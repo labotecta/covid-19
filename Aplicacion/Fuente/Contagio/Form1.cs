@@ -1011,6 +1011,13 @@ namespace Contagio
                 MessageBox.Show("No hay grupos de población", "Crear población", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+            sanos = 0;
+            desinmunizados = 0;
+            infectados = 0;
+            importados = 0;
+            curados = 0;
+            muertos = 0;
+            ActualizaMonitorEstados();
             linea_estado.Text = "Creando población ...";
             Application.DoEvents();
             double[] fraccion_antes = new double[grupos.Count];
@@ -1365,12 +1372,16 @@ namespace Contagio
                 num_dias_exportar = sdex.Length;
                 if (num_dias_exportar > 0)
                 {
+                    int ne = 0;
                     dias_exportar = new int[sdex.Length];
                     for (int i = 0; i < num_dias_exportar; i++)
                     {
-                        dias_exportar[i] = Convert.ToInt32(sdex[i]) - 1;
+                        if (sdex[i].Trim().Length == 0) continue;
+                        dias_exportar[ne] = Convert.ToInt32(sdex[i]) - 1;
                         if (dias_exportar[i] < 0) dias_exportar[i] = 0;
+                        ne++;
                     }
+                    num_dias_exportar = ne;
                 }
             }
             catch (Exception ex)
@@ -1392,6 +1403,7 @@ namespace Contagio
             importados = 0;
             curados = 0;
             muertos = 0;
+            ActualizaMonitorEstados();
             foreach (Individuo indi in individuos)
             {
                 // Para el primer gráfico
@@ -1453,6 +1465,7 @@ namespace Contagio
                     }
                 }
             }
+            ActualizaMonitorEstados();
             total_pasos = 0;
             total_recorridos = 0;
             acumulador_infectados = 0;
@@ -1797,8 +1810,8 @@ namespace Contagio
 
                 // La monitorización se hace al final del día
 
+                ActualizaMonitorEstados();
                 acumulador_infectados += infectados;
-
                 if ((total_recorridos) > 0)
                 {
                     recorrido_individuo_activo = total_distancias_ida / total_recorridos;
@@ -1865,6 +1878,7 @@ namespace Contagio
         }
         private string CierraCiclo(StreamWriter sw, TimeSpan dt, string texto, int dias_sim)
         {
+            ActualizaMonitorEstados();
             sw.WriteLine("--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------");
             sw.WriteLine("Día     Sanos  Infectados Importados    Curados Desinmuniz    Muertos     Ida     críticos  infectados         R0 Infectados    Curados    Muertos");
             sw.WriteLine();
@@ -2501,6 +2515,15 @@ namespace Contagio
         #endregion
 
         #region Individuos
+        private void ActualizaMonitorEstados()
+        {
+            v_sanos.Text = string.Format("{0:N0}", sanos);
+            v_desinmunizados.Text = string.Format("{0:N0}", desinmunizados);
+            v_infectados.Text = string.Format("{0:N0}", infectados);
+            v_curados.Text = string.Format("{0:N0}", curados);
+            v_muertos.Text = string.Format("{0:N0}", muertos);
+            Application.DoEvents();
+        }
         private void B_importa_individuos_Click(object sender, EventArgs e)
         {
             OpenFileDialog leefichero = new OpenFileDialog
@@ -2530,6 +2553,7 @@ namespace Contagio
                 infectados = 0;
                 curados = 0;
                 muertos = 0;
+                ActualizaMonitorEstados();
                 while (!sr.EndOfStream)
                 {
                     s = sr.ReadLine();
@@ -2568,6 +2592,7 @@ namespace Contagio
                     }
                 }
                 sr.Close();
+                ActualizaMonitorEstados();
                 if (individuos.Count == 0)
                 {
                     MessageBox.Show("No se ha importado ningún individuo", "Importar individuos", MessageBoxButtons.OK, MessageBoxIcon.Information);
