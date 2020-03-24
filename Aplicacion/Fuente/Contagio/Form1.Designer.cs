@@ -111,6 +111,8 @@
             this.v_curados = new System.Windows.Forms.Label();
             this.v_desinmunizados = new System.Windows.Forms.Label();
             this.v_muertos = new System.Windows.Forms.Label();
+            this.d_inmunes = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tablaGrupos)).BeginInit();
             this.SuspendLayout();
             // 
@@ -246,7 +248,7 @@
             // b_simula
             // 
             this.b_simula.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.b_simula.Location = new System.Drawing.Point(877, 643);
+            this.b_simula.Location = new System.Drawing.Point(877, 647);
             this.b_simula.Margin = new System.Windows.Forms.Padding(2);
             this.b_simula.Name = "b_simula";
             this.b_simula.Size = new System.Drawing.Size(119, 29);
@@ -286,7 +288,7 @@
             // 
             // d_dias
             // 
-            this.d_dias.Location = new System.Drawing.Point(830, 645);
+            this.d_dias.Location = new System.Drawing.Point(830, 649);
             this.d_dias.Name = "d_dias";
             this.d_dias.Size = new System.Drawing.Size(38, 22);
             this.d_dias.TabIndex = 172;
@@ -296,7 +298,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(781, 647);
+            this.label6.Location = new System.Drawing.Point(781, 651);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(36, 17);
             this.label6.TabIndex = 171;
@@ -304,7 +306,7 @@
             // 
             // d_lon_paso
             // 
-            this.d_lon_paso.Location = new System.Drawing.Point(735, 645);
+            this.d_lon_paso.Location = new System.Drawing.Point(735, 649);
             this.d_lon_paso.Name = "d_lon_paso";
             this.d_lon_paso.Size = new System.Drawing.Size(38, 22);
             this.d_lon_paso.TabIndex = 176;
@@ -315,7 +317,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.Color.Blue;
-            this.label7.Location = new System.Drawing.Point(625, 647);
+            this.label7.Location = new System.Drawing.Point(625, 651);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(102, 17);
             this.label7.TabIndex = 175;
@@ -323,7 +325,7 @@
             // 
             // d_contacto
             // 
-            this.d_contacto.Location = new System.Drawing.Point(576, 645);
+            this.d_contacto.Location = new System.Drawing.Point(576, 649);
             this.d_contacto.Name = "d_contacto";
             this.d_contacto.Size = new System.Drawing.Size(38, 22);
             this.d_contacto.TabIndex = 178;
@@ -334,7 +336,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.Fuchsia;
-            this.label4.Location = new System.Drawing.Point(390, 647);
+            this.label4.Location = new System.Drawing.Point(390, 651);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(144, 17);
             this.label4.TabIndex = 177;
@@ -354,7 +356,7 @@
             // d_contagio
             // 
             this.d_contagio.ForeColor = System.Drawing.Color.Maroon;
-            this.d_contagio.Location = new System.Drawing.Point(340, 581);
+            this.d_contagio.Location = new System.Drawing.Point(340, 585);
             this.d_contagio.Name = "d_contagio";
             this.d_contagio.Size = new System.Drawing.Size(38, 22);
             this.d_contagio.TabIndex = 181;
@@ -365,7 +367,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.Maroon;
-            this.label8.Location = new System.Drawing.Point(167, 583);
+            this.label8.Location = new System.Drawing.Point(167, 587);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(161, 17);
             this.label8.TabIndex = 180;
@@ -510,8 +512,8 @@
             // 
             // d_focos
             // 
-            this.d_focos.ForeColor = System.Drawing.Color.Green;
-            this.d_focos.Location = new System.Drawing.Point(340, 554);
+            this.d_focos.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.d_focos.Location = new System.Drawing.Point(576, 531);
             this.d_focos.Name = "d_focos";
             this.d_focos.Size = new System.Drawing.Size(38, 22);
             this.d_focos.TabIndex = 198;
@@ -522,8 +524,8 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.ForeColor = System.Drawing.Color.Green;
-            this.label14.Location = new System.Drawing.Point(167, 556);
+            this.label14.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label14.Location = new System.Drawing.Point(390, 533);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(100, 17);
             this.label14.TabIndex = 197;
@@ -577,7 +579,7 @@
             // 
             // d_latencia
             // 
-            this.d_latencia.Location = new System.Drawing.Point(179, 645);
+            this.d_latencia.Location = new System.Drawing.Point(179, 649);
             this.d_latencia.Name = "d_latencia";
             this.d_latencia.Size = new System.Drawing.Size(38, 22);
             this.d_latencia.TabIndex = 205;
@@ -588,7 +590,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(11, 647);
+            this.label17.Location = new System.Drawing.Point(11, 651);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(152, 17);
             this.label17.TabIndex = 204;
@@ -597,7 +599,7 @@
             // d_recontagio
             // 
             this.d_recontagio.ForeColor = System.Drawing.Color.Maroon;
-            this.d_recontagio.Location = new System.Drawing.Point(576, 581);
+            this.d_recontagio.Location = new System.Drawing.Point(576, 585);
             this.d_recontagio.Name = "d_recontagio";
             this.d_recontagio.Size = new System.Drawing.Size(38, 22);
             this.d_recontagio.TabIndex = 213;
@@ -609,7 +611,7 @@
             // 
             this.label20.AutoSize = true;
             this.label20.ForeColor = System.Drawing.Color.Maroon;
-            this.label20.Location = new System.Drawing.Point(390, 583);
+            this.label20.Location = new System.Drawing.Point(390, 587);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(174, 17);
             this.label20.TabIndex = 212;
@@ -618,7 +620,7 @@
             // d_mininmunidad
             // 
             this.d_mininmunidad.ForeColor = System.Drawing.Color.Maroon;
-            this.d_mininmunidad.Location = new System.Drawing.Point(831, 581);
+            this.d_mininmunidad.Location = new System.Drawing.Point(831, 585);
             this.d_mininmunidad.Name = "d_mininmunidad";
             this.d_mininmunidad.Size = new System.Drawing.Size(38, 22);
             this.d_mininmunidad.TabIndex = 215;
@@ -629,7 +631,7 @@
             // 
             this.label22.AutoSize = true;
             this.label22.ForeColor = System.Drawing.Color.Maroon;
-            this.label22.Location = new System.Drawing.Point(625, 583);
+            this.label22.Location = new System.Drawing.Point(625, 587);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(153, 17);
             this.label22.TabIndex = 214;
@@ -638,7 +640,7 @@
             // tabla_vecinos_en_uso
             // 
             this.tabla_vecinos_en_uso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabla_vecinos_en_uso.Location = new System.Drawing.Point(877, 580);
+            this.tabla_vecinos_en_uso.Location = new System.Drawing.Point(877, 584);
             this.tabla_vecinos_en_uso.Name = "tabla_vecinos_en_uso";
             this.tabla_vecinos_en_uso.Size = new System.Drawing.Size(119, 22);
             this.tabla_vecinos_en_uso.TabIndex = 216;
@@ -649,7 +651,7 @@
             // d_importados
             // 
             this.d_importados.ForeColor = System.Drawing.Color.Green;
-            this.d_importados.Location = new System.Drawing.Point(576, 554);
+            this.d_importados.Location = new System.Drawing.Point(576, 558);
             this.d_importados.Name = "d_importados";
             this.d_importados.Size = new System.Drawing.Size(38, 22);
             this.d_importados.TabIndex = 220;
@@ -661,7 +663,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.ForeColor = System.Drawing.Color.Green;
-            this.label23.Location = new System.Drawing.Point(390, 556);
+            this.label23.Location = new System.Drawing.Point(390, 560);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(120, 17);
             this.label23.TabIndex = 219;
@@ -670,7 +672,7 @@
             // d_dias_importados
             // 
             this.d_dias_importados.ForeColor = System.Drawing.Color.Green;
-            this.d_dias_importados.Location = new System.Drawing.Point(673, 554);
+            this.d_dias_importados.Location = new System.Drawing.Point(340, 558);
             this.d_dias_importados.Name = "d_dias_importados";
             this.d_dias_importados.Size = new System.Drawing.Size(38, 22);
             this.d_dias_importados.TabIndex = 218;
@@ -682,18 +684,18 @@
             // 
             this.label25.AutoSize = true;
             this.label25.ForeColor = System.Drawing.Color.Green;
-            this.label25.Location = new System.Drawing.Point(719, 556);
+            this.label25.Location = new System.Drawing.Point(625, 560);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(102, 17);
+            this.label25.Size = new System.Drawing.Size(68, 17);
             this.label25.TabIndex = 221;
-            this.label25.Text = "días, del grupo";
+            this.label25.Text = "del grupo";
             // 
             // d_grupo_importado
             // 
             this.d_grupo_importado.ForeColor = System.Drawing.Color.Green;
-            this.d_grupo_importado.Location = new System.Drawing.Point(831, 554);
+            this.d_grupo_importado.Location = new System.Drawing.Point(722, 558);
             this.d_grupo_importado.Name = "d_grupo_importado";
-            this.d_grupo_importado.Size = new System.Drawing.Size(165, 22);
+            this.d_grupo_importado.Size = new System.Drawing.Size(274, 22);
             this.d_grupo_importado.TabIndex = 222;
             this.d_grupo_importado.TextChanged += new System.EventHandler(this.CasoCambiado);
             // 
@@ -701,11 +703,11 @@
             // 
             this.label24.AutoSize = true;
             this.label24.ForeColor = System.Drawing.Color.Green;
-            this.label24.Location = new System.Drawing.Point(625, 556);
+            this.label24.Location = new System.Drawing.Point(167, 560);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(39, 17);
+            this.label24.Size = new System.Drawing.Size(81, 17);
             this.label24.TabIndex = 223;
-            this.label24.Text = "cada";
+            this.label24.Text = "Cada (días)";
             // 
             // prefijo
             // 
@@ -740,7 +742,7 @@
             // d_potencia
             // 
             this.d_potencia.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_potencia.Location = new System.Drawing.Point(576, 528);
+            this.d_potencia.Location = new System.Drawing.Point(958, 531);
             this.d_potencia.Name = "d_potencia";
             this.d_potencia.Size = new System.Drawing.Size(38, 22);
             this.d_potencia.TabIndex = 228;
@@ -751,7 +753,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label27.Location = new System.Drawing.Point(390, 530);
+            this.label27.Location = new System.Drawing.Point(760, 533);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(173, 17);
             this.label27.TabIndex = 227;
@@ -760,7 +762,7 @@
             // d_numero_c
             // 
             this.d_numero_c.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_numero_c.Location = new System.Drawing.Point(576, 607);
+            this.d_numero_c.Location = new System.Drawing.Point(576, 611);
             this.d_numero_c.Name = "d_numero_c";
             this.d_numero_c.Size = new System.Drawing.Size(38, 22);
             this.d_numero_c.TabIndex = 232;
@@ -772,7 +774,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label18.Location = new System.Drawing.Point(390, 609);
+            this.label18.Location = new System.Drawing.Point(390, 613);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(131, 17);
             this.label18.TabIndex = 231;
@@ -781,7 +783,7 @@
             // d_contagio_c
             // 
             this.d_contagio_c.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_contagio_c.Location = new System.Drawing.Point(340, 607);
+            this.d_contagio_c.Location = new System.Drawing.Point(340, 611);
             this.d_contagio_c.Name = "d_contagio_c";
             this.d_contagio_c.Size = new System.Drawing.Size(38, 22);
             this.d_contagio_c.TabIndex = 230;
@@ -792,7 +794,7 @@
             // 
             this.label21.AutoSize = true;
             this.label21.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label21.Location = new System.Drawing.Point(167, 609);
+            this.label21.Location = new System.Drawing.Point(167, 613);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(161, 17);
             this.label21.TabIndex = 229;
@@ -802,7 +804,7 @@
             // 
             this.label28.AutoSize = true;
             this.label28.ForeColor = System.Drawing.Color.Maroon;
-            this.label28.Location = new System.Drawing.Point(11, 583);
+            this.label28.Location = new System.Drawing.Point(11, 587);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(93, 17);
             this.label28.TabIndex = 233;
@@ -812,7 +814,7 @@
             // 
             this.label29.AutoSize = true;
             this.label29.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label29.Location = new System.Drawing.Point(11, 609);
+            this.label29.Location = new System.Drawing.Point(11, 613);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(72, 17);
             this.label29.TabIndex = 234;
@@ -821,7 +823,7 @@
             // d_individuos_c
             // 
             this.d_individuos_c.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_individuos_c.Location = new System.Drawing.Point(831, 607);
+            this.d_individuos_c.Location = new System.Drawing.Point(831, 611);
             this.d_individuos_c.Name = "d_individuos_c";
             this.d_individuos_c.Size = new System.Drawing.Size(38, 22);
             this.d_individuos_c.TabIndex = 236;
@@ -833,7 +835,7 @@
             // 
             this.label30.AutoSize = true;
             this.label30.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label30.Location = new System.Drawing.Point(625, 609);
+            this.label30.Location = new System.Drawing.Point(625, 613);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(186, 17);
             this.label30.TabIndex = 235;
@@ -842,7 +844,7 @@
             // linea_estado
             // 
             this.linea_estado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.linea_estado.Location = new System.Drawing.Point(12, 708);
+            this.linea_estado.Location = new System.Drawing.Point(12, 712);
             this.linea_estado.Name = "linea_estado";
             this.linea_estado.Size = new System.Drawing.Size(984, 22);
             this.linea_estado.TabIndex = 237;
@@ -864,7 +866,7 @@
             // 
             // b_crea_clusters
             // 
-            this.b_crea_clusters.Location = new System.Drawing.Point(878, 604);
+            this.b_crea_clusters.Location = new System.Drawing.Point(878, 608);
             this.b_crea_clusters.Margin = new System.Windows.Forms.Padding(2);
             this.b_crea_clusters.Name = "b_crea_clusters";
             this.b_crea_clusters.Size = new System.Drawing.Size(119, 29);
@@ -876,7 +878,7 @@
             // d_dias_exportar
             // 
             this.d_dias_exportar.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_dias_exportar.Location = new System.Drawing.Point(225, 678);
+            this.d_dias_exportar.Location = new System.Drawing.Point(225, 682);
             this.d_dias_exportar.Name = "d_dias_exportar";
             this.d_dias_exportar.Size = new System.Drawing.Size(708, 22);
             this.d_dias_exportar.TabIndex = 241;
@@ -885,7 +887,7 @@
             // 
             this.label31.AutoSize = true;
             this.label31.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label31.Location = new System.Drawing.Point(12, 680);
+            this.label31.Location = new System.Drawing.Point(12, 684);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(198, 17);
             this.label31.TabIndex = 240;
@@ -893,7 +895,7 @@
             // 
             // v_dias_exportar
             // 
-            this.v_dias_exportar.Location = new System.Drawing.Point(952, 680);
+            this.v_dias_exportar.Location = new System.Drawing.Point(952, 684);
             this.v_dias_exportar.Name = "v_dias_exportar";
             this.v_dias_exportar.Size = new System.Drawing.Size(33, 17);
             this.v_dias_exportar.TabIndex = 242;
@@ -945,11 +947,34 @@
             this.v_muertos.Text = "0";
             this.v_muertos.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // d_inmunes
+            // 
+            this.d_inmunes.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.d_inmunes.Location = new System.Drawing.Point(340, 531);
+            this.d_inmunes.Name = "d_inmunes";
+            this.d_inmunes.Size = new System.Drawing.Size(38, 22);
+            this.d_inmunes.TabIndex = 249;
+            this.d_inmunes.Text = "0";
+            this.d_inmunes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.d_inmunes.TextChanged += new System.EventHandler(this.PoblacionCambiado);
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label32.Location = new System.Drawing.Point(167, 533);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(115, 17);
+            this.label32.TabIndex = 248;
+            this.label32.Text = "Inmunes iniciales";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1002, 734);
+            this.ClientSize = new System.Drawing.Size(1002, 738);
+            this.Controls.Add(this.d_inmunes);
+            this.Controls.Add(this.label32);
             this.Controls.Add(this.v_muertos);
             this.Controls.Add(this.v_desinmunizados);
             this.Controls.Add(this.v_curados);
@@ -1127,6 +1152,8 @@
         private System.Windows.Forms.Label v_curados;
         private System.Windows.Forms.Label v_desinmunizados;
         private System.Windows.Forms.Label v_muertos;
+        private System.Windows.Forms.TextBox d_inmunes;
+        private System.Windows.Forms.Label label32;
     }
 }
 

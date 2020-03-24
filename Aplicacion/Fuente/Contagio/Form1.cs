@@ -27,6 +27,7 @@ namespace Contagio
         private int N_FOCOS_IMPORTADOS;
         private int DIAS_FOCOS_IMPORTADOS;
         private int GRUPO_IMPORTADO;
+        private int N_INMUNES_INICIALES;
         private int N_FOCOS_INICIALES;
         public int CONTACTO;
         private int CONTACTO2;
@@ -289,6 +290,7 @@ namespace Contagio
             b_importa_individuos.Enabled = !que;
             b_exporta_individuos.Enabled = !que;
             d_focos.Enabled = !que;
+            d_inmunes.Enabled = !que;
             d_importados.Enabled = !que;
             d_dias_importados.Enabled = !que;
             d_grupo_importado.Enabled = !que;
@@ -323,6 +325,7 @@ namespace Contagio
             b_importa_individuos.Visible = !que;
             b_exporta_individuos.Visible = !que;
             d_focos.Visible = !que;
+            d_inmunes.Visible = !que;
             d_importados.Visible = !que;
             d_dias_importados.Visible = !que;
             d_grupo_importado.Visible = !que;
@@ -435,6 +438,7 @@ namespace Contagio
                 d_mininmunidad.Text = sr.ReadLine();
                 d_latencia.Text = sr.ReadLine();
                 d_focos.Text = sr.ReadLine();
+                d_inmunes.Text = sr.ReadLine();
                 d_importados.Text = sr.ReadLine();
                 d_dias_importados.Text = sr.ReadLine();
                 d_grupo_importado.Text = sr.ReadLine();
@@ -512,6 +516,7 @@ namespace Contagio
                     sw.WriteLine(d_mininmunidad.Text);
                     sw.WriteLine(d_latencia.Text);
                     sw.WriteLine(d_focos.Text);
+                    sw.WriteLine(d_inmunes.Text);
                     sw.WriteLine(d_importados.Text);
                     sw.WriteLine(d_dias_importados.Text);
                     sw.WriteLine(d_grupo_importado.Text);
@@ -584,6 +589,7 @@ namespace Contagio
                 MIN_INMUNIDAD = Convert.ToInt32(d_mininmunidad.Text);
                 LATENCIA = Convert.ToInt32(d_latencia.Text);
                 N_FOCOS_INICIALES = Convert.ToInt32(d_focos.Text);
+                N_INMUNES_INICIALES = Convert.ToInt32(d_inmunes.Text);
                 N_FOCOS_IMPORTADOS = Convert.ToInt32(d_importados.Text);
                 DIAS_FOCOS_IMPORTADOS = Convert.ToInt32(d_dias_importados.Text);
                 GRUPO_IMPORTADO = -1;
@@ -1011,13 +1017,6 @@ namespace Contagio
                 MessageBox.Show("No hay grupos de población", "Crear población", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            sanos = 0;
-            desinmunizados = 0;
-            infectados = 0;
-            importados = 0;
-            curados = 0;
-            muertos = 0;
-            ActualizaMonitorEstados();
             linea_estado.Text = "Creando población ...";
             Application.DoEvents();
             double[] fraccion_antes = new double[grupos.Count];
@@ -1071,6 +1070,93 @@ namespace Contagio
             {
                 return false;
             }
+            sanos = 0;
+            desinmunizados = 0;
+            infectados = 0;
+            importados = 0;
+            curados = 0;
+            foreach (Individuo indi_i in individuos)
+            {
+                switch (indi_i.estado)
+                {
+                    case 0:
+                        sanos++;
+                        break;
+                    case 1:
+                        infectados++;
+                        break;
+                    case 2:
+                        curados++;
+                        break;
+                    case 3:
+                        desinmunizados++;
+                        break;
+                    default:
+                        muertos++;
+                        break;
+                }
+            }
+            ActualizaMonitorEstados();
+            Individuo indi;
+
+            // Focos inciciales
+
+            azar = new Random(17292);
+            if (sanos <= N_FOCOS_INICIALES)
+            {
+                MessageBox.Show("Hay más focos de infecciónque que individuos sanos. Cancelado", "Crear población", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+            for (int nf = 0; nf < N_FOCOS_INICIALES; nf++)
+            {
+                // Buscar al azar uno sano para infectarlo y marcarlo como recien infectado (indi.dias_infectado = 0)
+
+                int i;
+                Individuo paciente_cero;
+                while (true)
+                {
+                    i = (int)(azar.NextDouble() * individuos.Count);
+                    if (individuos.ElementAt(i).estado == 0)
+                    {
+                        paciente_cero = individuos.ElementAt(i);
+                        paciente_cero.estado = 1;
+                        paciente_cero.dias_infectado = 0;
+                        paciente_cero.enfermados = 0;
+                        infectados++;
+                        sanos--;
+                        break;
+                    }
+                }
+            }
+
+            // Inmunizados iniciales
+
+            if (sanos <= N_INMUNES_INICIALES)
+            {
+                MessageBox.Show("Hay más inmunizados que individuos sanos. Cancelado", "Crear población", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+            for (int nf = 0; nf < N_INMUNES_INICIALES; nf++)
+            {
+                // Buscar al azar uno sano para inmunizarlo (curarlo)
+
+                int i;
+                while (true)
+                {
+                    i = (int)(azar.NextDouble() * individuos.Count);
+                    if (individuos.ElementAt(i).estado == 0)
+                    {
+                        indi = individuos.ElementAt(i);
+                        indi.estado = 2;
+                        indi.dias_infectado = 0;
+                        indi.enfermados = 0;
+                        curados++;
+                        sanos--;
+                        break;
+                    }
+                }
+            }
+            ActualizaMonitorEstados();
             if (INDIVIDUOS != individuos.Count)
             {
                 INDIVIDUOS = individuos.Count;
@@ -1433,38 +1519,6 @@ namespace Contagio
                         break;
                 }
             }
-            if (infectados == 0)
-            {
-                if (sanos <= N_FOCOS_INICIALES)
-                {
-                    MessageBox.Show("Hay más focos que individuos sanos. Cancelado", "Simulación", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                // Paciente cero (focos de infectados)
-
-                for (int nf = 0; nf < N_FOCOS_INICIALES; nf++)
-                {
-                    // Buscar al azar uno sano para infectarlo y marcarlo como recien infectado (indi.dias_infectado = 0)
-
-                    int i;
-                    Individuo paciente_cero;
-                    while (true)
-                    {
-                        i = (int)(azar.NextDouble() * individuos.Count);
-                        if (individuos.ElementAt(i).estado == 0)
-                        {
-                            paciente_cero = individuos.ElementAt(i);
-                            paciente_cero.estado = 1;
-                            paciente_cero.dias_infectado = 0;
-                            paciente_cero.enfermados = 0;
-                            infectados++;
-                            sanos--;
-                            break;
-                        }
-                    }
-                }
-            }
             ActualizaMonitorEstados();
             total_pasos = 0;
             total_recorridos = 0;
@@ -1531,6 +1585,7 @@ namespace Contagio
             sw.WriteLine(string.Format("Número de individuos               {0,12:N0}", INDIVIDUOS));
             sw.WriteLine(string.Format("Radio                              {0,12:N0}", RADIO));
             sw.WriteLine(string.Format("Número de focos iniciales          {0,12:N0}", N_FOCOS_INICIALES));
+            sw.WriteLine(string.Format("Número de inmunes iniciales        {0,12:N0}", N_INMUNES_INICIALES));
             if (N_FOCOS_IMPORTADOS > 0 && GRUPO_IMPORTADO == -1)
             {
                 sw.WriteLine(string.Format("Número de focos a importar         {0,12:N0} cada {1} días, del grupo {2} NO ENCONTRADO. Opción deshabilitada.", N_FOCOS_IMPORTADOS, DIAS_FOCOS_IMPORTADOS, d_grupo_importado.Text));
