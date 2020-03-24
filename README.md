@@ -1,5 +1,5 @@
-# covid-19
+# Contagios (covid-19)
 El objetivo de este proyecto ha sido construir un modelo para entender mejor la pandemia del coronavirus que estamos padeciendo en estos momentos.
-El modelo se ha calibrado con la información disponible a la fecha y se ha utilizado para simular varios escenarios, cuyos resultados se muestran en la carpeta resultados.
-En la carpeta Aplicación estan tanto el código fuente del modelo como el paquete de instalación para Windows. La aplicación sólo puede funcionar en este sistema operativo y sólo se ha probado en Windowws 10. 
+El modelo se ha calibrado con la información disponible a la fecha y se ha utilizado para simular varios escenarios, cuyos resultados se muestran en la carpeta Resultados.
+En la carpeta Aplicacion están tanto el código fuente del modelo como el paquete de instalación para Windows. La aplicación sólo puede funcionar en este sistema operativo y sólo se ha probado en Windowws 10. 
 La carpeta Casos contiene los párametros para cada uno de los casos simulados en forma de ficheros con extensión ccc que la aplicación puede seleccionar.
