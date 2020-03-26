@@ -38,11 +38,15 @@ namespace Contagio
         }
         private void Form2_Load(object sender, EventArgs e)
         {
-            Text = principal.TITULO;
+            Text = string.Format("{0} [{1}]", principal.TITULO, principal.PREFIJO);
             BotonCancelar(true);
             lienzo.SetBounds(izq_lienzo, sup_lienzo, ancho_lienzo, alto_lienzo);
             SetBounds(Screen.PrimaryScreen.WorkingArea.Width - (izq_lienzo + ancho_lienzo + margen_dcha), 0, izq_lienzo + ancho_lienzo + margen_dcha, alto_lienzo + margen_sup + sup_lienzo);
             Grafico(false);
+        }
+        public void ActualizaTitulo()
+        {
+            Text = string.Format("{0} [{1}]", principal.TITULO, principal.PREFIJO);
         }
         public void ActualizaDia(int dia)
         {

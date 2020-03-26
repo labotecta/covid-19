@@ -982,12 +982,14 @@ namespace Contagio
             b_crea_poblacion.ForeColor = Color.Red;
             TABLA_VECINOS = false;
             tabla_vecinos_en_uso.Text = string.Empty;
+            tabla_vecinos_en_uso.BackColor = Color.Red;
         }
         private void Tabla_vecinos_en_uso_DoubleClick(object sender, EventArgs e)
         {
             if (!poblacion_creada || !tabla_vecinos_creada) return;
             TABLA_VECINOS = !TABLA_VECINOS;
             tabla_vecinos_en_uso.Text = TABLA_VECINOS ? "Tabla vecinos" : string.Empty;
+            tabla_vecinos_en_uso.BackColor = TABLA_VECINOS ? SystemColors.Control: Color.Red;
         }
         private void TablaGrupos_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -1182,6 +1184,7 @@ namespace Contagio
                     tabla_vecinos_creada = false;
                     TABLA_VECINOS = false;
                     tabla_vecinos_en_uso.Text = string.Empty;
+                    tabla_vecinos_en_uso.BackColor = Color.Red;
                 }
             }
             else
@@ -1189,6 +1192,7 @@ namespace Contagio
                 tabla_vecinos_creada = false;
                 TABLA_VECINOS = false;
                 tabla_vecinos_en_uso.Text = string.Empty;
+                tabla_vecinos_en_uso.BackColor = Color.Red;
             }
             if (mensaje)
             {
@@ -1325,6 +1329,9 @@ namespace Contagio
         }
         private bool TablaVecinos(bool mensaje)
         {
+            cancelar = false;
+            b_cancelar.Enabled = true;
+            Application.DoEvents();
             Individuo indi_i;
             Individuo indi_j;
             Grupo g;
@@ -1342,8 +1349,23 @@ namespace Contagio
             Application.DoEvents();
             for (int i = 0; i < individuos.Count; i++)
             {
-                linea_estado.Text = string.Format("Creando tabla de vecinos {0} de {1} ", i + 1, individuos.Count);
-                Application.DoEvents();
+                if (i % 10 == 0)
+                {
+                    linea_estado.Text = string.Format("Creando tabla de vecinos {0} de {1} ", i + 1, individuos.Count);
+                    Application.DoEvents();
+                }
+                if (cancelar)
+                {
+                    linea_estado.Text = string.Empty;
+                    cancelar = false;
+                    b_cancelar.Enabled = false;
+                    tabla_vecinos_creada = false;
+                    TABLA_VECINOS = false;
+                    tabla_vecinos_en_uso.Text = string.Empty;
+                    tabla_vecinos_en_uso.BackColor = Color.Red;
+                    MessageBox.Show("Sin tabla de vecinos los cálculos son muy lentos. Para crearla, vuelve a Crear la Población", "Tabla de vecinos", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
                 indi_i = individuos.ElementAt(i);
                 g = grupos.Find(v => v.grupo == indi_i.grupo);
                 d_max_i = g.pasos_max * LON_PASO;
@@ -1363,6 +1385,12 @@ namespace Contagio
                         {
                             MessageBox.Show("Superada la capacidad de la tabla", "Tabla de vecinos", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             linea_estado.Text = string.Empty;
+                            cancelar = false;
+                            b_cancelar.Enabled = false;
+                            tabla_vecinos_creada = false;
+                            TABLA_VECINOS = false;
+                            tabla_vecinos_en_uso.Text = string.Empty;
+                            tabla_vecinos_en_uso.BackColor = Color.Red;
                             return false;
                         }
                         vecinas[i, nv] = j;
@@ -1386,13 +1414,17 @@ namespace Contagio
             {
                 TABLA_VECINOS = true;
                 tabla_vecinos_en_uso.Text = "Tabla vecinos";
+                tabla_vecinos_en_uso.BackColor = SystemColors.Control;
             }
             else
             {
                 TABLA_VECINOS = false;
                 tabla_vecinos_en_uso.Text = string.Empty;
+                tabla_vecinos_en_uso.BackColor = Color.Red;
             }
             linea_estado.Text = string.Empty;
+            cancelar = false;
+            b_cancelar.Enabled = false;
             return true;
         }
         private bool ProbabilidadFinInfeccion()
@@ -1481,7 +1513,6 @@ namespace Contagio
                 lzo_ex = null;
             }
             lzo_ex = new Form2();
-
             azar = new Random(4816);
             sanos = 0;
             desinmunizados = 0;
@@ -1555,6 +1586,7 @@ namespace Contagio
             lzo_ex.principal = this;
             lzo_ex.radio = RADIO;
             lzo_ex.ActualizaDia(0);
+            lzo_ex.ActualizaTitulo();
             lzo_ex.Show(this);
             DialogResult respuesta = MessageBox.Show("¿ Preguntar a cada día ?", "Simulación", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (respuesta == DialogResult.Yes || respuesta == DialogResult.No)
@@ -1841,6 +1873,7 @@ namespace Contagio
                                 tabla_vecinos_creada = false;
                                 TABLA_VECINOS = false;
                                 tabla_vecinos_en_uso.Text = string.Empty;
+                                tabla_vecinos_en_uso.BackColor = Color.Red;
                             }
                         }
                         label23.ForeColor = Color.Red;
@@ -2669,6 +2702,7 @@ namespace Contagio
                             tabla_vecinos_creada = false;
                             TABLA_VECINOS = false;
                             tabla_vecinos_en_uso.Text = string.Empty;
+                            tabla_vecinos_en_uso.BackColor = Color.Red;
                         }
                     }
                     else
@@ -2676,6 +2710,7 @@ namespace Contagio
                         tabla_vecinos_creada = false;
                         TABLA_VECINOS = false;
                         tabla_vecinos_en_uso.Text = string.Empty;
+                        tabla_vecinos_en_uso.BackColor = Color.Red;
                     }
                 }
                 Desactiva(false);
