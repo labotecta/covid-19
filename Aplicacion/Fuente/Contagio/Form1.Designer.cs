@@ -63,7 +63,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.v_recorridos = new System.Windows.Forms.Label();
             this.senda_caso = new System.Windows.Forms.Label();
-            this.b_importa_individuos = new System.Windows.Forms.Button();
+            this.sel_individuos = new System.Windows.Forms.Button();
             this.b_exporta_individuos = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.v_max_pasos = new System.Windows.Forms.Label();
@@ -74,7 +74,7 @@
             this.salvar_imagenes = new System.Windows.Forms.CheckBox();
             this.label16 = new System.Windows.Forms.Label();
             this.v_r0 = new System.Windows.Forms.Label();
-            this.d_latencia = new System.Windows.Forms.TextBox();
+            this.d_carencia = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.d_recontagio = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -123,6 +123,14 @@
             this.filtro_curados = new System.Windows.Forms.CheckBox();
             this.filtro_recaida = new System.Windows.Forms.CheckBox();
             this.filtro_muertos = new System.Windows.Forms.CheckBox();
+            this.d_incubacion = new System.Windows.Forms.TextBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.d_hospitalizacion = new System.Windows.Forms.TextBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.d_fpc_enfermo = new System.Windows.Forms.TextBox();
+            this.d_fpc_hospitalizado = new System.Windows.Forms.TextBox();
+            this.label40 = new System.Windows.Forms.Label();
+            this.senda_individuos = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tablaGrupos)).BeginInit();
             this.SuspendLayout();
             // 
@@ -175,7 +183,7 @@
             // 
             // sel_caso
             // 
-            this.sel_caso.Location = new System.Drawing.Point(623, 46);
+            this.sel_caso.Location = new System.Drawing.Point(623, 48);
             this.sel_caso.Margin = new System.Windows.Forms.Padding(2);
             this.sel_caso.Name = "sel_caso";
             this.sel_caso.Size = new System.Drawing.Size(34, 28);
@@ -186,7 +194,7 @@
             // 
             // sel_grupos
             // 
-            this.sel_grupos.Location = new System.Drawing.Point(623, 74);
+            this.sel_grupos.Location = new System.Drawing.Point(623, 76);
             this.sel_grupos.Margin = new System.Windows.Forms.Padding(2);
             this.sel_grupos.Name = "sel_grupos";
             this.sel_grupos.Size = new System.Drawing.Size(34, 28);
@@ -258,10 +266,10 @@
             // b_simula
             // 
             this.b_simula.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.b_simula.Location = new System.Drawing.Point(877, 700);
+            this.b_simula.Location = new System.Drawing.Point(835, 723);
             this.b_simula.Margin = new System.Windows.Forms.Padding(2);
             this.b_simula.Name = "b_simula";
-            this.b_simula.Size = new System.Drawing.Size(119, 29);
+            this.b_simula.Size = new System.Drawing.Size(161, 36);
             this.b_simula.TabIndex = 164;
             this.b_simula.Text = "Simula";
             this.b_simula.UseVisualStyleBackColor = true;
@@ -298,7 +306,7 @@
             // 
             // d_dias
             // 
-            this.d_dias.Location = new System.Drawing.Point(830, 702);
+            this.d_dias.Location = new System.Drawing.Point(788, 732);
             this.d_dias.Name = "d_dias";
             this.d_dias.Size = new System.Drawing.Size(38, 22);
             this.d_dias.TabIndex = 172;
@@ -308,7 +316,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(781, 704);
+            this.label6.Location = new System.Drawing.Point(741, 734);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(36, 17);
             this.label6.TabIndex = 171;
@@ -316,7 +324,7 @@
             // 
             // d_lon_paso
             // 
-            this.d_lon_paso.Location = new System.Drawing.Point(735, 702);
+            this.d_lon_paso.Location = new System.Drawing.Point(695, 732);
             this.d_lon_paso.Name = "d_lon_paso";
             this.d_lon_paso.Size = new System.Drawing.Size(38, 22);
             this.d_lon_paso.TabIndex = 176;
@@ -327,7 +335,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.Color.Blue;
-            this.label7.Location = new System.Drawing.Point(625, 704);
+            this.label7.Location = new System.Drawing.Point(582, 734);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(102, 17);
             this.label7.TabIndex = 175;
@@ -335,7 +343,7 @@
             // 
             // d_contacto
             // 
-            this.d_contacto.Location = new System.Drawing.Point(576, 702);
+            this.d_contacto.Location = new System.Drawing.Point(533, 732);
             this.d_contacto.Name = "d_contacto";
             this.d_contacto.Size = new System.Drawing.Size(38, 22);
             this.d_contacto.TabIndex = 178;
@@ -346,7 +354,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.Fuchsia;
-            this.label4.Location = new System.Drawing.Point(390, 704);
+            this.label4.Location = new System.Drawing.Point(347, 734);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(144, 17);
             this.label4.TabIndex = 177;
@@ -366,7 +374,7 @@
             // d_contagio
             // 
             this.d_contagio.ForeColor = System.Drawing.Color.Maroon;
-            this.d_contagio.Location = new System.Drawing.Point(340, 638);
+            this.d_contagio.Location = new System.Drawing.Point(297, 638);
             this.d_contagio.Name = "d_contagio";
             this.d_contagio.Size = new System.Drawing.Size(38, 22);
             this.d_contagio.TabIndex = 181;
@@ -377,7 +385,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.Maroon;
-            this.label8.Location = new System.Drawing.Point(167, 640);
+            this.label8.Location = new System.Drawing.Point(124, 640);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(161, 17);
             this.label8.TabIndex = 180;
@@ -480,16 +488,16 @@
             this.senda_caso.TabIndex = 191;
             this.senda_caso.Text = "F:\\Contagio\\grupos.csv";
             // 
-            // b_importa_individuos
+            // sel_individuos
             // 
-            this.b_importa_individuos.Location = new System.Drawing.Point(11, 474);
-            this.b_importa_individuos.Margin = new System.Windows.Forms.Padding(2);
-            this.b_importa_individuos.Name = "b_importa_individuos";
-            this.b_importa_individuos.Size = new System.Drawing.Size(142, 29);
-            this.b_importa_individuos.TabIndex = 192;
-            this.b_importa_individuos.Text = "Importa individuos";
-            this.b_importa_individuos.UseVisualStyleBackColor = true;
-            this.b_importa_individuos.Click += new System.EventHandler(this.B_importa_individuos_Click);
+            this.sel_individuos.Location = new System.Drawing.Point(623, 105);
+            this.sel_individuos.Margin = new System.Windows.Forms.Padding(2);
+            this.sel_individuos.Name = "sel_individuos";
+            this.sel_individuos.Size = new System.Drawing.Size(34, 29);
+            this.sel_individuos.TabIndex = 192;
+            this.sel_individuos.Text = "S";
+            this.sel_individuos.UseVisualStyleBackColor = true;
+            this.sel_individuos.Click += new System.EventHandler(this.B_importa_individuos_Click);
             // 
             // b_exporta_individuos
             // 
@@ -523,7 +531,7 @@
             // d_focos
             // 
             this.d_focos.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_focos.Location = new System.Drawing.Point(576, 584);
+            this.d_focos.Location = new System.Drawing.Point(533, 584);
             this.d_focos.Name = "d_focos";
             this.d_focos.Size = new System.Drawing.Size(38, 22);
             this.d_focos.TabIndex = 198;
@@ -535,7 +543,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label14.Location = new System.Drawing.Point(390, 586);
+            this.label14.Location = new System.Drawing.Point(347, 586);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(100, 17);
             this.label14.TabIndex = 197;
@@ -562,7 +570,7 @@
             // salvar_imagenes
             // 
             this.salvar_imagenes.AutoSize = true;
-            this.salvar_imagenes.Location = new System.Drawing.Point(576, 555);
+            this.salvar_imagenes.Location = new System.Drawing.Point(533, 555);
             this.salvar_imagenes.Name = "salvar_imagenes";
             this.salvar_imagenes.Size = new System.Drawing.Size(135, 21);
             this.salvar_imagenes.TabIndex = 201;
@@ -587,29 +595,29 @@
             this.v_r0.Text = "0";
             this.v_r0.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // d_latencia
+            // d_carencia
             // 
-            this.d_latencia.Location = new System.Drawing.Point(225, 702);
-            this.d_latencia.Name = "d_latencia";
-            this.d_latencia.Size = new System.Drawing.Size(38, 22);
-            this.d_latencia.TabIndex = 205;
-            this.d_latencia.Text = "0";
-            this.d_latencia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.d_latencia.TextChanged += new System.EventHandler(this.CasoCambiado);
+            this.d_carencia.Location = new System.Drawing.Point(297, 691);
+            this.d_carencia.Name = "d_carencia";
+            this.d_carencia.Size = new System.Drawing.Size(38, 22);
+            this.d_carencia.TabIndex = 205;
+            this.d_carencia.Text = "0";
+            this.d_carencia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.d_carencia.TextChanged += new System.EventHandler(this.CasoCambiado);
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(11, 704);
+            this.label17.Location = new System.Drawing.Point(124, 693);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(183, 17);
+            this.label17.Size = new System.Drawing.Size(143, 17);
             this.label17.TabIndex = 204;
-            this.label17.Text = "Días infectado sin contagiar";
+            this.label17.Text = "Iniciales sin contagiar";
             // 
             // d_recontagio
             // 
             this.d_recontagio.ForeColor = System.Drawing.Color.Maroon;
-            this.d_recontagio.Location = new System.Drawing.Point(576, 638);
+            this.d_recontagio.Location = new System.Drawing.Point(533, 638);
             this.d_recontagio.Name = "d_recontagio";
             this.d_recontagio.Size = new System.Drawing.Size(38, 22);
             this.d_recontagio.TabIndex = 213;
@@ -621,7 +629,7 @@
             // 
             this.label20.AutoSize = true;
             this.label20.ForeColor = System.Drawing.Color.Maroon;
-            this.label20.Location = new System.Drawing.Point(390, 640);
+            this.label20.Location = new System.Drawing.Point(347, 640);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(174, 17);
             this.label20.TabIndex = 212;
@@ -630,7 +638,7 @@
             // d_mininmunidad
             // 
             this.d_mininmunidad.ForeColor = System.Drawing.Color.Maroon;
-            this.d_mininmunidad.Location = new System.Drawing.Point(831, 638);
+            this.d_mininmunidad.Location = new System.Drawing.Point(788, 638);
             this.d_mininmunidad.Name = "d_mininmunidad";
             this.d_mininmunidad.Size = new System.Drawing.Size(38, 22);
             this.d_mininmunidad.TabIndex = 215;
@@ -641,7 +649,7 @@
             // 
             this.label22.AutoSize = true;
             this.label22.ForeColor = System.Drawing.Color.Maroon;
-            this.label22.Location = new System.Drawing.Point(625, 640);
+            this.label22.Location = new System.Drawing.Point(582, 640);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(153, 17);
             this.label22.TabIndex = 214;
@@ -650,7 +658,7 @@
             // tabla_vecinos_en_uso
             // 
             this.tabla_vecinos_en_uso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabla_vecinos_en_uso.Location = new System.Drawing.Point(877, 637);
+            this.tabla_vecinos_en_uso.Location = new System.Drawing.Point(834, 637);
             this.tabla_vecinos_en_uso.Name = "tabla_vecinos_en_uso";
             this.tabla_vecinos_en_uso.Size = new System.Drawing.Size(119, 22);
             this.tabla_vecinos_en_uso.TabIndex = 216;
@@ -661,7 +669,7 @@
             // d_importados
             // 
             this.d_importados.ForeColor = System.Drawing.Color.Green;
-            this.d_importados.Location = new System.Drawing.Point(576, 611);
+            this.d_importados.Location = new System.Drawing.Point(533, 611);
             this.d_importados.Name = "d_importados";
             this.d_importados.Size = new System.Drawing.Size(38, 22);
             this.d_importados.TabIndex = 220;
@@ -673,7 +681,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.ForeColor = System.Drawing.Color.Green;
-            this.label23.Location = new System.Drawing.Point(390, 613);
+            this.label23.Location = new System.Drawing.Point(347, 613);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(120, 17);
             this.label23.TabIndex = 219;
@@ -682,7 +690,7 @@
             // d_dias_importados
             // 
             this.d_dias_importados.ForeColor = System.Drawing.Color.Green;
-            this.d_dias_importados.Location = new System.Drawing.Point(340, 611);
+            this.d_dias_importados.Location = new System.Drawing.Point(297, 611);
             this.d_dias_importados.Name = "d_dias_importados";
             this.d_dias_importados.Size = new System.Drawing.Size(38, 22);
             this.d_dias_importados.TabIndex = 218;
@@ -694,7 +702,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.ForeColor = System.Drawing.Color.Green;
-            this.label25.Location = new System.Drawing.Point(625, 613);
+            this.label25.Location = new System.Drawing.Point(582, 613);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(68, 17);
             this.label25.TabIndex = 221;
@@ -703,7 +711,7 @@
             // d_grupo_importado
             // 
             this.d_grupo_importado.ForeColor = System.Drawing.Color.Green;
-            this.d_grupo_importado.Location = new System.Drawing.Point(722, 611);
+            this.d_grupo_importado.Location = new System.Drawing.Point(679, 611);
             this.d_grupo_importado.Name = "d_grupo_importado";
             this.d_grupo_importado.Size = new System.Drawing.Size(274, 22);
             this.d_grupo_importado.TabIndex = 222;
@@ -713,7 +721,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.ForeColor = System.Drawing.Color.Green;
-            this.label24.Location = new System.Drawing.Point(167, 613);
+            this.label24.Location = new System.Drawing.Point(124, 613);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(81, 17);
             this.label24.TabIndex = 223;
@@ -741,7 +749,7 @@
             this.mostrar_recorridos.AutoSize = true;
             this.mostrar_recorridos.Checked = true;
             this.mostrar_recorridos.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.mostrar_recorridos.Location = new System.Drawing.Point(167, 555);
+            this.mostrar_recorridos.Location = new System.Drawing.Point(124, 555);
             this.mostrar_recorridos.Name = "mostrar_recorridos";
             this.mostrar_recorridos.Size = new System.Drawing.Size(146, 21);
             this.mostrar_recorridos.TabIndex = 226;
@@ -752,7 +760,7 @@
             // d_potencia
             // 
             this.d_potencia.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_potencia.Location = new System.Drawing.Point(958, 584);
+            this.d_potencia.Location = new System.Drawing.Point(915, 584);
             this.d_potencia.Name = "d_potencia";
             this.d_potencia.Size = new System.Drawing.Size(38, 22);
             this.d_potencia.TabIndex = 228;
@@ -763,7 +771,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label27.Location = new System.Drawing.Point(760, 586);
+            this.label27.Location = new System.Drawing.Point(717, 586);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(173, 17);
             this.label27.TabIndex = 227;
@@ -772,7 +780,7 @@
             // d_numero_c
             // 
             this.d_numero_c.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_numero_c.Location = new System.Drawing.Point(576, 664);
+            this.d_numero_c.Location = new System.Drawing.Point(533, 664);
             this.d_numero_c.Name = "d_numero_c";
             this.d_numero_c.Size = new System.Drawing.Size(38, 22);
             this.d_numero_c.TabIndex = 232;
@@ -784,7 +792,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label18.Location = new System.Drawing.Point(390, 666);
+            this.label18.Location = new System.Drawing.Point(347, 666);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(131, 17);
             this.label18.TabIndex = 231;
@@ -793,7 +801,7 @@
             // d_contagio_c
             // 
             this.d_contagio_c.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_contagio_c.Location = new System.Drawing.Point(340, 664);
+            this.d_contagio_c.Location = new System.Drawing.Point(297, 664);
             this.d_contagio_c.Name = "d_contagio_c";
             this.d_contagio_c.Size = new System.Drawing.Size(38, 22);
             this.d_contagio_c.TabIndex = 230;
@@ -804,7 +812,7 @@
             // 
             this.label21.AutoSize = true;
             this.label21.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label21.Location = new System.Drawing.Point(167, 666);
+            this.label21.Location = new System.Drawing.Point(124, 666);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(161, 17);
             this.label21.TabIndex = 229;
@@ -833,7 +841,7 @@
             // d_individuos_c
             // 
             this.d_individuos_c.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_individuos_c.Location = new System.Drawing.Point(831, 664);
+            this.d_individuos_c.Location = new System.Drawing.Point(788, 664);
             this.d_individuos_c.Name = "d_individuos_c";
             this.d_individuos_c.Size = new System.Drawing.Size(38, 22);
             this.d_individuos_c.TabIndex = 236;
@@ -845,7 +853,7 @@
             // 
             this.label30.AutoSize = true;
             this.label30.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label30.Location = new System.Drawing.Point(625, 666);
+            this.label30.Location = new System.Drawing.Point(582, 666);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(186, 17);
             this.label30.TabIndex = 235;
@@ -854,7 +862,7 @@
             // linea_estado
             // 
             this.linea_estado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.linea_estado.Location = new System.Drawing.Point(12, 765);
+            this.linea_estado.Location = new System.Drawing.Point(12, 795);
             this.linea_estado.Name = "linea_estado";
             this.linea_estado.Size = new System.Drawing.Size(984, 22);
             this.linea_estado.TabIndex = 237;
@@ -866,7 +874,7 @@
             this.puntos_gordos.AutoSize = true;
             this.puntos_gordos.Checked = true;
             this.puntos_gordos.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.puntos_gordos.Location = new System.Drawing.Point(340, 555);
+            this.puntos_gordos.Location = new System.Drawing.Point(297, 555);
             this.puntos_gordos.Name = "puntos_gordos";
             this.puntos_gordos.Size = new System.Drawing.Size(122, 21);
             this.puntos_gordos.TabIndex = 238;
@@ -876,7 +884,7 @@
             // 
             // b_crea_clusters
             // 
-            this.b_crea_clusters.Location = new System.Drawing.Point(878, 661);
+            this.b_crea_clusters.Location = new System.Drawing.Point(835, 661);
             this.b_crea_clusters.Margin = new System.Windows.Forms.Padding(2);
             this.b_crea_clusters.Name = "b_crea_clusters";
             this.b_crea_clusters.Size = new System.Drawing.Size(119, 29);
@@ -888,16 +896,17 @@
             // d_dias_exportar
             // 
             this.d_dias_exportar.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_dias_exportar.Location = new System.Drawing.Point(225, 735);
+            this.d_dias_exportar.Location = new System.Drawing.Point(225, 765);
             this.d_dias_exportar.Name = "d_dias_exportar";
             this.d_dias_exportar.Size = new System.Drawing.Size(708, 22);
             this.d_dias_exportar.TabIndex = 241;
+            this.d_dias_exportar.TextChanged += new System.EventHandler(this.CasoCambiado);
             // 
             // label31
             // 
             this.label31.AutoSize = true;
             this.label31.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label31.Location = new System.Drawing.Point(12, 737);
+            this.label31.Location = new System.Drawing.Point(12, 767);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(198, 17);
             this.label31.TabIndex = 240;
@@ -905,7 +914,7 @@
             // 
             // v_dias_exportar
             // 
-            this.v_dias_exportar.Location = new System.Drawing.Point(952, 737);
+            this.v_dias_exportar.Location = new System.Drawing.Point(952, 767);
             this.v_dias_exportar.Name = "v_dias_exportar";
             this.v_dias_exportar.Size = new System.Drawing.Size(33, 17);
             this.v_dias_exportar.TabIndex = 242;
@@ -960,7 +969,7 @@
             // d_inmunes
             // 
             this.d_inmunes.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.d_inmunes.Location = new System.Drawing.Point(340, 584);
+            this.d_inmunes.Location = new System.Drawing.Point(297, 584);
             this.d_inmunes.Name = "d_inmunes";
             this.d_inmunes.Size = new System.Drawing.Size(38, 22);
             this.d_inmunes.TabIndex = 249;
@@ -972,7 +981,7 @@
             // 
             this.label32.AutoSize = true;
             this.label32.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label32.Location = new System.Drawing.Point(167, 586);
+            this.label32.Location = new System.Drawing.Point(124, 586);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(115, 17);
             this.label32.TabIndex = 248;
@@ -1083,11 +1092,100 @@
             this.filtro_muertos.UseVisualStyleBackColor = true;
             this.filtro_muertos.Visible = false;
             // 
+            // d_incubacion
+            // 
+            this.d_incubacion.Location = new System.Drawing.Point(487, 691);
+            this.d_incubacion.Name = "d_incubacion";
+            this.d_incubacion.Size = new System.Drawing.Size(38, 22);
+            this.d_incubacion.TabIndex = 261;
+            this.d_incubacion.Text = "0";
+            this.d_incubacion.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.d_incubacion.TextChanged += new System.EventHandler(this.CasoCambiado);
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(347, 693);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(76, 17);
+            this.label38.TabIndex = 260;
+            this.label38.Text = "Incubación";
+            // 
+            // d_hospitalizacion
+            // 
+            this.d_hospitalizacion.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.d_hospitalizacion.Location = new System.Drawing.Point(738, 691);
+            this.d_hospitalizacion.Name = "d_hospitalizacion";
+            this.d_hospitalizacion.Size = new System.Drawing.Size(38, 22);
+            this.d_hospitalizacion.TabIndex = 263;
+            this.d_hospitalizacion.Text = "1";
+            this.d_hospitalizacion.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.d_hospitalizacion.TextChanged += new System.EventHandler(this.CasoCambiado);
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label39.Location = new System.Drawing.Point(582, 693);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(117, 17);
+            this.label39.TabIndex = 262;
+            this.label39.Text = "% hospitalización";
+            // 
+            // d_fpc_enfermo
+            // 
+            this.d_fpc_enfermo.Location = new System.Drawing.Point(533, 691);
+            this.d_fpc_enfermo.Name = "d_fpc_enfermo";
+            this.d_fpc_enfermo.Size = new System.Drawing.Size(38, 22);
+            this.d_fpc_enfermo.TabIndex = 264;
+            this.d_fpc_enfermo.Text = "0";
+            this.d_fpc_enfermo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.d_fpc_enfermo.TextChanged += new System.EventHandler(this.CasoCambiado);
+            // 
+            // d_fpc_hospitalizado
+            // 
+            this.d_fpc_hospitalizado.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.d_fpc_hospitalizado.Location = new System.Drawing.Point(788, 691);
+            this.d_fpc_hospitalizado.Name = "d_fpc_hospitalizado";
+            this.d_fpc_hospitalizado.Size = new System.Drawing.Size(38, 22);
+            this.d_fpc_hospitalizado.TabIndex = 265;
+            this.d_fpc_hospitalizado.Text = "1";
+            this.d_fpc_hospitalizado.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.d_fpc_hospitalizado.TextChanged += new System.EventHandler(this.CasoCambiado);
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(12, 107);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(71, 17);
+            this.label40.TabIndex = 267;
+            this.label40.Text = "Individuos";
+            // 
+            // senda_individuos
+            // 
+            this.senda_individuos.BackColor = System.Drawing.Color.White;
+            this.senda_individuos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.senda_individuos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.senda_individuos.Location = new System.Drawing.Point(139, 107);
+            this.senda_individuos.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.senda_individuos.Name = "senda_individuos";
+            this.senda_individuos.Size = new System.Drawing.Size(480, 24);
+            this.senda_individuos.TabIndex = 266;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1002, 793);
+            this.ClientSize = new System.Drawing.Size(1002, 833);
+            this.Controls.Add(this.label40);
+            this.Controls.Add(this.senda_individuos);
+            this.Controls.Add(this.d_fpc_hospitalizado);
+            this.Controls.Add(this.d_fpc_enfermo);
+            this.Controls.Add(this.d_hospitalizacion);
+            this.Controls.Add(this.label39);
+            this.Controls.Add(this.d_incubacion);
+            this.Controls.Add(this.label38);
             this.Controls.Add(this.filtro_muertos);
             this.Controls.Add(this.filtro_recaida);
             this.Controls.Add(this.filtro_curados);
@@ -1135,7 +1233,7 @@
             this.Controls.Add(this.label22);
             this.Controls.Add(this.d_recontagio);
             this.Controls.Add(this.label20);
-            this.Controls.Add(this.d_latencia);
+            this.Controls.Add(this.d_carencia);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.v_r0);
@@ -1147,7 +1245,7 @@
             this.Controls.Add(this.v_max_pasos);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.b_exporta_individuos);
-            this.Controls.Add(this.b_importa_individuos);
+            this.Controls.Add(this.sel_individuos);
             this.Controls.Add(this.senda_caso);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.v_recorridos);
@@ -1229,7 +1327,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label v_recorridos;
         private System.Windows.Forms.Label senda_caso;
-        private System.Windows.Forms.Button b_importa_individuos;
+        private System.Windows.Forms.Button sel_individuos;
         private System.Windows.Forms.Button b_exporta_individuos;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label v_max_pasos;
@@ -1240,7 +1338,7 @@
         public System.Windows.Forms.CheckBox salvar_imagenes;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label v_r0;
-        private System.Windows.Forms.TextBox d_latencia;
+        private System.Windows.Forms.TextBox d_carencia;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox d_recontagio;
         private System.Windows.Forms.Label label20;
@@ -1289,6 +1387,14 @@
         private System.Windows.Forms.CheckBox filtro_curados;
         private System.Windows.Forms.CheckBox filtro_recaida;
         private System.Windows.Forms.CheckBox filtro_muertos;
+        private System.Windows.Forms.TextBox d_incubacion;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.TextBox d_hospitalizacion;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.TextBox d_fpc_enfermo;
+        private System.Windows.Forms.TextBox d_fpc_hospitalizado;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label senda_individuos;
     }
 }
 
