@@ -1,0 +1,123 @@
+01/04/2020 17:27:01
+
+Situación inicial
+
+Cluster GID Grupo                Individuos     Sanos  Infectados    Curados Desinmuniz    Muertos
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ----------
+      1   1 menor                        60         60          0          0          0          0
+      2   2 adulto                      100          0         95          5          0          0
+      3   2 adulto                      100          1         99          0          0          0
+      4   2 adulto                      100          0         97          3          0          0
+      5   2 adulto                      100          0         97          3          0          0
+      6   2 adulto                      100          0         79         21          0          0
+      7   2 adulto                      100          0        100          0          0          0
+      8   4 mayor                        40          0         29          9          0          2
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ----------
+                                        700         61        596         41          0          2
+
+Situación final
+
+                                                       -------------- Dentro y fuera ------------- -------- Dentro -----      %
+Cluster GID Grupo                Individuos      Sanos Infectados    Curados Desinmuniz    Muertos   Intentos Infectados   Aciertos
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+      1   1 menor                        60         60          0          0          0          0          0          0       0,00
+      2   2 adulto                      100          0          0        100          0          0          0          0       0,00
+      3   2 adulto                      100          0         35         65          0          0         65          1       1,54
+      4   2 adulto                      100          0          0        100          0          0          0          0       0,00
+      5   2 adulto                      100          0          0        100          0          0          0          0       0,00
+      6   2 adulto                      100          0          0        100          0          0          0          0       0,00
+      7   2 adulto                      100          0          0         99          0          1          0          0       0,00
+      8   4 mayor                        40          0          0         32          0          8          0          0       0,00
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+                                        700         60         35        596          0          9         65          1       1,54
+
+Grupo   0 nene
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número intentos fin infección                     59
+Número finales de infección                        5       8,47
+Número finales curacion                            5     100,00
+Número finales muerte                              0       0,00
+Total infecciones                                  1
+Total infecciones por curados                      1
+Total infecciones por muertos                      0
+Total infectadores curados                         7
+Total infectadores muertos                         0
+Máximo de contagios por 1 individuo                1
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,1429
+Falso (R0) muertos                            0,0000
+
+Grupo   1 menor
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número intentos fin infección                     31
+Número finales de infección                        4      12,90
+Número finales curacion                            4     100,00
+Número finales muerte                              0       0,00
+Total infecciones                                  3
+Total infecciones por curados                      3
+Total infecciones por muertos                      0
+Total infectadores curados                         9
+Total infectadores muertos                         0
+Máximo de contagios por 1 individuo                1
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,3333
+Falso (R0) muertos                            0,0000
+
+Grupo   2 adulto
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número intentos fin infección                 49.987
+Número finales de infección                    3.183       6,37
+Número finales curacion                        3.169      99,56
+Número finales muerte                             14       0,44
+Total infecciones                              4.248
+Total infecciones por curados                  4.129
+Total infecciones por muertos                     41
+Total infectadores curados                     3.533
+Total infectadores muertos                        16
+Máximo de contagios por 1 individuo               24
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            1,1687
+Falso (R0) muertos                            2,5625
+
+Grupo   3 jubilado
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número intentos fin infección                  4.687
+Número finales de infección                      238       5,08
+Número finales curacion                          232      97,48
+Número finales muerte                              6       2,52
+Total infecciones                                172
+Total infecciones por curados                    157
+Total infecciones por muertos                      7
+Total infectadores curados                       243
+Total infectadores muertos                         8
+Máximo de contagios por 1 individuo               15
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,6461
+Falso (R0) muertos                            0,8750
+
+Grupo   4 mayor
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número intentos fin infección                 12.315
+Número finales de infección                      575       4,67
+Número finales curacion                          469      81,57
+Número finales muerte                            106      18,43
+Total infecciones                                482
+Total infecciones por curados                    405
+Total infecciones por muertos                     53
+Total infectadores curados                       511
+Total infectadores muertos                       110
+Máximo de contagios por 1 individuo               14
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,7926
+Falso (R0) muertos                            0,4818
+
