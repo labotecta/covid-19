@@ -3,7 +3,6 @@ C:\Contagio\Contagio\bin\Debug\Contagio.exe.config
 C:\Contagio\Contagio\bin\Debug\Contagio.exe.manifest
 C:\Contagio\Contagio\bin\Debug\Contagio.application
 C:\Contagio\Contagio\bin\Debug\Contagio.pdb
-C:\Contagio\Contagio\obj\Debug\Contagio.csprojAssemblyReference.cache
 C:\Contagio\Contagio\obj\Debug\Contagio.Form1.resources
 C:\Contagio\Contagio\obj\Debug\Contagio.Form2.resources
 C:\Contagio\Contagio\obj\Debug\Contagio.Properties.Resources.resources
@@ -13,3 +12,4 @@ C:\Contagio\Contagio\obj\Debug\Contagio.exe.manifest
 C:\Contagio\Contagio\obj\Debug\Contagio.application
 C:\Contagio\Contagio\obj\Debug\Contagio.exe
 C:\Contagio\Contagio\obj\Debug\Contagio.pdb
+C:\Contagio\Contagio\obj\Debug\Contagio.csprojAssemblyReference.cache

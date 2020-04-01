@@ -230,8 +230,8 @@ namespace Contagio
         private int tabla_alto_fila;
         private int tabla_alto_cabecera;
 
-        private const int MAX_INDIVIDUOS_PARA_TABLA = 75001;
-        private const int MAX_VECINOS_PARA_TABLA = 601;
+        private const int MAX_INDIVIDUOS_PARA_TABLA = 100001;
+        private const int MAX_VECINOS_PARA_TABLA = 501;
         private readonly int[] nvecinas = new int[MAX_INDIVIDUOS_PARA_TABLA + 1];
         private readonly int[,] vecinas = new int[MAX_INDIVIDUOS_PARA_TABLA + 1, MAX_VECINOS_PARA_TABLA + 1];
         public Form1()
