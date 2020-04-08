@@ -1,0 +1,15 @@
+C:\Contagio\Contagio\bin\Release\Contagio.exe.config
+C:\Contagio\Contagio\bin\Release\Contagio.exe
+C:\Contagio\Contagio\bin\Release\Contagio.pdb
+C:\Contagio\Contagio\obj\Release\Contagio.Form1.resources
+C:\Contagio\Contagio\obj\Release\Contagio.Form2.resources
+C:\Contagio\Contagio\obj\Release\Contagio.Properties.Resources.resources
+C:\Contagio\Contagio\obj\Release\Contagio.csproj.GenerateResource.cache
+C:\Contagio\Contagio\obj\Release\Contagio.exe
+C:\Contagio\Contagio\obj\Release\Contagio.pdb
+C:\Contagio\Contagio\obj\Release\Contagio.csproj.CoreCompileInputs.cache
+C:\Contagio\Contagio\bin\Release\Contagio.exe.manifest
+C:\Contagio\Contagio\bin\Release\Contagio.application
+C:\Contagio\Contagio\obj\Release\Contagio.exe.manifest
+C:\Contagio\Contagio\obj\Release\Contagio.application
+C:\Contagio\Contagio\obj\Release\Contagio.csprojAssemblyReference.cache

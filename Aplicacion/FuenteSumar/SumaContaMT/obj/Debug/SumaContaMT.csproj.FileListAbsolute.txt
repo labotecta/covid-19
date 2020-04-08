@@ -1,0 +1,14 @@
+C:\Contagio\SumaContaMT\SumaContaMT\bin\Debug\SumaContaMT.exe.config
+C:\Contagio\SumaContaMT\SumaContaMT\bin\Debug\SumaContaMT.exe
+C:\Contagio\SumaContaMT\SumaContaMT\bin\Debug\SumaContaMT.pdb
+C:\Contagio\SumaContaMT\SumaContaMT\obj\Debug\SumaContaMT.Form1.resources
+C:\Contagio\SumaContaMT\SumaContaMT\obj\Debug\SumaContaMT.Properties.Resources.resources
+C:\Contagio\SumaContaMT\SumaContaMT\obj\Debug\SumaContaMT.csproj.GenerateResource.cache
+C:\Contagio\SumaContaMT\SumaContaMT\obj\Debug\SumaContaMT.csproj.CoreCompileInputs.cache
+C:\Contagio\SumaContaMT\SumaContaMT\obj\Debug\SumaContaMT.exe
+C:\Contagio\SumaContaMT\SumaContaMT\obj\Debug\SumaContaMT.pdb
+C:\Contagio\SumaContaMT\SumaContaMT\bin\Debug\SumaContaMT.exe.manifest
+C:\Contagio\SumaContaMT\SumaContaMT\bin\Debug\SumaContaMT.application
+C:\Contagio\SumaContaMT\SumaContaMT\obj\Debug\SumaContaMT.exe.manifest
+C:\Contagio\SumaContaMT\SumaContaMT\obj\Debug\SumaContaMT.application
+C:\Contagio\SumaContaMT\SumaContaMT\obj\Debug\SumaContaMT.csprojAssemblyReference.cache
