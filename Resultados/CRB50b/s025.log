@@ -1,0 +1,68 @@
+--------------------------------------------------------------------------------------------------
+Simulador de contagios. 2.0.2.4
+06/04/2020 13:48:10
+--------------------------------------------------------------------------------------------------
+Prefijo CRB50b
+Número de hilos                              30
+Potencia para fin de infección             3,00
+
+Probabilidad base de contagio              4,00 %
+Probabilidad contagio cluster              5,00 %
+Probabilidad base de REcontagio            0,00 %
+Días mínimos de inmunidad                     5
+Días de carencia para contagiar               3
+Días de incubación                            7
+Probabilidad de enfermar                 100,00 %
+Factor probab. contagio enfermo           25,00 %
+Probabilidad de hospitalización           10,00 %
+Factor prob. contagio hospitalizad         0,00 %
+Densidad crítica de vecinos infect         0,00 %
+Probabilidad contagio ambiental            0,00 %
+
+Número de individuos                     50.000
+Radio                                     2.694
+Número de focos iniciales                    10
+Número de inmunes iniciales                   0
+Número de focos a importar                    0 cada 0 días, del grupo adulto
+Radio de contacto                             1
+Longitud media 10 pasos                       4
+
+Número clusters objetivo                    125
+Número clusters generados                   123 con        9.960 individuos,            2 infectados de inicio
+Factor individuos por cluster              1,00
+
+                        - Edad- % Factor B    Días         %      Num.Pasos      %                          %      Individuos 
+Grupo            Género Min Max   Contagio  Duración    Curación   Min   Max Individuos   Individuos     clusters    cluster  
+---------------- ------ --- --- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+nene                  2   0   4       10,0       30,0       99,3    70    90       4,00        2.000          4,0           40
+menor                 2   5  19        5,0       30,0      100,0    80   110      15,00        7.500         15,0           60
+adulto                2  20  64       40,0       30,0       99,4    80   120      62,00       31.000         62,0          100
+jubilado              2  65  69     1000,0       30,0       96,8    70    90       5,00        2.500          5,0           50
+mayor                 2  70 150      800,0       30,0       83,5    60    70      14,00        7.000         14,0           40
+---------------- ------ --- --- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+
+Valores al final del día
+                                                                       Recorrido  Contactos Media días            ------ Afectados ---- ----------  Clusters -----------
+Día     Sanos  Infectados Importados    Curados Desinmuniz    Muertos     Ida     críticos  infectados         R0   Cercania   Clusters Infectados    Curados    Muertos   Enfermos Hospitaliz  Ambiental
+--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+  1      49990         10          0          0          0          0      56,36       0,00        0,0       0,00          0          0          0          0          0          0          0          0
+  2      49990         10          0          0          0          0      56,44       0,00        0,0       0,00          0          0          0          0          0          0          0          0
+  3      49990         10          0          0          0          0      56,42       0,00        0,0       0,00          0          0          0          0          0          0          0          0
+  4      49985         15          0          0          0          0      56,40       0,84        0,0       0,00          1          4          4          0          0          0          0          0
+--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+Día     Sanos  Infectados Importados    Curados Desinmuniz    Muertos     Ida     críticos  infectados         R0   Cercania   Clusters Infectados    Curados    Muertos   Enfermos Hospitaliz  Ambiental
+
+Infectados importados                              0
+
+Total pasos                               23.006.040
+Total recorridos                             235.191
+Total distancia recorrida                 13.088.730
+Contactos de riesgo                               60
+Acumulador infectados                             45
+
+Total días infectados (curados)                    0       0,00
+Total días infectados (muertos)                    0       0,00
+Total días infectados                              0       0,00
+
+Cancelado. Simulados 4 días. 1582,6 s
+
