@@ -6,4 +6,4 @@ La carpeta Casos contiene los párametros para cada uno de los casos simulados e
 
 En la carpeta Documentos se encuentra la última versión del artículo principal sobre este proyecto.
 
-# Las previsiones se mantienen estables: Faltan 6 días para el pico al que llegaremos con 190.000 afectados (casos) y 150.000 contagiados
+# Las previsiones son las mismas de ayer lo que significa que el pico se retrasa un día: Faltan 6 días para el pico al que llegaremos con 190.000 afectados (casos) y 150.000 contagiados
