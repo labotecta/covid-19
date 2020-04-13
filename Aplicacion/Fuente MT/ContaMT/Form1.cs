@@ -11,14 +11,13 @@ namespace Contagio
     public partial class Form1 : Form
     {
         private readonly char[] ESPECIAL = { ':', '/', '\\' };
-        public string TITULO;
-        public string U_SALIDAS;
-        public string PREFIJO;
+        private readonly string CARPETA_SALIDAS = "Contagio";
+        private string CARPETA_CASO;
+        private string U_SALIDAS;
+        private string CARPETA;
         private int NUM_HILOS;
         private int SEMILLA_POBLACION;
         private int SEMILLA_SIMULACION;
-        public string CARPETA_SALIDAS = "Contagio";
-        private string CARPETA_CASO;
         private string F_CASO;
         private string F_CONDICIONES;
         private string F_GRUPOS;
@@ -26,6 +25,8 @@ namespace Contagio
         private long INDIVIDUOS;
         private int RADIO;
         private double PROB_CONTAGIO;
+        private double PROB_CONTAGIO_C;
+        private double PROB_CONTAGIO_Cd2;
         private double PROB_RECONTAGIO;
         private int MIN_INMUNIDAD = 0;
         private int CARENCIA_CONTAGIAR;
@@ -35,25 +36,37 @@ namespace Contagio
         private double PROB_HOSPITALIZACION;
         private double F_PROB_HOSPITALIZADO;
         private double DENSIDAD_VECINOS;
-        private double PROB_AMBIENTAL;
+        private double PROB_INDIRECTA;
+        private int N_FOCOS_INICIALES;
         private int N_FOCOS_IMPORTADOS;
         private int DIAS_FOCOS_IMPORTADOS;
         private int[] GRUPO_IMPORTADO;
         private int N_INMUNES_INICIALES;
-        private int N_FOCOS_INICIALES;
-        public int CONTACTO;
+        private int CONTACTO;
         private int CONTACTO2;
-        public int LON_10PASOS;
+        private int LON_10PASOS;
         private double LON_PASO;
         private double LON_PASO2;
+        private int NUM_DIAS_EXPORTAR;
+        private int[] DIAS_EXPORTAR;
+        private int[] PROX_DIA_EXPORTAR;
+        private int[] NUMERO_CLUSTERS_DATO;
+        private int[] NUMERO_CLUSTERS;
         private int DIAS;
-        private double PROB_CONTAGIO_C;
-        private double PROB_CONTAGIO_Cd2;
+        private double POTENCIA;
+        private const int MAX_CONVALECENCIA = 200;
+        private double[,] PROB_FIN_INFECCION;   // grupo, dias
+
+        private const int MAX_GRUPOS = 512;
+        private long[,] total_pasos_g;
+        private long[,] total_recorridos_g;
+        private double[,] total_distancias_ida_g;
+        private long[,] total_contactos_de_riesgo_g;
+        private long[,] total_dias_infectados_curados_g;
+        private long[,] total_dias_infectados_muertos_g;
 
         private const int MAX_INDIVIDUOS_CLUSTER = 1000;
         private double FACTOR_INDIVIDUOS_CLUSTER;
-        private int[] NUMERO_CLUSTERS_DATO;
-        private int[] NUMERO_CLUSTERS;
         private int[] clusters_grupo;
         private List<Individuo>[,] individuos_cluster;
         private long[,] intentos_cluster;
@@ -65,21 +78,24 @@ namespace Contagio
         private long[] curados_total_clusters;
         private long[] muertos_total_clusters;
 
-        private int num_dias_exportar;
-        private int[] prox_dia_exportar;
-        private int[] dias_exportar;
-        private long[] sanos;
-        public long[] desinmunizados;
-        public long[] infectados;
-        private long[] enfermos;
-        private long[] hospitalizados;
-        public long[] importados;
-        public long[] curados;
-        public long[] muertos;
+        private const int MAX_TIPOS = 32;
+        private int NUM_TIPOS;
+        private long[,] sanos;
+        private long[,] desinmunizados;
+        private long[,] infectados;
+        private long[,] enfermos;
+        private long[,] hospitalizados;
+        private long[,] importados;
+        private long[,] curados;
+        private long[,] muertos;
+        private long[,] infectados_indirectos;
         private long[] acumulador_infectados;
         private long[] contagios_cercania;
 
-        private const int MAX_GRUPOS = 512;
+        private long[,] infectados_graves;
+        private long[,] curados_graves;
+        private long[,] muertos_graves;
+
         private int[] max_pasos_dia;
         private long[] total_pasos;
         private long[] total_recorridos;
@@ -87,28 +103,18 @@ namespace Contagio
         private long[] total_contactos_de_riesgo;
         private long[] total_dias_infectados_curados;
         private long[] total_dias_infectados_muertos;
-        private long[,] total_pasos_g;
-        private long[,] total_recorridos_g;
-        private double[,] total_distancias_ida_g;
-        private long[,] total_contactos_de_riesgo_g;
-        private long[,] total_dias_infectados_curados_g;
-        private long[,] total_dias_infectados_muertos_g;
 
         private long[,] n_sorteos_fin_infeccion;
         private long[,] n_fin_infeccion;
         private long[,,] res_fin_infeccion;
         private long[,] infectados_grupo;
-        private long[] infectados_ambientales;
-        public bool cancelar;
+        private bool cancelar;
         /*
          * y = a * x ^ p entre 0 y n
          * a = 1 / (n ^ p)
          */
-        private double POTENCIA;
-        private const int MAX_CONVALECENCIA = 200;
-        private double[,] PROB_FIN_INFECCION;   // grupo, dias
         private bool ignorar_cambio;
-        public class Condicion
+        private class Condicion
         {
             public int ID;
             public int dias;
@@ -126,13 +132,14 @@ namespace Contagio
         private int[] prox_condiciones;
         private int[] cont_condiciones;
 
-        public class Grupo
+        private class Grupo
         {
             public int ID;
             public string grupo;
-            public int genero;
+            public int tipo;
             public int edad_min;
             public int edad_max;
+            public double gravedad;
             public double prob_contagio;
             public int duracion_infeccion;
             public double prob_curacion;
@@ -141,13 +148,14 @@ namespace Contagio
             public double fraccion_poblacion;
             public double fraccion_clusters;
             public int individuos_c;
-            public Grupo(int ID, string grupo, int genero, int edad_min, int edad_max, double prob_contagio, int duracion_infeccion, double prob_curacion, int pasos_min, int pasos_max, double fraccion_poblacion, double fraccion_clusters, int individuos_c)
+            public Grupo(int ID, string grupo, int tipo, int edad_min, int edad_max, double gravedad, double prob_contagio, int duracion_infeccion, double prob_curacion, int pasos_min, int pasos_max, double fraccion_poblacion, double fraccion_clusters, int individuos_c)
             {
                 this.ID = ID;
                 this.grupo = grupo;
-                this.genero = genero;
+                this.tipo = tipo;
                 this.edad_min = edad_min;
                 this.edad_max = edad_max;
+                this.gravedad = gravedad;
                 this.prob_contagio = prob_contagio;
                 this.duracion_infeccion = duracion_infeccion;
                 this.prob_curacion = prob_curacion;
@@ -161,9 +169,10 @@ namespace Contagio
         private List<Grupo> grupos;
         private List<Grupo>[] grupos_hilo;
         private long[,] indi_grupos;
-        public class Individuo
+        private class Individuo
         {
             public int ID;
+            public int tipo;
             public int grupo_ID;
             public string grupo;
             public double xi;
@@ -198,9 +207,11 @@ namespace Contagio
             public bool contagio_en_cluster;
             public bool enfermo;
             public bool hospitalizado;
-            public Individuo(int ID, int grupo_ID, string grupo, double xi, double yi, int estado)
+            public bool grave;
+            public Individuo(int ID, int tipo, int grupo_ID, string grupo, double xi, double yi, int estado)
             {
                 this.ID = ID;
+                this.tipo = tipo;
                 this.grupo_ID = grupo_ID;
                 this.grupo = grupo;
                 this.xi = xi;
@@ -224,9 +235,10 @@ namespace Contagio
                 enfermo = false;
                 hospitalizado = false;
             }
-            public Individuo(int ID, int grupo_ID, string grupo, double xi, double yi, int estado, int dias_infectado, int dias_curado, int indi_enfermados, int cluster, bool contagio_en_cluster, bool enfermo, bool hospitalizado)
+            public Individuo(int ID, int tipo, int grupo_ID, string grupo, double xi, double yi, int estado, int dias_infectado, int dias_curado, int indi_enfermados, int cluster, bool contagio_en_cluster, bool enfermo, bool hospitalizado, bool grave)
             {
                 this.ID = ID;
+                this.tipo = tipo;
                 this.grupo_ID = grupo_ID;
                 this.grupo = grupo;
                 this.xi = xi;
@@ -249,32 +261,36 @@ namespace Contagio
                 this.contagio_en_cluster = contagio_en_cluster;
                 this.enfermo = enfermo;
                 this.hospitalizado = hospitalizado;
+                this.grave = grave;
             }
         }
-        public List<Individuo>[] individuos;
-        public List<Individuo> individuos_base;
-        public class Resultado
+        private List<Individuo>[] individuos;
+        private List<Individuo> individuos_base;
+        private class Resultado
         {
-            public int dia;
-            public long sanos;
-            public long infectados;
-            public long importados;
-            public long curados;
-            public long desinmunizados;
-            public long muertos;
-            public double recorrido_individuo_activo;
-            public double contactos_de_riesgo;
-            public double media_dias_infectado;
-            public double R0;
-            public long contagios_cercania;
-            public long contagios_clusters;
-            public long infectados_total_clusters;
-            public long curados_total_clusters;
-            public long muertos_total_clusters;
-            public long enfermos;
-            public long hospitalizados;
-            public long infectados_ambientales;
-
+            public int r_dia;
+            public long r_sanos;
+            public long r_infectados;
+            public long r_importados;
+            public long r_curados;
+            public long r_desinmunizados;
+            public long r_muertos;
+            public double r_recorrido_individuo_activo;
+            public double r_contactos_de_riesgo;
+            public double r_media_dias_infectado;
+            public double r_R0;
+            public long r_contagios_cercania;
+            public long r_contagios_clusters;
+            public long r_infectados_total_clusters;
+            public long r_curados_total_clusters;
+            public long r_muertos_total_clusters;
+            public long r_infectados_indirectos;
+            public long r_enfermos;
+            public long r_hospitalizados;
+            public long r_infectados_graves;
+            public long r_curados_graves;
+            public long r_muertos_graves;
+            public double r_R0_graves;
             public Resultado(
                 int dia,
                 long sanos,
@@ -292,51 +308,88 @@ namespace Contagio
                 long infectados_total_clusters,
                 long curados_total_clusters,
                 long muertos_total_clusters,
+                long infectados_indirectos,
                 long enfermos,
                 long hospitalizados,
-                long infectados_ambientales)
+                long infectados_graves,
+                long curados_graves,
+                long muertos_graves,
+                double R0_graves)
             {
-                this.dia = dia;
-                this.sanos = sanos;
-                this.infectados = infectados;
-                this.importados = importados;
-                this.curados = curados;
-                this.desinmunizados = desinmunizados;
-                this.muertos = muertos;
-                this.recorrido_individuo_activo = recorrido_individuo_activo;
-                this.contactos_de_riesgo = contactos_de_riesgo;
-                this.media_dias_infectado = media_dias_infectado;
-                this.R0 = R0;
-                this.contagios_cercania = contagios_cercania;
-                this.contagios_clusters = contagios_clusters;
-                this.infectados_total_clusters = infectados_total_clusters;
-                this.curados_total_clusters = curados_total_clusters;
-                this.muertos_total_clusters = muertos_total_clusters;
-                this.enfermos = enfermos;
-                this.hospitalizados = hospitalizados;
-                this.infectados_ambientales = infectados_ambientales;
+                r_dia = dia;
+                r_sanos = sanos;
+                r_infectados = infectados;
+                r_importados = importados;
+                r_curados = curados;
+                r_desinmunizados = desinmunizados;
+                r_muertos = muertos;
+                r_recorrido_individuo_activo = recorrido_individuo_activo;
+                r_contactos_de_riesgo = contactos_de_riesgo;
+                r_media_dias_infectado = media_dias_infectado;
+                r_R0 = R0;
+                r_contagios_cercania = contagios_cercania;
+                r_contagios_clusters = contagios_clusters;
+                r_infectados_total_clusters = infectados_total_clusters;
+                r_curados_total_clusters = curados_total_clusters;
+                r_muertos_total_clusters = muertos_total_clusters;
+                r_infectados_indirectos = infectados_indirectos;
+                r_enfermos = enfermos;
+                r_hospitalizados = hospitalizados;
+                r_infectados_graves = infectados_graves;
+                r_curados_graves = curados_graves;
+                r_muertos_graves = muertos_graves;
+                r_R0_graves = R0_graves;
             }
         }
-        public List<Resultado>[] resultados;
-
-        private int tabla_alto_fila;
-        private int tabla_alto_cabecera;
-
+        private List<Resultado>[] resultados;
+        private class ResTipo
+        {
+            public long r_sanos;
+            public long r_infectados;
+            public long r_importados;
+            public long r_curados;
+            public long r_desinmunizados;
+            public long r_muertos;
+            public long r_infectados_indirectos;
+            public long r_enfermos;
+            public long r_hospitalizados;
+            public ResTipo(
+                long sanos,
+                long infectados,
+                long importados,
+                long curados,
+                long desinmunizados,
+                long muertos,
+                long infectados_indirectos,
+                long enfermos,
+                long hospitalizados)
+            {
+                r_sanos = sanos;
+                r_infectados = infectados;
+                r_importados = importados;
+                r_curados = curados;
+                r_desinmunizados = desinmunizados;
+                r_muertos = muertos;
+                r_infectados_indirectos = infectados_indirectos;
+                r_enfermos = enfermos;
+                r_hospitalizados = hospitalizados;
+            }
+        }
+        private List<ResTipo>[,] restipos;
         private const int MAX_INDIVIDUOS_PARA_TABLA = 100001;
         private const int MAX_VECINOS_PARA_TABLA = 401;
         private int[,] nvecinas;
         private int[,,] vecinas;
 
-        private const int MAX_HILOS = 50;
         private readonly object sync = new object();
         private DateTime tiempo_inicio;
-        private readonly Thread[] hiloSimulacion = new Thread[MAX_HILOS];
+        private Thread[] hiloSimulacion;
+        private int[] hiloDia;
+        private Random[] hiloAzar;
         /*
          *  0 Activo
          *  1 Terminado
          */
-        private int[] hiloDia;
-        private Random[] hiloAzar;
         private int[] hiloEstado;
         private delegate void DelegadoActualizaEstadisticas(int hilo, int dia);
         private DelegadoActualizaEstadisticas delegadoActualizaEstadisticas = null;
@@ -354,16 +407,13 @@ namespace Contagio
             StartPosition = FormStartPosition.Manual;
             Left = 0;
             Top = 0;
-            Text = TITULO = string.Format("Simulador de contagios [Paralelo] {0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            Text = string.Format("Simulador de contagios [Paralelo] {0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Desactiva(true);
             b_cancelar.Enabled = false;
             Show();
             linea_estado.Text = "Espera por favor ...";
             Oculta(true);
             Application.DoEvents();
-            tabla_alto_fila = tablaGrupos.RowTemplate.Height;
-            tabla_alto_cabecera = tablaGrupos.ColumnHeadersHeight;
-            if (tabla_alto_cabecera <= tabla_alto_fila) tabla_alto_cabecera = tabla_alto_fila + 1;
             IniciaTablaCondiciones(tablaCondiciones);
             IniciaTablaGrupos(tablaGrupos);
             U_SALIDAS = Properties.Settings.Default.u_salidas;
@@ -435,7 +485,7 @@ namespace Contagio
             d_fpc_enfermo.Enabled = !que;
             d_hospitalizacion.Enabled = !que;
             d_densidad.Enabled = !que;
-            d_ambiental.Enabled = !que;
+            d_indirecta.Enabled = !que;
             d_fpc_hospitalizado.Enabled = !que;
             sel_individuos.Enabled = !que;
             d_focos.Enabled = !que;
@@ -453,6 +503,8 @@ namespace Contagio
             b_condicion_mas.Enabled = !que;
             b_condicion_menos.Enabled = !que;
             b_salva_condiciones.Enabled = !que;
+            b_sube.Enabled = !que;
+            b_baja.Enabled = !que;
         }
         private void Oculta(bool que)
         {
@@ -479,7 +531,7 @@ namespace Contagio
             d_hospitalizacion.Visible = !que;
             d_fpc_hospitalizado.Visible = !que;
             d_densidad.Enabled = !que;
-            d_ambiental.Enabled = !que;
+            d_indirecta.Enabled = !que;
             d_carencia.Visible = !que;
             sel_individuos.Visible = !que;
             d_focos.Visible = !que;
@@ -497,6 +549,8 @@ namespace Contagio
             b_condicion_mas.Visible = !que;
             b_condicion_menos.Visible = !que;
             b_salva_condiciones.Visible = !que;
+            b_sube.Visible = !que;
+            b_baja.Visible = !que;
         }
         private string FicheroEscritura(string fichero, string filtro)
         {
@@ -585,7 +639,7 @@ namespace Contagio
                     U_SALIDAS = "C";
                 }
                 selunidad.SelectedItem = U_SALIDAS;
-                prefijo.Text = PREFIJO = sr.ReadLine();
+                prefijo.Text = CARPETA = sr.ReadLine();
                 d_hilos.Text = sr.ReadLine();
                 semilla_poblacion.Text = sr.ReadLine();
                 semilla_simulacion.Text = sr.ReadLine();
@@ -622,7 +676,7 @@ namespace Contagio
                 d_hospitalizacion.Text = sr.ReadLine();
                 d_fpc_hospitalizado.Text = sr.ReadLine();
                 d_densidad.Text = sr.ReadLine();
-                d_ambiental.Text = sr.ReadLine();
+                d_indirecta.Text = sr.ReadLine();
                 d_focos.Text = sr.ReadLine();
                 d_inmunes.Text = sr.ReadLine();
                 d_importados.Text = sr.ReadLine();
@@ -744,7 +798,7 @@ namespace Contagio
                     sw.WriteLine(d_hospitalizacion.Text);
                     sw.WriteLine(d_fpc_hospitalizado.Text);
                     sw.WriteLine(d_densidad.Text);
-                    sw.WriteLine(d_ambiental.Text);
+                    sw.WriteLine(d_indirecta.Text);
                     sw.WriteLine(d_focos.Text);
                     sw.WriteLine(d_inmunes.Text);
                     sw.WriteLine(d_importados.Text);
@@ -788,7 +842,7 @@ namespace Contagio
                     U_SALIDAS = "C";
                 }
                 selunidad.SelectedItem = U_SALIDAS;
-                PREFIJO = prefijo.Text;
+                CARPETA = prefijo.Text;
                 NUM_HILOS = Convert.ToInt32(d_hilos.Text);
                 SEMILLA_POBLACION = string.IsNullOrEmpty(semilla_poblacion.Text.Trim()) ? 0 : Convert.ToInt32(semilla_poblacion.Text.Trim());
                 SEMILLA_SIMULACION = string.IsNullOrEmpty(semilla_simulacion.Text.Trim()) ? 0 : Convert.ToInt32(semilla_simulacion.Text.Trim());
@@ -807,7 +861,7 @@ namespace Contagio
                 PROB_HOSPITALIZACION = Convert.ToDouble(d_hospitalizacion.Text) / 100.0;
                 F_PROB_HOSPITALIZADO = Convert.ToDouble(d_fpc_hospitalizado.Text) / 100.0;
                 DENSIDAD_VECINOS = Convert.ToDouble(d_densidad.Text) / 100.0;
-                PROB_AMBIENTAL = Convert.ToDouble(d_ambiental.Text) / 100.0;
+                PROB_INDIRECTA = Convert.ToDouble(d_indirecta.Text) / 100.0;
                 N_FOCOS_INICIALES = Convert.ToInt32(d_focos.Text);
                 N_INMUNES_INICIALES = Convert.ToInt32(d_inmunes.Text);
                 N_FOCOS_IMPORTADOS = Convert.ToInt32(d_importados.Text);
@@ -859,6 +913,9 @@ namespace Contagio
             tabla.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             tabla.DefaultCellStyle.SelectionBackColor = Color.LightSalmon;
             tabla.RowHeadersVisible = false;
+            int tabla_alto_fila = tabla.RowTemplate.Height;
+            int tabla_alto_cabecera = tabla.ColumnHeadersHeight;
+            if (tabla_alto_cabecera <= tabla_alto_fila) tabla_alto_cabecera = tabla_alto_fila + 1;
             tabla.RowTemplate.Height = tabla_alto_fila;
             tabla.ColumnHeadersHeight = tabla_alto_cabecera;
             tabla.ColumnCount = 3;
@@ -1075,6 +1132,34 @@ namespace Contagio
         {
             b_salva_condiciones.ForeColor = Color.Red;
         }
+        private void B_sube_Click(object sender, EventArgs e)
+        {
+            if (tablaCondiciones.SelectedRows != null && tablaCondiciones.SelectedRows[0].Index > 0)
+            {
+                int i = tablaCondiciones.SelectedRows[0].Index;
+                DataGridViewRow fila1 = tablaCondiciones.Rows[i];
+                tablaCondiciones.Rows.RemoveAt(i);
+                tablaCondiciones.Rows.Insert(i - 1, fila1);
+                tablaCondiciones.Rows[i - 1].Selected = true;
+                Condicion c = condiciones.ElementAt(i);
+                condiciones.RemoveAt(i);
+                condiciones.Insert(i - 1, c);
+            }
+        }
+        private void B_baja_Click(object sender, EventArgs e)
+        {
+            if (tablaCondiciones.SelectedRows != null && tablaCondiciones.SelectedRows[0].Index < tablaCondiciones.Rows.Count - 1)
+            {
+                int i = tablaCondiciones.SelectedRows[0].Index;
+                DataGridViewRow fila1 = tablaCondiciones.Rows[i];
+                tablaCondiciones.Rows.RemoveAt(i);
+                tablaCondiciones.Rows.Insert(i + 1, fila1);
+                tablaCondiciones.Rows[i + 1].Selected = true;
+                Condicion c = condiciones.ElementAt(i);
+                condiciones.RemoveAt(i);
+                condiciones.Insert(i + 1, c);
+            }
+        }
         #endregion
 
         #region Grupos
@@ -1097,18 +1182,20 @@ namespace Contagio
             tabla.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             tabla.DefaultCellStyle.SelectionBackColor = Color.LightSalmon;
             tabla.RowHeadersVisible = false;
+            int tabla_alto_fila = tabla.RowTemplate.Height;
+            int tabla_alto_cabecera = tabla.ColumnHeadersHeight;
             tabla.RowTemplate.Height = tabla_alto_fila;
             tabla.ColumnHeadersHeight = tabla_alto_cabecera;
-            tabla.ColumnCount = 12;
+            tabla.ColumnCount = 13;
             int j = 0;
             tabla.Columns[j].FillWeight = 30;
             tabla.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             tabla.Columns[j].Name = "Nombre";
             tabla.Columns[j].SortMode = DataGridViewColumnSortMode.Automatic;
             j++;
-            tabla.Columns[j].FillWeight = 18;
+            tabla.Columns[j].FillWeight = 14;
             tabla.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            tabla.Columns[j].Name = "Genero";
+            tabla.Columns[j].Name = "Tipo";
             j++;
             tabla.Columns[j].FillWeight = 18;
             tabla.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
@@ -1119,6 +1206,10 @@ namespace Contagio
             tabla.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             tabla.Columns[j].DefaultCellStyle.BackColor = Color.Beige;
             tabla.Columns[j].Name = "Edad-Max";
+            j++;
+            tabla.Columns[j].FillWeight = 18;
+            tabla.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            tabla.Columns[j].Name = "Grave";
             j++;
             tabla.Columns[j].FillWeight = 20;
             tabla.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
@@ -1132,21 +1223,21 @@ namespace Contagio
             tabla.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             tabla.Columns[j].Name = "ProbCura";
             j++;
-            tabla.Columns[j].FillWeight = 20;
+            tabla.Columns[j].FillWeight = 18;
             tabla.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             tabla.Columns[j].DefaultCellStyle.BackColor = Color.Beige;
             tabla.Columns[j].Name = "PasosMin";
             j++;
-            tabla.Columns[j].FillWeight = 20;
+            tabla.Columns[j].FillWeight = 18;
             tabla.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             tabla.Columns[j].DefaultCellStyle.BackColor = Color.Beige;
             tabla.Columns[j].Name = "PasosMax";
             j++;
-            tabla.Columns[j].FillWeight = 18;
+            tabla.Columns[j].FillWeight = 16;
             tabla.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             tabla.Columns[j].Name = "% Pobl";
             j++;
-            tabla.Columns[j].FillWeight = 18;
+            tabla.Columns[j].FillWeight = 16;
             tabla.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             tabla.Columns[j].DefaultCellStyle.BackColor = Color.Beige;
             tabla.Columns[j].Name = "% Clus";
@@ -1202,11 +1293,12 @@ namespace Contagio
             string s;
             string[] sd;
             string grupo;
-            int genero;
+            int tipo;
             int edad_min;
             int edad_max;
             int pasos_min;
             int pasos_max;
+            double gravedad;
             double prob_contagio;
             int duracion_infeccion;
             double prob_curacion;
@@ -1217,7 +1309,7 @@ namespace Contagio
             {
                 s = sr.ReadLine();
                 sd = s.Split(';');
-                if (sd.Length != 12)
+                if (sd.Length != 13)
                 {
                     MessageBox.Show(string.Format("Número incorrecto de campos: {0} {1}", sd.Length, s), "Lectura de gr_tmp", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     if (sr != null) sr.Close();
@@ -1226,36 +1318,26 @@ namespace Contagio
                 try
                 {
                     grupo = sd[0];
-                    if (sd[1].Equals("m", StringComparison.OrdinalIgnoreCase))
-                    {
-                        genero = 0;
-                    }
-                    else if (sd[1].Equals("f", StringComparison.OrdinalIgnoreCase))
-                    {
-                        genero = 1;
-                    }
-                    else
-                    {
-                        genero = 2;
-                    }
+                    tipo = Convert.ToInt32(sd[1]);
                     edad_min = Convert.ToInt32(sd[2]);
                     edad_max = Convert.ToInt32(sd[3]);
-                    prob_contagio = Convert.ToDouble(sd[4]);
-                    duracion_infeccion = Convert.ToInt32(sd[5]);
-                    prob_curacion = Convert.ToDouble(sd[6]);
-                    pasos_min = Convert.ToInt32(sd[7]);
-                    pasos_max = Convert.ToInt32(sd[8]);
-                    fraccion_poblacion = Convert.ToDouble(sd[9]);
-                    fraccion_clusters = Convert.ToInt64(sd[10]);
-                    individuos_c = Convert.ToInt32(sd[11]);
+                    gravedad = Convert.ToDouble(sd[4]);
+                    prob_contagio = Convert.ToDouble(sd[5]);
+                    duracion_infeccion = Convert.ToInt32(sd[6]);
+                    prob_curacion = Convert.ToDouble(sd[7]);
+                    pasos_min = Convert.ToInt32(sd[8]);
+                    pasos_max = Convert.ToInt32(sd[9]);
+                    fraccion_poblacion = Convert.ToDouble(sd[10]);
+                    fraccion_clusters = Convert.ToInt64(sd[11]);
+                    individuos_c = Convert.ToInt32(sd[12]);
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(string.Format("<{0}> <{1}> <{2}> <{3}> <{4}> <{5}> <{6}> <{7}> <{8}> <{9}> <{10}> <{11}> Mensaje: {12}", sd[0], sd[1], sd[2], sd[3], sd[4], sd[5], sd[6], sd[7], sd[8], sd[9], sd[10], sd[11], e.Message), "Lectura de gr_tmp", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format("<{0}> <{1}> <{2}> <{3}> <{4}> <{5}> <{6}> <{7}> <{8}> <{9}> <{10}> <{11}> <{12}> Mensaje: {13}", sd[0], sd[1], sd[2], sd[3], sd[4], sd[5], sd[6], sd[7], sd[8], sd[9], sd[10], sd[11], sd[12], e.Message), "Lectura de gr_tmp", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     if (sr != null) sr.Close();
                     return null;
                 }
-                g_temp.Add(new Grupo(g_temp.Count, grupo, genero, edad_min, edad_max, prob_contagio, duracion_infeccion, prob_curacion, pasos_min, pasos_max, fraccion_poblacion, fraccion_clusters, individuos_c));
+                g_temp.Add(new Grupo(g_temp.Count, grupo, tipo, edad_min, edad_max, gravedad, prob_contagio, duracion_infeccion, prob_curacion, pasos_min, pasos_max, fraccion_poblacion, fraccion_clusters, individuos_c));
             }
             sr.Close();
             return g_temp;
@@ -1263,32 +1345,22 @@ namespace Contagio
         private void MuestraGrupos()
         {
             tablaGrupos.RowCount = 1;
-            object[] fila = new object[12];
+            object[] fila = new object[13];
             foreach (Grupo g in grupos)
             {
                 fila[0] = g.grupo;
-                if (g.genero == 0)
-                {
-                    fila[1] = "m";
-                }
-                if (g.genero == 1)
-                {
-                    fila[1] = "f";
-                }
-                else
-                {
-                    fila[1] = "-";
-                }
+                fila[1] = g.tipo;
                 fila[2] = g.edad_min;
                 fila[3] = g.edad_max;
-                fila[4] = g.prob_contagio;
-                fila[5] = g.duracion_infeccion;
-                fila[6] = g.prob_curacion;
-                fila[7] = g.pasos_min;
-                fila[8] = g.pasos_max;
-                fila[9] = g.fraccion_poblacion;
-                fila[10] = g.fraccion_clusters;
-                fila[11] = g.individuos_c;
+                fila[4] = g.gravedad;
+                fila[5] = g.prob_contagio;
+                fila[6] = g.duracion_infeccion;
+                fila[7] = g.prob_curacion;
+                fila[8] = g.pasos_min;
+                fila[9] = g.pasos_max;
+                fila[10] = g.fraccion_poblacion;
+                fila[11] = g.fraccion_clusters;
+                fila[12] = g.individuos_c;
                 tablaGrupos.Rows.Add(fila);
             }
         }
@@ -1296,11 +1368,12 @@ namespace Contagio
         {
             string[] sd = new string[tablaGrupos.ColumnCount];
             string grupo;
-            int genero;
+            int tipo;
             int edad_min;
             int edad_max;
             int pasos_min;
             int pasos_max;
+            double gravedad;
             double prob_contagio;
             int duracion_infeccion;
             double prob_curacion;
@@ -1313,7 +1386,7 @@ namespace Contagio
             {
                 fila = tablaGrupos.Rows[i];
 
-                // Evitar la última fila que está vacía
+                // Evitar la última fila que está vacía (para añdir datos)
 
                 if (fila.Cells[0].Value == null || String.IsNullOrEmpty(fila.Cells[0].Value.ToString())) continue;
                 for (int j = 0; j < tablaGrupos.ColumnCount; j++)
@@ -1323,35 +1396,25 @@ namespace Contagio
                 try
                 {
                     grupo = sd[0];
-                    if (sd[1].Equals("m", StringComparison.OrdinalIgnoreCase))
-                    {
-                        genero = 0;
-                    }
-                    else if (sd[1].Equals("f", StringComparison.OrdinalIgnoreCase))
-                    {
-                        genero = 1;
-                    }
-                    else
-                    {
-                        genero = 2;
-                    }
+                    tipo = Convert.ToInt32(sd[1]);
                     edad_min = Convert.ToInt32(sd[2]);
                     edad_max = Convert.ToInt32(sd[3]);
-                    prob_contagio = Convert.ToDouble(sd[4]);
-                    duracion_infeccion = Convert.ToInt32(sd[5]);
-                    prob_curacion = Convert.ToDouble(sd[6]);
-                    pasos_min = Convert.ToInt32(sd[7]);
-                    pasos_max = Convert.ToInt32(sd[8]);
-                    fraccion_poblacion = Convert.ToDouble(sd[9]);
-                    fraccion_clusters = Convert.ToDouble(sd[10]);
-                    individuos_c = Convert.ToInt32(sd[11]);
+                    gravedad = Convert.ToDouble(sd[4]);
+                    prob_contagio = Convert.ToDouble(sd[5]);
+                    duracion_infeccion = Convert.ToInt32(sd[6]);
+                    prob_curacion = Convert.ToDouble(sd[7]);
+                    pasos_min = Convert.ToInt32(sd[8]);
+                    pasos_max = Convert.ToInt32(sd[9]);
+                    fraccion_poblacion = Convert.ToDouble(sd[10]);
+                    fraccion_clusters = Convert.ToDouble(sd[11]);
+                    individuos_c = Convert.ToInt32(sd[12]);
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(string.Format("<{0}> <{1}> <{2}> <{3}> <{4}> <{5}> <{6}> <{7}> <{8}> <{9}> <{10}> <{11}> Mensaje: {12}", sd[0], sd[1], sd[2], sd[3], sd[4], sd[5], sd[6], sd[7], sd[8], sd[9], sd[10], sd[11], e.Message), "Actualiza grupos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format("<{0}> <{1}> <{2}> <{3}> <{4}> <{5}> <{6}> <{7}> <{8}> <{9}> <{10}> <{11}> <{12}> Mensaje: {13}", sd[0], sd[1], sd[2], sd[3], sd[4], sd[5], sd[6], sd[7], sd[8], sd[9], sd[10], sd[11], sd[12], e.Message), "Actualiza grupos", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
-                grupos.Add(new Grupo(grupos.Count, grupo, genero, edad_min, edad_max, prob_contagio, duracion_infeccion, prob_curacion, pasos_min, pasos_max, fraccion_poblacion, fraccion_clusters, individuos_c));
+                grupos.Add(new Grupo(grupos.Count, grupo, tipo, edad_min, edad_max, gravedad, prob_contagio, duracion_infeccion, prob_curacion, pasos_min, pasos_max, fraccion_poblacion, fraccion_clusters, individuos_c));
             }
             b_salva_grupos.ForeColor = Color.Black;
             return true;
@@ -1366,6 +1429,12 @@ namespace Contagio
                     if (!fichero.Equals(F_GRUPOS, StringComparison.OrdinalIgnoreCase))
                     {
                         senda_condiciones.Text = F_GRUPOS = fichero;
+                        if (tablaCondiciones.SelectedRows != null)
+                        {
+                            int i = tablaCondiciones.SelectedRows[0].Index;
+                            tablaCondiciones.Rows[i].Cells[1].Value = F_GRUPOS;
+                            condiciones.ElementAt(i).f_grupos = F_GRUPOS;
+                        }
                     }
                     b_salva_grupos.ForeColor = Color.Black;
                     b_salva_condiciones.ForeColor = Color.Red;
@@ -1396,7 +1465,8 @@ namespace Contagio
                     if (fila.Cells[9].Value == null) fila.Cells[9].Value = "0";
                     if (fila.Cells[10].Value == null) fila.Cells[10].Value = "0";
                     if (fila.Cells[11].Value == null) fila.Cells[11].Value = "0";
-                    sw.WriteLine(string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11}", fila.Cells[0].Value.ToString(), fila.Cells[1].Value.ToString(), fila.Cells[2].Value.ToString(), fila.Cells[3].Value.ToString(), fila.Cells[4].Value.ToString(), fila.Cells[5].Value.ToString(), fila.Cells[6].Value.ToString(), fila.Cells[7].Value.ToString(), fila.Cells[8].Value.ToString(), fila.Cells[9].Value.ToString(), fila.Cells[10].Value.ToString(), fila.Cells[11].Value.ToString()));
+                    if (fila.Cells[12].Value == null) fila.Cells[12].Value = "0";
+                    sw.WriteLine(string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12}", fila.Cells[0].Value.ToString(), fila.Cells[1].Value.ToString(), fila.Cells[2].Value.ToString(), fila.Cells[3].Value.ToString(), fila.Cells[4].Value.ToString(), fila.Cells[5].Value.ToString(), fila.Cells[6].Value.ToString(), fila.Cells[7].Value.ToString(), fila.Cells[8].Value.ToString(), fila.Cells[9].Value.ToString(), fila.Cells[10].Value.ToString(), fila.Cells[11].Value.ToString(), fila.Cells[12].Value.ToString()));
                 }
                 sw.Close();
             }
@@ -1466,7 +1536,7 @@ namespace Contagio
                     }
                     xt = RADIO * xt;
                     yt = RADIO * yt;
-                    individuos_base.Add(new Individuo(individuos_base.Count, g.ID, g.grupo, xt, yt, 0));
+                    individuos_base.Add(new Individuo(individuos_base.Count, g.tipo, g.ID, g.grupo, xt, yt, 0));
                 }
                 n++;
             }
@@ -1481,7 +1551,7 @@ namespace Contagio
             individuos[hilo] = new List<Individuo>();
             foreach (Individuo individuo in individuos_base)
             {
-                individuos[hilo].Add(new Individuo(individuo.ID, individuo.grupo_ID, individuo.grupo, individuo.xi, individuo.yi, 0));
+                individuos[hilo].Add(new Individuo(individuo.ID, grupos_hilo[hilo].ElementAt(individuo.grupo_ID).tipo, individuo.grupo_ID, individuo.grupo, individuo.xi, individuo.yi, 0));
             }
             long sanos_ini = individuos[hilo].Count;
             Random azar_poblacion;
@@ -1501,7 +1571,7 @@ namespace Contagio
             {
                 try
                 {
-                    object[] objetomensaje = new object[] { hilo, string.Format("{0}. Hay más focos de infección que que individuos sanos. Cancelado [{1}]", hilo, PREFIJO) };
+                    object[] objetomensaje = new object[] { hilo, string.Format("{0}. Hay más focos de infección que que individuos sanos. Cancelado [{1}]", hilo, CARPETA) };
                     Invoke(delegadoMensaje, objetomensaje);
                 }
                 catch (Exception ee)
@@ -1535,7 +1605,7 @@ namespace Contagio
             {
                 try
                 {
-                    object[] objetomensaje = new object[] { hilo, string.Format("{0}. Hay más inmunizados que individuos sanos. Cancelado [{1}]", hilo, PREFIJO) };
+                    object[] objetomensaje = new object[] { hilo, string.Format("{0}. Hay más inmunizados que individuos sanos. Cancelado [{1}]", hilo, CARPETA) };
                     Invoke(delegadoMensaje, objetomensaje);
                 }
                 catch (Exception ee)
@@ -1743,6 +1813,12 @@ namespace Contagio
             linea_estado.Text = string.Empty;
             return true;
         }
+        private bool ActualizaTablaVecinos()
+        {
+            // PENDIENTE
+
+            return true;
+        }
         private bool ProbabilidadFinInfeccion()
         {
             if (grupos.Count == 0) return false;
@@ -1759,7 +1835,7 @@ namespace Contagio
                 n = g.duracion_infeccion;
                 if (n >= MAX_CONVALECENCIA)
                 {
-                    MessageBox.Show(string.Format("El máximo número de días de convalecencia es {0}", MAX_CONVALECENCIA - 1), string.Format("Simular [{0}]", PREFIJO), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format("El máximo número de días de convalecencia es {0}", MAX_CONVALECENCIA - 1), string.Format("Simulación [{0}]", CARPETA), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 a = 1 / Math.Pow(n, POTENCIA);
@@ -1856,7 +1932,7 @@ namespace Contagio
         }
         private void EscribeCambioCondiciones(int hilo, int dia, Condicion c, bool clus)
         {
-            string carpeta = string.Format(@"{0}:\{1}\{2}", U_SALIDAS, CARPETA_SALIDAS, PREFIJO);
+            string carpeta = string.Format(@"{0}:\{1}\{2}", U_SALIDAS, CARPETA_SALIDAS, CARPETA);
             if (!Directory.Exists(carpeta)) Directory.CreateDirectory(carpeta);
             string fichero = string.Format(@"{0}\saux{1:D3}.log", carpeta, hilo + 1);
             FileStream fw = new FileStream(fichero, FileMode.Append, FileAccess.Write, FileShare.Read);
@@ -1866,20 +1942,27 @@ namespace Contagio
             sw.WriteLine(string.Format("Cambio de condiciones el día {0}", dia));
             sw.WriteLine(string.Format("Fichero de grupos            {0}", c.f_grupos));
             sw.WriteLine(string.Format("Número de clusters           {0}", c.clusters));
-            sw.WriteLine(string.Format("Próximo cambio en            {0} días", c.dias));
+            if (c.dias == 0)
+            {
+                sw.WriteLine("No hay próximos cambios");
+            }
+            else
+            {
+                sw.WriteLine(string.Format("Próximo cambio en            {0} días", c.dias));
+            }
             sw.WriteLine();
-            sw.WriteLine("                        - Edad- % Factor B    Días         %      Num.Pasos      %                          %      Individuos ");
-            sw.WriteLine("Grupo            Género Min Max   Contagio  Duración    Curación   Min   Max Individuos   Individuos     clusters    cluster  ");
-            sw.WriteLine("---------------- ------ --- --- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------");
+            sw.WriteLine("                        - Edad-      %     % Factor B    Días         %      Num.Pasos      %                          %      Individuos ");
+            sw.WriteLine("Grupo            Género Min Max   Gravedad   Contagio  Duración    Curación   Min   Max Individuos   Individuos     clusters    cluster  ");
+            sw.WriteLine("---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------");
             int n = 0;
             long i_g;
             foreach (Grupo gt in grupos_hilo[hilo])
             {
                 i_g = indi_grupos[hilo, n];
-                sw.WriteLine(string.Format("{0,-16} {1,6} {2,3:N0} {3,3:N0} {4,10:f1} {5,10:f1} {6,10:f1} {7,5:N0} {8,5:N0} {9,10:f2} {10,12:N0} {11,12:f1} {12,12:N0}", gt.grupo, gt.genero, gt.edad_min, gt.edad_max, gt.prob_contagio, gt.duracion_infeccion, gt.prob_curacion, gt.pasos_min, gt.pasos_max, gt.fraccion_poblacion, i_g, gt.fraccion_clusters, gt.individuos_c));
+                sw.WriteLine(string.Format("{0,-16} {1,6} {2,3:N0} {3,3:N0} {4,10:f2} {5,10:f2} {6,10:f2} {7,10:f2} {8,5:N0} {9,5:N0} {10,10:f2} {11,12:N0} {12,12:f1} {13,12:N0}", gt.grupo, gt.tipo, gt.edad_min, gt.edad_max, gt.gravedad, gt.prob_contagio, gt.duracion_infeccion, gt.prob_curacion, gt.pasos_min, gt.pasos_max, gt.fraccion_poblacion, i_g, gt.fraccion_clusters, gt.individuos_c));
                 n++;
             }
-            sw.WriteLine("---------------- ------ --- --- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------");
+            sw.WriteLine("---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------");
             sw.WriteLine();
             if (clus)
             {
@@ -1937,30 +2020,71 @@ namespace Contagio
         private void ActualizaEstadisticas(int hilo, int dia)
         {
             hiloDia[hilo] = dia;
+            v_dia.Text = string.Format("{0:N0}", dia + 1);
+            v_hilo.Text = string.Format("{0:N0}", hilo + 1);
             int faltan = 0;
             int dia_min_hilo = 9999;
             int dia_max_hilo = 0;
+            int hilo_min_hilo = 0;
+            int hilo_max_hilo = 0;
             for (int i = 0; i < NUM_HILOS; i++)
             {
                 if (hiloEstado[i] == 0)
                 {
                     faltan++;
-                    if (hiloDia[i] > dia_max_hilo) dia_max_hilo = hiloDia[i];
-                    if (hiloDia[i] < dia_min_hilo) dia_min_hilo = hiloDia[i];
+                    if (hiloDia[i] > dia_max_hilo)
+                    {
+                        hilo_max_hilo = i + 1;
+                        dia_max_hilo = hiloDia[i];
+                    }
+                    if (hiloDia[i] < dia_min_hilo)
+                    {
+                        hilo_min_hilo = i + 1;
+                        dia_min_hilo = hiloDia[i];
+                    }
                 }
             }
+            v_pendientes.Text = string.Format("{0:N0}", faltan);
             dia_min.Text = string.Format("{0:N0}", dia_min_hilo + 1);
             dia_max.Text = string.Format("{0:N0}", dia_max_hilo + 1);
-            v_dia.Text = string.Format("{0:N0}", dia + 1);
-            v_hilo.Text = string.Format("{0:N0}", hilo + 1);
-            v_pendientes.Text = string.Format("{0:N0}", faltan);
-            v_sanos.Text = string.Format("{0:N0}", sanos[hilo]);
-            v_desinmunizados.Text = string.Format("{0:N0}", desinmunizados[hilo]);
-            v_infectados.Text = string.Format("{0:N0}", infectados[hilo]);
-            v_curados.Text = string.Format("{0:N0}", curados[hilo]);
-            v_muertos.Text = string.Format("{0:N0}", muertos[hilo]);
-            v_enfermos.Text = string.Format("{0:N0}", enfermos[hilo]);
-            v_hospital.Text = string.Format("{0:N0}", hospitalizados[hilo]);
+            hilo_min.Text = string.Format("{0:N0}", hilo_min_hilo);
+            hilo_max.Text = string.Format("{0:N0}", hilo_max_hilo);
+            long[] suma = new long[5];
+            for (int j = 0; j < suma.Length; j++)
+            {
+                suma[j] = 0;
+            }
+            for (int j = 0; j < NUM_TIPOS; j++)
+            {
+                suma[0] += sanos[hilo, j];
+                suma[1] += desinmunizados[hilo, j];
+                suma[2] += infectados[hilo, j];
+                suma[3] += curados[hilo, j];
+                suma[4] += muertos[hilo, j];
+            }
+            v_sanos.Text = string.Format("{0:N0}", suma[0]);
+            v_desinmunizados.Text = string.Format("{0:N0}", suma[1]);
+            v_infectados.Text = string.Format("{0:N0}", suma[2]);
+            v_curados.Text = string.Format("{0:N0}", suma[3]);
+            v_muertos.Text = string.Format("{0:N0}", suma[4]);
+            long[] suma_graves = new long[5];
+            for (int j = 0; j < suma.Length; j++)
+            {
+                suma_graves[j] = 0;
+            }
+            for (int j = 0; j < NUM_TIPOS; j++)
+            {
+                suma_graves[0] += infectados_graves[hilo, j];
+                suma_graves[1] += curados_graves[hilo, j];
+                suma_graves[2] += muertos_graves[hilo, j];
+                suma_graves[3] += enfermos[hilo, j];
+                suma_graves[4] += hospitalizados[hilo, j];
+            }
+            v_infectados_graves.Text = string.Format("{0:N0}", suma_graves[0]);
+            v_curados_graves.Text = string.Format("{0:N0}", suma_graves[1]);
+            v_muertos_graves.Text = string.Format("{0:N0}", suma_graves[2]);
+            v_enfermos.Text = string.Format("{0:N0}", suma_graves[3]);
+            v_hospital.Text = string.Format("{0:N0}", suma_graves[4]);
             Application.DoEvents();
         }
         private void FinHilo()
@@ -1993,7 +2117,7 @@ namespace Contagio
         {
             if (condiciones.Count == 0)
             {
-                MessageBox.Show("No hay condiciones", string.Format("Simular [{0}]", PREFIJO), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No hay condiciones", string.Format("Simulación [{0}]", CARPETA), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             ActualizaCondiciones();
@@ -2002,7 +2126,7 @@ namespace Contagio
 
             // Días para exportar la población
 
-            prox_dia_exportar = new int[NUM_HILOS];
+            PROX_DIA_EXPORTAR = new int[NUM_HILOS];
             try
             {
                 string[] sdex;
@@ -2014,42 +2138,44 @@ namespace Contagio
                 {
                     sdex = d_dias_exportar.Text.Trim().Split(' ');
                 }
-                num_dias_exportar = sdex.Length;
-                if (num_dias_exportar > 0)
+                NUM_DIAS_EXPORTAR = sdex.Length;
+                if (NUM_DIAS_EXPORTAR > 0)
                 {
                     int ne = 0;
-                    dias_exportar = new int[sdex.Length];
-                    for (int i = 0; i < num_dias_exportar; i++)
+                    DIAS_EXPORTAR = new int[sdex.Length];
+                    for (int i = 0; i < NUM_DIAS_EXPORTAR; i++)
                     {
                         if (sdex[i].Trim().Length == 0) continue;
-                        dias_exportar[ne] = Convert.ToInt32(sdex[i]) - 1;
-                        if (dias_exportar[i] < 0) dias_exportar[i] = 0;
+                        DIAS_EXPORTAR[ne] = Convert.ToInt32(sdex[i]) - 1;
+                        if (DIAS_EXPORTAR[i] < 0) DIAS_EXPORTAR[i] = 0;
                         ne++;
                     }
-                    num_dias_exportar = ne;
+                    NUM_DIAS_EXPORTAR = ne;
                 }
                 for (int nh = 0; nh < NUM_HILOS; nh++)
                 {
-                    prox_dia_exportar[nh] = 0;
+                    PROX_DIA_EXPORTAR[nh] = 0;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, string.Format("Simular [{0}]", PREFIJO), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, string.Format("Simulación [{0}]", CARPETA), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             dia_min.Text = string.Empty;
             dia_max.Text = string.Empty;
+            hilo_min.Text = string.Empty;
+            hilo_max.Text = string.Empty;
 
-            string carpeta = string.Format(@"{0}:\{1}\{2}", U_SALIDAS, CARPETA_SALIDAS, PREFIJO);
+            string carpeta = string.Format(@"{0}:\{1}\{2}", U_SALIDAS, CARPETA_SALIDAS, CARPETA);
             if (!Directory.Exists(carpeta)) Directory.CreateDirectory(carpeta);
 
             // Crear matrices de hilos
 
-            NUMERO_CLUSTERS = new int[MAX_HILOS];
-            NUMERO_CLUSTERS_DATO = new int[MAX_HILOS];
-            GRUPO_IMPORTADO = new int[MAX_HILOS];
+            NUMERO_CLUSTERS = new int[NUM_HILOS];
+            NUMERO_CLUSTERS_DATO = new int[NUM_HILOS];
+            GRUPO_IMPORTADO = new int[NUM_HILOS];
             prox_condiciones = new int[NUM_HILOS];
             cont_condiciones = new int[NUM_HILOS];
             max_pasos_dia = new int[NUM_HILOS];
@@ -2062,10 +2188,25 @@ namespace Contagio
 
             // Necesitamos un valor para 'grupos.Count'
             // Lo tomamos de la primera condición
+            // Tambien necesitamos el número de tipos
 
             Condicion c = condiciones.ElementAt(0);
             grupos = LeeGrupos(c.f_grupos);
             int ng = grupos.Count;
+            NUM_TIPOS = 0;
+            foreach (Grupo g in grupos)
+            {
+                if (NUM_TIPOS < g.tipo)
+                {
+                    if (g.tipo >= MAX_TIPOS)
+                    {
+                        MessageBox.Show(string.Format("Número de tipo {0} superior al máximo {1}", NUM_TIPOS, MAX_TIPOS), string.Format("Simulación [{0}]", CARPETA), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    NUM_TIPOS = g.tipo;
+                }
+            }
+            NUM_TIPOS++;
 
             infectados_grupo = new long[NUM_HILOS, ng];
             indi_grupos = new long[NUM_HILOS, ng];
@@ -2099,15 +2240,28 @@ namespace Contagio
             curados_total_clusters = new long[NUM_HILOS];
             muertos_total_clusters = new long[NUM_HILOS];
 
-            sanos = new long[NUM_HILOS];
-            desinmunizados = new long[NUM_HILOS];
-            infectados = new long[NUM_HILOS];
-            importados = new long[NUM_HILOS];
-            enfermos = new long[NUM_HILOS];
-            hospitalizados = new long[NUM_HILOS];
-            curados = new long[NUM_HILOS];
-            muertos = new long[NUM_HILOS];
-            infectados_ambientales = new long[NUM_HILOS];
+            sanos = new long[NUM_HILOS, NUM_TIPOS];
+            desinmunizados = new long[NUM_HILOS, NUM_TIPOS];
+            infectados = new long[NUM_HILOS, NUM_TIPOS];
+            importados = new long[NUM_HILOS, NUM_TIPOS];
+            enfermos = new long[NUM_HILOS, NUM_TIPOS];
+            hospitalizados = new long[NUM_HILOS, NUM_TIPOS];
+            curados = new long[NUM_HILOS, NUM_TIPOS];
+            muertos = new long[NUM_HILOS, NUM_TIPOS];
+            infectados_indirectos = new long[NUM_HILOS, NUM_TIPOS];
+
+            infectados_graves = new long[NUM_HILOS, NUM_TIPOS];
+            curados_graves = new long[NUM_HILOS, NUM_TIPOS];
+            muertos_graves = new long[NUM_HILOS, NUM_TIPOS];
+
+            restipos = new List<ResTipo>[NUM_HILOS, NUM_TIPOS];
+            for (int i = 0; i < NUM_HILOS; i++)
+            {
+                for (int j = 0; j < NUM_TIPOS; j++)
+                {
+                    restipos[i, j] = new List<ResTipo>();
+                }
+            }
 
             individuos = new List<Individuo>[NUM_HILOS];
             resultados = new List<Resultado>[NUM_HILOS];
@@ -2123,7 +2277,7 @@ namespace Contagio
             F_INDIVIDUOS = string.Empty;
             if (!IndividuosBase())
             {
-                MessageBox.Show("No se pudo crear la población base", string.Format("Simular [{0}]", PREFIJO), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se pudo crear la población base", string.Format("Simulación [{0}]", CARPETA), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -2131,7 +2285,7 @@ namespace Contagio
 
             if (individuos_base.Count >= MAX_INDIVIDUOS_PARA_TABLA)
             {
-                MessageBox.Show("No hay memoria para crear la tabla de vecinos", string.Format("Simular [{0}]", PREFIJO), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No hay memoria para crear la tabla de vecinos", string.Format("Simulación [{0}]", CARPETA), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             nvecinas = new int[1, individuos_base.Count];
@@ -2140,7 +2294,7 @@ namespace Contagio
             Application.DoEvents();
             if (!TablaVecinos())
             {
-                MessageBox.Show("No se pudo crear la tabla de vecinos", string.Format("Simular [{0}]", PREFIJO), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se pudo crear la tabla de vecinos", string.Format("Simulación [{0}]", CARPETA), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 linea_estado.Text = string.Empty;
                 return;
             }
@@ -2149,9 +2303,11 @@ namespace Contagio
 
             // Lanzar los hilos
 
-            hiloDia = new int[MAX_HILOS];
-            hiloAzar = new Random[MAX_HILOS];
-            hiloEstado = new int[MAX_HILOS];
+            hiloDia = new int[NUM_HILOS];
+            hiloAzar = new Random[NUM_HILOS];
+            hiloEstado = new int[NUM_HILOS];
+            hiloSimulacion = new Thread[NUM_HILOS];
+
             for (int nh = 0; nh < NUM_HILOS; nh++)
             {
                 hiloDia[nh] = 0;
@@ -2219,15 +2375,7 @@ namespace Contagio
             acumulador_infectados[hilo] = 0;
             total_distancias_ida[hilo] = 0.0;
             total_contactos_de_riesgo[hilo] = 0;
-            sanos[hilo] = 0;
-            desinmunizados[hilo] = 0;
-            infectados[hilo] = 0;
-            importados[hilo] = 0;
-            enfermos[hilo] = 0;
-            hospitalizados[hilo] = 0;
-            curados[hilo] = 0;
-            muertos[hilo] = 0;
-            infectados_ambientales[hilo] = 0;
+
             contagios_cercania[hilo] = 0;
             contagios_clusters[hilo] = 0;
             total_dias_infectados_curados[hilo] = 0;
@@ -2238,6 +2386,25 @@ namespace Contagio
 
             // Prepara los individuos
 
+            for (int i = 0; i < NUM_TIPOS; i++)
+            {
+                sanos[hilo, i] = 0;
+                desinmunizados[hilo, i] = 0;
+                infectados[hilo, i] = 0;
+                importados[hilo, i] = 0;
+                enfermos[hilo, i] = 0;
+                hospitalizados[hilo, i] = 0;
+                curados[hilo, i] = 0;
+                muertos[hilo, i] = 0;
+                infectados_indirectos[hilo, i] = 0;
+
+                infectados_graves[hilo, i] = 0;
+                curados_graves[hilo, i] = 0;
+                muertos_graves[hilo, i] = 0;
+            }
+
+            int tipo;
+            double gravedad;
             foreach (Individuo indi in individuos[hilo])
             {
                 indi_grupos[hilo, indi.grupo_ID]++;
@@ -2246,6 +2413,8 @@ namespace Contagio
                 indi.distancia = 0.0;
                 indi.sentido = 0;
                 indi.pasos_dados = 0;
+                tipo = grupos_hilo[hilo].ElementAt(indi.grupo_ID).tipo;
+                gravedad = grupos_hilo[hilo].ElementAt(indi.grupo_ID).gravedad;
                 if (indi.contagio_en_cluster)
                 {
                     infectados_total_clusters[hilo]++;
@@ -2253,14 +2422,14 @@ namespace Contagio
                 switch (indi.estado)
                 {
                     case 0:
-                        sanos[hilo]++;
+                        sanos[hilo, tipo]++;
                         break;
                     case 1:
-                        infectados[hilo]++;
+                        infectados[hilo, tipo]++;
                         infectados_grupo[hilo, indi.grupo_ID]++;
                         break;
                     case 2:
-                        curados[hilo]++;
+                        curados[hilo, tipo]++;
                         total_dias_infectados_curados[hilo] += indi.dias_infectado;
                         total_dias_infectados_curados_g[hilo, indi.grupo_ID] += indi.dias_infectado;
                         if (indi.contagio_en_cluster)
@@ -2269,10 +2438,10 @@ namespace Contagio
                         }
                         break;
                     case 3:
-                        desinmunizados[hilo]++;
+                        desinmunizados[hilo, tipo]++;
                         break;
                     default:
-                        muertos[hilo]++;
+                        muertos[hilo, tipo]++;
                         total_dias_infectados_muertos[hilo] += indi.dias_infectado;
                         total_dias_infectados_muertos_g[hilo, indi.grupo_ID] += indi.dias_infectado;
                         if (indi.contagio_en_cluster)
@@ -2281,8 +2450,23 @@ namespace Contagio
                         }
                         break;
                 }
-                if (indi.enfermo) enfermos[hilo]++;
-                if (indi.hospitalizado) hospitalizados[hilo]++;
+                if (indi.grave || gravedad > 90)
+                {
+                    switch (indi.estado)
+                    {
+                        case 1:
+                            infectados_graves[hilo, tipo]++;
+                            break;
+                        case 2:
+                            curados_graves[hilo, tipo]++;
+                            break;
+                        case -1:
+                            muertos_graves[hilo, tipo]++;
+                            break;
+                    }
+                }
+                if (indi.enfermo) enfermos[hilo, tipo]++;
+                if (indi.hospitalizado) hospitalizados[hilo, tipo]++;
             }
             try
             {
@@ -2320,7 +2504,7 @@ namespace Contagio
         private int CicloDias(int hilo)
         {
             resultados[hilo] = new List<Resultado>();
-            string carpeta = string.Format(@"{0}:\{1}\{2}", U_SALIDAS, CARPETA_SALIDAS, PREFIJO);
+            string carpeta = string.Format(@"{0}:\{1}\{2}", U_SALIDAS, CARPETA_SALIDAS, CARPETA);
             string fichero = string.Format(@"{0}\saux{1:D3}.log", carpeta, hilo + 1);
             FileStream fw = new FileStream(fichero, FileMode.Append, FileAccess.Write, FileShare.Read);
             StreamWriter sw = new StreamWriter(fw);
@@ -2332,16 +2516,20 @@ namespace Contagio
             fw = new FileStream(fichero, FileMode.Append, FileAccess.Write, FileShare.Read);
             sw = new StreamWriter(fw);
             CabeceraSalida(sw, hilo);
-
             long n_R0;
             long suma_R0;
             double R0;
+            long n_R0_graves;
+            long suma_R0_graves;
+            double R0_graves;
             double xt;
             double yt;
             double pre;
             double contactos_de_riesgo;
             double media_dias_infectado;
             double recorrido_individuo_activo;
+            long[] suma;
+            long[] suma_graves = new long[3];
 
             Grupo g;
             int id_grupo_importar = -1;
@@ -2352,6 +2540,8 @@ namespace Contagio
                 id_grupo_importar = g.ID;
                 nombre_grupo_importar = g.grupo;
             }
+
+            // Ciclo diario
 
             int dias_sim = 0;
             int resultado_dia;
@@ -2375,7 +2565,14 @@ namespace Contagio
 
                 // Empieza un nuevo día
 
-                if (sanos[hilo] > 0 || desinmunizados[hilo] > 0)
+                suma = new long[2];
+                suma[0] = suma[1] = 0;
+                for (int k = 0; k < NUM_TIPOS; k++)
+                {
+                    suma[0] += sanos[hilo, k];
+                    suma[1] += desinmunizados[hilo, k];
+                }
+                if (suma[0] > 0 || suma[1] > 0)
                 {
                     // Preparar los individuos para pasear
 
@@ -2414,7 +2611,7 @@ namespace Contagio
                     }
                     resultado_dia = ContagiosDiaVecinos(hilo);
                     if (NUMERO_CLUSTERS[hilo] > 0) ContagiosCluster(hilo);
-                    if (DENSIDAD_VECINOS > 1) ContagiosAmbientales(hilo);
+                    if (PROB_INDIRECTA > 0 && DENSIDAD_VECINOS < 1) ContagiosIndirectos(hilo);
                 }
                 else
                 {
@@ -2429,7 +2626,7 @@ namespace Contagio
                     return -1;
                 }
 
-                // 'Curacion / Desinmunización / Muerte' al final del día
+                // 'Curacion / Desinmunización / Muerte / Enfermo / Hospitalizado' al final del día
 
                 foreach (Individuo indi in individuos[hilo])
                 {
@@ -2444,8 +2641,12 @@ namespace Contagio
                             // Perdida de la inmunidad
 
                             indi.estado = 3;
-                            desinmunizados[hilo]++;
-                            curados[hilo]--;
+                            desinmunizados[hilo, indi.tipo]++;
+                            curados[hilo, g.tipo]--;
+                            if (indi.grave)
+                            {
+                                curados_graves[hilo, g.tipo]--;
+                            }
                             indi.indi_enfermados = 0;
                             indi.dias_infectado = 0;
                             indi.dias_curado = 0;
@@ -2469,25 +2670,30 @@ namespace Contagio
                         n_sorteos_fin_infeccion[hilo, g.ID]++;
                         if (hiloAzar[hilo].NextDouble() < pfi)
                         {
-                            // Ahora sortear si es por curación o muerte
+                            // Sólo los graves pueden morir, si lo es, sortear si es por curación o muerte
 
                             n_fin_infeccion[hilo, g.ID]++;
                             double rcm = g.prob_curacion / 100;
-                            if (hiloAzar[hilo].NextDouble() < rcm)
+                            if (!indi.grave || hiloAzar[hilo].NextDouble() < rcm)
                             {
                                 // Curado
 
                                 indi.estado = 2;
-                                curados[hilo]++;
+                                curados[hilo, g.tipo]++;
                                 indi.dias_curado = 0;
-                                infectados[hilo]--;
+                                infectados[hilo, g.tipo]--;
+                                if (indi.grave)
+                                {
+                                    curados_graves[hilo, g.tipo]++;
+                                    infectados_graves[hilo, g.tipo]--;
+                                }
                                 if (indi.enfermo)
                                 {
-                                    enfermos[hilo]--;
+                                    enfermos[hilo, g.tipo]--;
                                     indi.enfermo = false;
                                     if (indi.hospitalizado)
                                     {
-                                        hospitalizados[hilo]--;
+                                        hospitalizados[hilo, g.tipo]--;
                                         indi.hospitalizado = false;
                                     }
                                 }
@@ -2505,15 +2711,20 @@ namespace Contagio
                                 // Muerte
 
                                 indi.estado = -1;
-                                muertos[hilo]++;
-                                infectados[hilo]--;
+                                muertos[hilo, g.tipo]++;
+                                infectados[hilo, g.tipo]--;
+                                if (indi.grave)
+                                {
+                                    muertos_graves[hilo, g.tipo]++;
+                                    infectados_graves[hilo, g.tipo]--;
+                                }
                                 if (indi.enfermo)
                                 {
-                                    enfermos[hilo]--;
+                                    enfermos[hilo, g.tipo]--;
                                     indi.enfermo = false;
                                     if (indi.hospitalizado)
                                     {
-                                        hospitalizados[hilo]--;
+                                        hospitalizados[hilo, g.tipo]--;
                                         indi.hospitalizado = false;
                                     }
                                 }
@@ -2534,27 +2745,60 @@ namespace Contagio
                             indi.dias_infectado++;
                             if (indi.dias_infectado == DIAS_INCUBACION)
                             {
-                                if (hiloAzar[hilo].NextDouble() < PROB_ENFERMAR)
+                                if (indi.grave)
                                 {
-                                    // La enfermedad da la cara
-
-                                    indi.enfermo = true;
-                                    enfermos[hilo]++;
-
-                                    // Hospitalización
-
-                                    if (hiloAzar[hilo].NextDouble() < PROB_HOSPITALIZACION)
+                                    if (hiloAzar[hilo].NextDouble() < PROB_ENFERMAR)
                                     {
-                                        indi.hospitalizado = true;
-                                        hospitalizados[hilo]++;
+                                        // La enfermedad da la cara
+
+                                        indi.enfermo = true;
+                                        enfermos[hilo, g.tipo]++;
+
+                                        // Hospitalización
+
+                                        if (hiloAzar[hilo].NextDouble() < PROB_HOSPITALIZACION)
+                                        {
+                                            indi.hospitalizado = true;
+                                            hospitalizados[hilo, g.tipo]++;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+                suma = new long[9];
+                for (int j = 0; j < suma.Length; j++)
+                {
+                    suma[j] = 0;
+                }
+                for (int j = 0; j < NUM_TIPOS; j++)
+                {
+                    suma[0] += sanos[hilo, j];
+                    suma[1] += infectados[hilo, j];
+                    suma[2] += importados[hilo, j];
+                    suma[3] += curados[hilo, j];
+                    suma[4] += desinmunizados[hilo, j];
+                    suma[5] += muertos[hilo, j];
+                    suma[6] += infectados_indirectos[hilo, j];
+                    suma[7] += enfermos[hilo, j];
+                    suma[8] += hospitalizados[hilo, j];
+                    restipos[hilo, j].Add(new ResTipo(sanos[hilo, j], infectados[hilo, j], importados[hilo, j], curados[hilo, j], desinmunizados[hilo, j], muertos[hilo, j], infectados_indirectos[hilo, j], enfermos[hilo, j], hospitalizados[hilo, j]));
+                }
+                for (int j = 0; j < suma_graves.Length; j++)
+                {
+                    suma_graves[j] = 0;
+                }
+                for (int j = 0; j < NUM_TIPOS; j++)
+                {
+                    suma_graves[0] += infectados_graves[hilo, j];
+                    suma_graves[1] += curados_graves[hilo, j];
+                    suma_graves[2] += muertos_graves[hilo, j];
+                }
                 n_R0 = 0;
                 suma_R0 = 0;
+                n_R0_graves = 0;
+                suma_R0_graves = 0;
                 foreach (Individuo indi in individuos[hilo])
                 {
                     if (indi.estado == 2 || indi.estado == -1)
@@ -2563,9 +2807,15 @@ namespace Contagio
 
                         n_R0++;
                         suma_R0 += indi.indi_enfermados;
+                        if (indi.grave)
+                        {
+                            n_R0_graves++;
+                            suma_R0_graves += indi.indi_enfermados;
+                        }
                     }
                 }
                 R0 = n_R0 == 0 ? 0 : (double)suma_R0 / n_R0;
+                R0_graves = n_R0_graves == 0 ? 0 : (double)suma_R0_graves / n_R0_graves;
 
                 // Focos inportados
 
@@ -2583,38 +2833,43 @@ namespace Contagio
                             }
                             xt = RADIO * xt;
                             yt = RADIO * yt;
-                            Individuo individuo_nuevo = new Individuo(individuos[hilo].Count, id_grupo_importar, nombre_grupo_importar, xt, yt, 1, 0, 0, 0, -1, false, false, false);
+
+                            // Se importa como tipo 0
+
+                            int tipo = 0;
+                            Individuo individuo_nuevo = new Individuo(individuos[hilo].Count, tipo, id_grupo_importar, nombre_grupo_importar, xt, yt, 1, 0, 0, 0, -1, false, false, false, false);
                             individuos[hilo].Add(individuo_nuevo);
-                            infectados[hilo]++;
-                            importados[hilo]++;
+                            infectados[hilo, tipo]++;
+                            importados[hilo, tipo]++;
                             infectados_grupo[hilo, id_grupo_importar]++;
                         }
-                        if (!TablaVecinos())
-                        {
-                        }
+
+                        // Se necesita actualizar las tablas de vecinos. PENDIENTE
+
+                        ActualizaTablaVecinos();
                     }
                 }
-                if (num_dias_exportar > 0 && prox_dia_exportar[hilo] != -1 && i == dias_exportar[prox_dia_exportar[hilo]])
+                if (NUM_DIAS_EXPORTAR > 0 && PROX_DIA_EXPORTAR[hilo] != -1 && i == DIAS_EXPORTAR[PROX_DIA_EXPORTAR[hilo]])
                 {
                     string ficheroex = Path.Combine(carpeta, string.Format("Pobla_{0:D3}_{1:D3}.iii", hilo, i + 1));
                     ExportarPoblacion(ficheroex, hilo);
                     //Distancias(i + 1);
-                    prox_dia_exportar[hilo]++;
-                    if (prox_dia_exportar[hilo] == num_dias_exportar)
+                    PROX_DIA_EXPORTAR[hilo]++;
+                    if (PROX_DIA_EXPORTAR[hilo] == NUM_DIAS_EXPORTAR)
                     {
-                        prox_dia_exportar[hilo] = -1;
+                        PROX_DIA_EXPORTAR[hilo] = -1;
                     }
                 }
 
                 // La monitorización se hace al final del día
 
-                acumulador_infectados[hilo] += infectados[hilo];
+                acumulador_infectados[hilo] += suma[1];
                 recorrido_individuo_activo = total_recorridos[hilo] == 0 ? 0 : total_distancias_ida[hilo] / total_recorridos[hilo];
                 contactos_de_riesgo = acumulador_infectados[hilo] == 0 ? 0 : (double)total_contactos_de_riesgo[hilo] / acumulador_infectados[hilo];
-                media_dias_infectado = curados[hilo] + muertos[hilo] == 0 ? 0 : (double)(total_dias_infectados_curados[hilo] + total_dias_infectados_muertos[hilo]) / (curados[hilo] + muertos[hilo]);
-                sw.WriteLine(string.Format("{0,3} {1,10} {2,10} {3,10} {4,10} {5,10} {6,10} {7,10:f2} {8,10:f2} {9,10:f1} {10,10:f2} {11,10} {12,10} {13,10} {14,10} {15,10} {16,10} {17,10} {18,10}", i + 1, sanos[hilo], infectados[hilo], importados[hilo], curados[hilo], desinmunizados[hilo], muertos[hilo], recorrido_individuo_activo, contactos_de_riesgo, media_dias_infectado, R0, contagios_cercania[hilo], contagios_clusters[hilo], infectados_total_clusters[hilo], curados_total_clusters[hilo], muertos_total_clusters[hilo], enfermos[hilo], hospitalizados[hilo], infectados_ambientales[hilo]));
+                media_dias_infectado = suma[3] + suma[5] == 0 ? 0 : (double)(total_dias_infectados_curados[hilo] + total_dias_infectados_muertos[hilo]) / (suma[3] + suma[5]);
+                sw.WriteLine(string.Format("{0,3} {1,10} {2,10} {3,10} {4,10} {5,10} {6,10} {7,10:f2} {8,10:f2} {9,10:f1} {10,10:f2} {11,10} {12,10} {13,10} {14,10} {15,10} {16,10} {17,10} {18,10} {19,10} {20,10} {21,10} {22,10:f2}", i + 1, suma[0], suma[1], suma[2], suma[3], suma[4], suma[5], recorrido_individuo_activo, contactos_de_riesgo, media_dias_infectado, R0, contagios_cercania[hilo], contagios_clusters[hilo], infectados_total_clusters[hilo], curados_total_clusters[hilo], muertos_total_clusters[hilo], suma[6], suma[7], suma[8], suma_graves[0], suma_graves[1], suma_graves[2], R0_graves));
                 sw.Flush();
-                resultados[hilo].Add(new Resultado(i + 1, sanos[hilo], infectados[hilo], importados[hilo], curados[hilo], desinmunizados[hilo], muertos[hilo], recorrido_individuo_activo, contactos_de_riesgo, media_dias_infectado, R0, contagios_cercania[hilo], contagios_clusters[hilo], infectados_total_clusters[hilo], curados_total_clusters[hilo], muertos_total_clusters[hilo], enfermos[hilo], hospitalizados[hilo], infectados_ambientales[hilo]));
+                resultados[hilo].Add(new Resultado(i + 1, suma[0], suma[1], suma[2], suma[3], suma[4], suma[5], recorrido_individuo_activo, contactos_de_riesgo, media_dias_infectado, R0, contagios_cercania[hilo], contagios_clusters[hilo], infectados_total_clusters[hilo], curados_total_clusters[hilo], muertos_total_clusters[hilo], suma[6], suma[7], suma[8], suma_graves[0], suma_graves[1], suma_graves[2], R0_graves));
                 dias_sim = i + 1;
                 try
                 {
@@ -2631,7 +2886,8 @@ namespace Contagio
                     catch { }
                     return -1;
                 }
-                if (infectados[hilo] == 0 && (N_FOCOS_IMPORTADOS == 0 || (N_FOCOS_IMPORTADOS > 0 && sanos[hilo] == 0)))
+
+                if (suma[1] == 0 && (N_FOCOS_IMPORTADOS == 0 || (N_FOCOS_IMPORTADOS > 0 && suma[0] == 0)))
                 {
                     break;
                 }
@@ -2657,10 +2913,27 @@ namespace Contagio
                 catch { }
                 return "0";
             }
-            sw.WriteLine("--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------");
-            sw.WriteLine("Día     Sanos  Infectados Importados    Curados Desinmuniz    Muertos     Ida     críticos  infectados         R0   Cercania   Clusters Infectados    Curados    Muertos   Enfermos Hospitaliz  Ambiental");
+            sw.WriteLine("--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------");
+            sw.WriteLine("Día     Sanos  Infectados Importados    Curados Desinmuniz    Muertos     Ida     críticos  infectados         R0   Cercania   Clusters Infectados    Curados    Muertos  Indirecto   Enfermos Hospitaliz Infectados    Curados    Muertos         R0");
             sw.WriteLine();
-            sw.WriteLine(string.Format("Infectados importados           {0,20:N0}", importados[hilo]));
+            long[] sumas = new long[9];
+            for (int j = 0; j < sumas.Length; j++)
+            {
+                sumas[j] = 0;
+            }
+            for (int j = 0; j < NUM_TIPOS; j++)
+            {
+                sumas[0] += sanos[hilo, j];
+                sumas[1] += infectados[hilo, j];
+                sumas[2] += importados[hilo, j];
+                sumas[3] += curados[hilo, j];
+                sumas[4] += desinmunizados[hilo, j];
+                sumas[5] += muertos[hilo, j];
+                sumas[6] += infectados_indirectos[hilo, j];
+                sumas[7] += enfermos[hilo, j];
+                sumas[8] += hospitalizados[hilo, j];
+            }
+            sw.WriteLine(string.Format("Infectados importados           {0,20:N0}", sumas[1]));
             sw.WriteLine();
             sw.WriteLine(string.Format("Total pasos                     {0,20:N0}", total_pasos[hilo]));
             sw.WriteLine(string.Format("Total recorridos                {0,20:N0}", total_recorridos[hilo]));
@@ -2668,16 +2941,16 @@ namespace Contagio
             sw.WriteLine(string.Format("Contactos de riesgo             {0,20:N0}", total_contactos_de_riesgo[hilo]));
             sw.WriteLine(string.Format("Acumulador infectados           {0,20:N0}", acumulador_infectados[hilo]));
             sw.WriteLine();
-            sw.WriteLine(string.Format("Total días infectados (curados) {0,20:N0} {1,10:f2}", total_dias_infectados_curados[hilo], curados[hilo] == 0 ? 0 : total_dias_infectados_curados[hilo] / curados[hilo]));
-            sw.WriteLine(string.Format("Total días infectados (muertos) {0,20:N0} {1,10:f2}", total_dias_infectados_muertos[hilo], muertos[hilo] == 0 ? 0 : total_dias_infectados_muertos[hilo] / muertos[hilo]));
-            sw.WriteLine(string.Format("Total días infectados           {0,20:N0} {1,10:f2}", total_dias_infectados_curados[hilo] + total_dias_infectados_muertos[hilo], muertos[hilo] == 0 ? 0 : (total_dias_infectados_curados[hilo] + total_dias_infectados_muertos[hilo]) / (curados[hilo] + muertos[hilo])));
+            sw.WriteLine(string.Format("Total días infectados (curados) {0,20:N0} {1,10:f2}", total_dias_infectados_curados[hilo], sumas[3] == 0 ? 0 : total_dias_infectados_curados[hilo] / sumas[3]));
+            sw.WriteLine(string.Format("Total días infectados (muertos) {0,20:N0} {1,10:f2}", total_dias_infectados_muertos[hilo], sumas[5] == 0 ? 0 : total_dias_infectados_muertos[hilo] / sumas[5]));
+            sw.WriteLine(string.Format("Total días infectados           {0,20:N0} {1,10:f2}", total_dias_infectados_curados[hilo] + total_dias_infectados_muertos[hilo], (sumas[3] + sumas[5]) == 0 ? 0 : (total_dias_infectados_curados[hilo] + total_dias_infectados_muertos[hilo]) / (sumas[3] + sumas[5])));
             sw.WriteLine();
             string tiempo = string.Format("{0} {1:N0} días. {2:f1} s", texto, dias_sim, dt.TotalMilliseconds / 1000.0d);
             sw.WriteLine(tiempo);
             sw.WriteLine();
             sw.Close();
             //Distancias(-1);
-            string carpeta = string.Format(@"{0}:\{1}\{2}", U_SALIDAS, CARPETA_SALIDAS, PREFIJO);
+            string carpeta = string.Format(@"{0}:\{1}\{2}", U_SALIDAS, CARPETA_SALIDAS, CARPETA);
             if (!Directory.Exists(carpeta)) Directory.CreateDirectory(carpeta);
             string fichero = string.Format(@"{0}\saux{1:D3}.log", carpeta, hilo + 1);
             FileStream fw = new FileStream(fichero, FileMode.Append, FileAccess.Write, FileShare.Read);
@@ -2762,6 +3035,25 @@ namespace Contagio
                 sw.WriteLine();
             }
             sw.Close();
+            string fichero_t = string.Format(@"{0}\st{1:D3}.log", carpeta, hilo + 1);
+            FileStream fw_t = new FileStream(fichero_t, FileMode.Append, FileAccess.Write, FileShare.Read);
+            StreamWriter sw_t = new StreamWriter(fw_t);
+            ResTipo r;
+            for (int j = 0; j < NUM_TIPOS; j++)
+            {
+                sw_t.WriteLine(string.Format("Tipo {0}", j));
+                sw_t.WriteLine("Día     Sanos  Infectados Importados    Curados Desinmuniz    Muertos Inf.Indire   Enfermos Hospitaliz");
+                sw_t.WriteLine("--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------");
+                for (int i = 0; i < dias_sim; i++)
+                {
+                    r = restipos[hilo, j].ElementAt(i);
+                    if (r == null) break;
+                    sw_t.WriteLine(string.Format("{0,3} {1,10} {2,10} {3,10} {4,10} {5,10} {6,10} {7,10} {8,10} {9,10}", i + 1, r.r_sanos, r.r_infectados, r.r_importados, r.r_curados, r.r_desinmunizados, r.r_muertos, r.r_infectados_indirectos, r.r_enfermos, r.r_hospitalizados));
+                }
+                sw_t.WriteLine("--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------");
+                sw_t.WriteLine();
+            }
+            sw_t.Close();
             return tiempo;
         }
         private void CabeceraSalida(StreamWriter sw, int hilo)
@@ -2770,7 +3062,7 @@ namespace Contagio
             sw.WriteLine(string.Format("Simulador de contagios. {0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()));
             sw.WriteLine(string.Format("{0:D2}/{1:D2}/{2:D4} {3:D2}:{4:D2}:{5:D2}", DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second));
             sw.WriteLine("--------------------------------------------------------------------------------------------------");
-            sw.WriteLine(string.Format("Prefijo {0}", PREFIJO));
+            sw.WriteLine(string.Format("Carpeta {0}", CARPETA));
             sw.WriteLine(string.Format("Número de hilos                    {0,12:N0}", NUM_HILOS));
             sw.WriteLine(string.Format("Semilla población                  {0,12:N0}", SEMILLA_POBLACION));
             sw.WriteLine(string.Format("Semilla simulación                 {0,12:N0}", SEMILLA_SIMULACION + hilo));
@@ -2789,7 +3081,7 @@ namespace Contagio
             sw.WriteLine(string.Format("Probabilidad de hospitalización    {0,12:f2} %", 100.0 * PROB_HOSPITALIZACION));
             sw.WriteLine(string.Format("Factor prob. contagio hospitalizad {0,12:f2} %", 100.0 * F_PROB_HOSPITALIZADO));
             sw.WriteLine(string.Format("Densidad crítica de vecinos infect {0,12:f2} %", 100.0 * DENSIDAD_VECINOS));
-            sw.WriteLine(string.Format("Probabilidad contagio ambiental    {0,12:f2} %", 100.0 * PROB_AMBIENTAL));
+            sw.WriteLine(string.Format("Probabilidad contagio indirecta    {0,12:f2} %", 100.0 * PROB_INDIRECTA));
             sw.WriteLine();
             sw.WriteLine(string.Format("Número de focos iniciales          {0,12:N0}", N_FOCOS_INICIALES));
             sw.WriteLine(string.Format("Número de inmunes iniciales        {0,12:N0}", N_INMUNES_INICIALES));
@@ -2830,9 +3122,9 @@ namespace Contagio
             sw.WriteLine(string.Format("Número clusters generados          {0,12:N0} con {1,12:N0} individuos, {2,12:N0} infectados de inicio", shnumeroclusters, shindividuos, shinfectados));
             sw.WriteLine(string.Format("Factor individuos por cluster      {0,12:f2}", FACTOR_INDIVIDUOS_CLUSTER));
             sw.WriteLine();
-            sw.WriteLine("                        - Edad- % Factor B    Días         %      Num.Pasos      %                          %      Individuos ");
-            sw.WriteLine("Grupo            Género Min Max   Contagio  Duración    Curación   Min   Max Individuos   Individuos     clusters    cluster  ");
-            sw.WriteLine("---------------- ------ --- --- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------");
+            sw.WriteLine("                        - Edad-      %     % Factor B    Días         %      Num.Pasos      %                          %      Individuos ");
+            sw.WriteLine("Grupo            Género Min Max   Gravedad   Contagio  Duración    Curación   Min   Max Individuos   Individuos     clusters    cluster  ");
+            sw.WriteLine("---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------");
             sw.Flush();
             int n = 0;
             long i_g;
@@ -2851,15 +3143,15 @@ namespace Contagio
                 {
                     i_g = indi_grupos[hilo, n];
                 }
-                sw.WriteLine(string.Format("{0,-16} {1,6} {2,3:N0} {3,3:N0} {4,10:f1} {5,10:f1} {6,10:f1} {7,5:N0} {8,5:N0} {9,10:f2} {10,12:N0} {11,12:f1} {12,12:N0}", gt.grupo, gt.genero, gt.edad_min, gt.edad_max, gt.prob_contagio, gt.duracion_infeccion, gt.prob_curacion, gt.pasos_min, gt.pasos_max, gt.fraccion_poblacion, i_g, gt.fraccion_clusters, gt.individuos_c));
+                sw.WriteLine(string.Format("{0,-16} {1,6} {2,3:N0} {3,3:N0} {4,10:f2} {5,10:f2} {6,10:f2} {7,10:f2} {8,5:N0} {9,5:N0} {10,10:f2} {11,12:N0} {11,12:f1} {12,12:N0}", gt.grupo, gt.tipo, gt.edad_min, gt.edad_max, gt.gravedad, gt.prob_contagio, gt.duracion_infeccion, gt.prob_curacion, gt.pasos_min, gt.pasos_max, gt.fraccion_poblacion, i_g, gt.fraccion_clusters, gt.individuos_c));
                 n++;
             }
-            sw.WriteLine("---------------- ------ --- --- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------");
+            sw.WriteLine("---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------");
             sw.WriteLine();
             sw.WriteLine("Valores al final del día");
-            sw.WriteLine("                                                                       Recorrido  Contactos Media días            ------ Afectados ---- ----------  Clusters -----------");
-            sw.WriteLine("Día     Sanos  Infectados Importados    Curados Desinmuniz    Muertos     Ida     críticos  infectados         R0   Cercania   Clusters Infectados    Curados    Muertos   Enfermos Hospitaliz  Ambiental");
-            sw.WriteLine("--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------");
+            sw.WriteLine("                                                                       Recorrido  Contactos Media días            ------ Afectados ---- ----------  Clusters -----------                                  -----------------  GRAVES  ----------------");
+            sw.WriteLine("Día     Sanos  Infectados Importados    Curados Desinmuniz    Muertos     Ida     críticos  infectados         R0   Cercania   Clusters Infectados    Curados    Muertos  Indirecto   Enfermos Hospitaliz Infectados    Curados    Muertos         R0");
+            sw.WriteLine("--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------");
             sw.Flush();
         }
         private void ClustersInicio(StreamWriter sw, int hilo)
@@ -2971,24 +3263,28 @@ namespace Contagio
         {
             if (resultados[0] == null) return;
             int datos;
-            long sanos;
-            long infectados;
-            long importados;
-            long curados;
-            long desinmunizados;
-            long muertos;
-            double recorrido_individuo_activo;
-            double contactos_de_riesgo;
-            double media_dias_infectado;
-            double R0;
-            long contagios_cercania;
-            long contagios_clusters;
-            long infectados_total_clusters;
-            long curados_total_clusters;
-            long muertos_total_clusters;
-            long enfermos;
-            long hospitalizados;
-            long infectados_ambientales;
+            long m_sanos;
+            long m_infectados;
+            long m_importados;
+            long m_curados;
+            long m_desinmunizados;
+            long m_muertos;
+            double m_recorrido_individuo_activo;
+            double m_contactos_de_riesgo;
+            double m_media_dias_infectado;
+            double m_R0;
+            long m_contagios_cercania;
+            long m_contagios_clusters;
+            long m_infectados_total_clusters;
+            long m_curados_total_clusters;
+            long m_muertos_total_clusters;
+            long m_infectados_indirectos;
+            long m_enfermos;
+            long m_hospitalizados;
+            long m_infectados_graves;
+            long m_curados_graves;
+            long m_muertos_graves;
+            double m_R0_graves;
             Resultado r;
             List<Resultado> acumulado = new List<Resultado>();
             int max_dias = resultados[0].Count;
@@ -3002,55 +3298,63 @@ namespace Contagio
             for (int i = 0; i < max_dias; i++)
             {
                 datos = 0;
-                sanos = 0;
-                infectados = 0;
-                importados = 0;
-                curados = 0;
-                desinmunizados = 0;
-                muertos = 0;
-                recorrido_individuo_activo = 0;
-                contactos_de_riesgo = 0;
-                media_dias_infectado = 0;
-                R0 = 0;
-                contagios_cercania = 0;
-                contagios_clusters = 0;
-                infectados_total_clusters = 0;
-                curados_total_clusters = 0;
-                muertos_total_clusters = 0;
-                enfermos = 0;
-                hospitalizados = 0;
-                infectados_ambientales = 0;
+                m_sanos = 0;
+                m_infectados = 0;
+                m_importados = 0;
+                m_curados = 0;
+                m_desinmunizados = 0;
+                m_muertos = 0;
+                m_recorrido_individuo_activo = 0;
+                m_contactos_de_riesgo = 0;
+                m_media_dias_infectado = 0;
+                m_R0 = 0;
+                m_contagios_cercania = 0;
+                m_contagios_clusters = 0;
+                m_infectados_total_clusters = 0;
+                m_curados_total_clusters = 0;
+                m_muertos_total_clusters = 0;
+                m_infectados_indirectos = 0;
+                m_enfermos = 0;
+                m_hospitalizados = 0;
+                m_infectados_graves = 0;
+                m_curados_graves = 0;
+                m_muertos_graves = 0;
+                m_R0_graves = 0;
                 for (int n = 0; n < nh; n++)
                 {
                     if (resultados[n] == null || resultados[n].Count <= i) continue;
                     r = resultados[n].ElementAt(i);
                     datos++;
-                    sanos += r.sanos;
-                    infectados += r.infectados;
-                    importados += r.importados;
-                    curados += r.curados;
-                    desinmunizados += r.desinmunizados;
-                    muertos += r.muertos;
-                    recorrido_individuo_activo += r.recorrido_individuo_activo;
-                    contactos_de_riesgo += r.contactos_de_riesgo;
-                    media_dias_infectado += r.media_dias_infectado;
-                    R0 += r.R0;
-                    contagios_cercania += r.contagios_cercania;
-                    contagios_clusters += r.contagios_clusters;
-                    infectados_total_clusters += r.infectados_total_clusters;
-                    curados_total_clusters += r.curados_total_clusters;
-                    muertos_total_clusters += r.muertos_total_clusters;
-                    enfermos += r.enfermos;
-                    hospitalizados += r.hospitalizados;
-                    infectados_ambientales += r.infectados_ambientales;
+                    m_sanos += r.r_sanos;
+                    m_infectados += r.r_infectados;
+                    m_importados += r.r_importados;
+                    m_curados += r.r_curados;
+                    m_desinmunizados += r.r_desinmunizados;
+                    m_muertos += r.r_muertos;
+                    m_recorrido_individuo_activo += r.r_recorrido_individuo_activo;
+                    m_contactos_de_riesgo += r.r_contactos_de_riesgo;
+                    m_media_dias_infectado += r.r_media_dias_infectado;
+                    m_R0 += r.r_R0;
+                    m_contagios_cercania += r.r_contagios_cercania;
+                    m_contagios_clusters += r.r_contagios_clusters;
+                    m_infectados_total_clusters += r.r_infectados_total_clusters;
+                    m_curados_total_clusters += r.r_curados_total_clusters;
+                    m_muertos_total_clusters += r.r_muertos_total_clusters;
+                    m_infectados_indirectos += r.r_infectados_indirectos;
+                    m_enfermos += r.r_enfermos;
+                    m_hospitalizados += r.r_hospitalizados;
+                    m_infectados_graves += r.r_infectados_graves;
+                    m_curados_graves += r.r_curados_graves;
+                    m_muertos_graves += r.r_muertos_graves;
+                    m_R0_graves += r.r_R0_graves;
                 }
                 if (datos == 0)
                 {
                     datos = 1;
                 }
-                acumulado.Add(new Resultado(datos, sanos, infectados, importados, curados, desinmunizados, muertos, recorrido_individuo_activo, contactos_de_riesgo, media_dias_infectado, R0, contagios_cercania, contagios_clusters, infectados_total_clusters, curados_total_clusters, muertos_total_clusters, enfermos, hospitalizados, infectados_ambientales));
+                acumulado.Add(new Resultado(datos, m_sanos, m_infectados, m_importados, m_curados, m_desinmunizados, m_muertos, m_recorrido_individuo_activo, m_contactos_de_riesgo, m_media_dias_infectado, m_R0, m_contagios_cercania, m_contagios_clusters, m_infectados_total_clusters, m_curados_total_clusters, m_muertos_total_clusters, m_infectados_indirectos, m_enfermos, m_hospitalizados, m_infectados_graves, m_curados_graves, m_muertos_graves, m_R0_graves));
             }
-            string carpeta = string.Format(@"{0}:\{1}\{2}", U_SALIDAS, CARPETA_SALIDAS, PREFIJO);
+            string carpeta = string.Format(@"{0}:\{1}\{2}", U_SALIDAS, CARPETA_SALIDAS, CARPETA);
             if (!Directory.Exists(carpeta)) Directory.CreateDirectory(carpeta);
             string fichero = string.Format(@"{0}\s.log", carpeta);
             FileStream fw = new FileStream(fichero, FileMode.Append, FileAccess.Write, FileShare.Read);
@@ -3060,46 +3364,110 @@ namespace Contagio
             for (int n = 0; n < acumulado.Count; n++)
             {
                 r = acumulado.ElementAt(n);
-                divisor = (double)r.dia;
+                divisor = (double)r.r_dia;
                 sw.WriteLine(string.Format(
-                    "{0,3} {1,10} {2,10} {3,10} {4,10} {5,10} {6,10} {7,10:f2} {8,10:f2} {9,10:f1} {10,10:f2} {11,10} {12,10} {13,10} {14,10} {15,10} {16,10} {17,10} {18,10}",
+                    "{0,3} {1,10} {2,10} {3,10} {4,10} {5,10} {6,10} {7,10:f2} {8,10:f2} {9,10:f1} {10,10:f2} {11,10} {12,10} {13,10} {14,10} {15,10} {16,10} {17,10} {18,10} {19,10} {20,10} {21,10} {22,10:f2}",
                     n + 1,
-                    (int)(r.sanos / divisor),
-                    (int)(r.infectados / divisor),
-                    (int)(r.importados / divisor),
-                    (int)(r.curados / divisor),
-                    (int)(r.desinmunizados / divisor),
-                    (int)(r.muertos / divisor),
-                    r.recorrido_individuo_activo / divisor,
-                    r.contactos_de_riesgo / divisor,
-                    r.media_dias_infectado / divisor,
-                    r.R0 / divisor,
-                    (int)(r.contagios_cercania / divisor),
-                    (int)(r.contagios_clusters / divisor),
-                    (int)(r.infectados_total_clusters / divisor),
-                    (int)(r.curados_total_clusters / divisor),
-                    (int)(r.muertos_total_clusters / divisor),
-                    (int)(r.enfermos / divisor),
-                    (int)(r.hospitalizados / divisor),
-                    (int)(r.infectados_ambientales / divisor)));
+                    (int)(r.r_sanos / divisor),
+                    (int)(r.r_infectados / divisor),
+                    (int)(r.r_importados / divisor),
+                    (int)(r.r_curados / divisor),
+                    (int)(r.r_desinmunizados / divisor),
+                    (int)(r.r_muertos / divisor),
+                    r.r_recorrido_individuo_activo / divisor,
+                    r.r_contactos_de_riesgo / divisor,
+                    r.r_media_dias_infectado / divisor,
+                    r.r_R0 / divisor,
+                    (int)(r.r_contagios_cercania / divisor),
+                    (int)(r.r_contagios_clusters / divisor),
+                    (int)(r.r_infectados_total_clusters / divisor),
+                    (int)(r.r_curados_total_clusters / divisor),
+                    (int)(r.r_muertos_total_clusters / divisor),
+                    (int)(r.r_infectados_indirectos / divisor),
+                    (int)(r.r_enfermos / divisor),
+                    (int)(r.r_hospitalizados / divisor),
+                    (int)(r.r_infectados_graves / divisor),
+                    (int)(r.r_curados_graves / divisor),
+                    (int)(r.r_muertos_graves / divisor),
+                    r.r_R0_graves / divisor));
             }
-            sw.WriteLine("--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------");
-            sw.WriteLine("Día     Sanos  Infectados Importados    Curados Desinmuniz    Muertos     Ida     críticos  infectados         R0   Cercania   Clusters Infectados    Curados    Muertos   Enfermos Hospitaliz  Ambiental");
+            sw.WriteLine("--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------");
+            sw.WriteLine("Día     Sanos  Infectados Importados    Curados Desinmuniz    Muertos     Ida     críticos  infectados         R0   Cercania   Clusters Infectados    Curados    Muertos  Indirecto   Enfermos Hospitaliz Infectados    Curados    Muertos         R0");
             sw.WriteLine();
             string tiempo;
             if (cancelar)
             {
-                tiempo = string.Format("Simular [{0}]. Cancelada. {1:f1} s", PREFIJO, dt.TotalMilliseconds / 1000.0d);
+                tiempo = string.Format("Simulación [{0}]. Cancelada. {1:f1} s", CARPETA, dt.TotalMilliseconds / 1000.0d);
             }
             else
             {
-                tiempo = string.Format("Simular [{0}]. Terminada. {1:f1} s", PREFIJO, dt.TotalMilliseconds / 1000.0d);
+                tiempo = string.Format("Simulación [{0}]. Terminada. {1:f1} s", CARPETA, dt.TotalMilliseconds / 1000.0d);
 
             }
             sw.WriteLine(tiempo);
             sw.WriteLine();
             sw.Close();
-            MessageBox.Show(tiempo, PREFIJO, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string fichero_t = string.Format(@"{0}\st.log", carpeta);
+            FileStream fw_t = new FileStream(fichero_t, FileMode.Append, FileAccess.Write, FileShare.Read);
+            StreamWriter sw_t = new StreamWriter(fw_t);
+            ResTipo rt;
+            long r_sanos;
+            long r_infectados;
+            long r_importados;
+            long r_curados;
+            long r_desinmunizados;
+            long r_muertos;
+            long r_infectados_indirectos;
+            long r_enfermos;
+            long r_hospitalizados;
+            for (int j = 0; j < NUM_TIPOS; j++)
+            {
+                sw_t.WriteLine(string.Format("Tipo {0}", j));
+                sw_t.WriteLine("Día     Sanos  Infectados Importados    Curados Desinmuniz    Muertos Inf.Indire   Enfermos Hospitaliz");
+                sw_t.WriteLine("--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------");
+                for (int i = 0; i < max_dias; i++)
+                {
+                    r_sanos = 0;
+                    r_infectados = 0;
+                    r_importados = 0;
+                    r_curados = 0;
+                    r_desinmunizados = 0;
+                    r_muertos = 0;
+                    r_infectados_indirectos = 0;
+                    r_enfermos = 0;
+                    r_hospitalizados = 0;
+                    for (int k = 0; k < NUM_HILOS; k++)
+                    {
+                        if (restipos[k, j] == null || restipos[k, j].Count <= i) break;
+                        rt = restipos[k, j].ElementAt(i);
+                        r_sanos += rt.r_sanos;
+                        r_infectados += rt.r_infectados;
+                        r_importados += rt.r_importados;
+                        r_curados += rt.r_curados;
+                        r_desinmunizados += rt.r_desinmunizados;
+                        r_muertos += rt.r_muertos;
+                        r_infectados_indirectos += rt.r_infectados_indirectos;
+                        r_enfermos += rt.r_enfermos;
+                        r_hospitalizados += rt.r_hospitalizados;
+                    }
+                    sw_t.WriteLine(string.Format("{0,3} {1,10} {2,10} {3,10} {4,10} {5,10} {6,10} {7,10} {8,10} {9,10}",
+                        i + 1,
+                        (long)(r_sanos / NUM_HILOS),
+                        (long)(r_infectados / NUM_HILOS),
+                        (long)(r_importados / NUM_HILOS),
+                        (long)(r_curados / NUM_HILOS),
+                        (long)(r_desinmunizados / NUM_HILOS),
+                        (long)(r_muertos / NUM_HILOS),
+                        (long)(r_infectados_indirectos / NUM_HILOS),
+                        (long)(r_enfermos / NUM_HILOS),
+                        (long)(r_hospitalizados / NUM_HILOS)
+                        ));
+                }
+                sw_t.WriteLine("--- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------");
+                sw_t.WriteLine();
+            }
+            sw_t.Close();
+            MessageBox.Show(tiempo, CARPETA, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private int ContagiosDiaVecinos(int hilo)
         {
@@ -3135,17 +3503,19 @@ namespace Contagio
                 puntero_activos.Add(indi_aux.ID, indi_activos.Count);
                 indi_activos.Add(indi_aux);
             }
-            int pasos = 0;
 
             // Caminan todos menos los curados y los muertos
 
-            long pendientes_de_volver = sanos[hilo] + desinmunizados[hilo] + infectados[hilo];
+            long pendientes_de_volver = 0;
+            for (int i = 0; i < NUM_TIPOS; i++)
+            {
+                pendientes_de_volver += sanos[hilo, i] + desinmunizados[hilo, i] + infectados[hilo, i];
+            }
             while (true)
             {
                 // Caminos de ida y vuelta
                 // Los individuos dan un paso tras otro, hasta que no quede ninguno 'pendiente' de volver al punto de partida
 
-                pasos++;
                 foreach (Individuo indi in indi_activos)
                 {
                     if (cancelar)
@@ -3234,12 +3604,15 @@ namespace Contagio
                 double d;
                 int i;
                 int j;
-                Grupo g_indi;
+                Grupo g_indi_i;
+                Grupo g_indi_j;
                 Individuo indi_j;
                 double p_contagio_de_i;
                 double p_contagio_de_j;
                 double p_contagio_de_i_a_j;
                 double p_contagio_de_j_a_i;
+                double p_gravedad_i;
+                double p_gravedad_j;
                 foreach (Individuo indi_i in indi_activos)
                 {
                     if (cancelar)
@@ -3247,8 +3620,9 @@ namespace Contagio
                         return -1;
                     }
                     i = indi_i.ID;
-                    g_indi = grupos_hilo[hilo].ElementAt(indi_i.grupo_ID);
-                    p_contagio_de_i = g_indi.prob_contagio / 100.0;
+                    g_indi_i = grupos_hilo[hilo].ElementAt(indi_i.grupo_ID);
+                    p_contagio_de_i = g_indi_i.prob_contagio / 100.0;
+                    p_gravedad_i = g_indi_i.gravedad / 100.0;
                     if (indi_i.hospitalizado)
                     {
                         p_contagio_de_i_a_j = F_PROB_HOSPITALIZADO;
@@ -3271,8 +3645,9 @@ namespace Contagio
                         d = x * x + y * y;
                         if (d < CONTACTO2)
                         {
-                            g_indi = grupos_hilo[hilo].ElementAt(indi_j.grupo_ID);
-                            p_contagio_de_j = g_indi.prob_contagio / 100.0;
+                            g_indi_j = grupos_hilo[hilo].ElementAt(indi_j.grupo_ID);
+                            p_contagio_de_j = g_indi_j.prob_contagio / 100.0;
+                            p_gravedad_j = g_indi_j.gravedad / 100.0;
                             if (indi_j.hospitalizado)
                             {
                                 p_contagio_de_j_a_i = F_PROB_HOSPITALIZADO;
@@ -3300,20 +3675,28 @@ namespace Contagio
 
                                     if (indi_i.estado == 0)
                                     {
-                                        sanos[hilo]--;
+                                        sanos[hilo, g_indi_i.tipo]--;
                                     }
                                     else
                                     {
-                                        desinmunizados[hilo]--;
+                                        desinmunizados[hilo, g_indi_i.tipo]--;
                                     }
                                     indi_i.estado = 1;
-                                    infectados[hilo]++;
+                                    infectados[hilo, g_indi_i.tipo]++;
                                     infectados_grupo[hilo, indi_i.grupo_ID]++;
 
                                     // Una muesca más en la culata de 'indi_j'
 
                                     indi_j.indi_enfermados++;
                                     contagios_cercania[hilo]++;
+
+                                    // Gravedad
+
+                                    if (hiloAzar[hilo].NextDouble() < p_gravedad_i)
+                                    {
+                                        indi_i.grave = true;
+                                        infectados_graves[hilo, g_indi_i.tipo]++;
+                                    }
                                 }
                             }
                             else if (indi_i.estado == 1 && indi_i.dias_infectado >= CARENCIA_CONTAGIAR && (indi_j.estado == 0 || indi_j.estado == 3))
@@ -3328,20 +3711,28 @@ namespace Contagio
 
                                     if (indi_j.estado == 0)
                                     {
-                                        sanos[hilo]--;
+                                        sanos[hilo, g_indi_j.tipo]--;
                                     }
                                     else
                                     {
-                                        desinmunizados[hilo]--;
+                                        desinmunizados[hilo, g_indi_j.tipo]--;
                                     }
                                     indi_j.estado = 1;
-                                    infectados[hilo]++;
+                                    infectados[hilo, g_indi_j.tipo]++;
                                     infectados_grupo[hilo, indi_j.grupo_ID]++;
 
                                     // Una muesca más en la culata de 'indi_i'
 
                                     indi_i.indi_enfermados++;
                                     contagios_cercania[hilo]++;
+
+                                    // Gravedad
+
+                                    if (hiloAzar[hilo].NextDouble() < p_gravedad_j)
+                                    {
+                                        indi_j.grave = true;
+                                        infectados_graves[hilo, g_indi_j.tipo]++;
+                                    }
                                 }
                             }
                         }
@@ -3368,6 +3759,8 @@ namespace Contagio
             double p_contagio_de_j;
             double p_contagio_de_i_a_j;
             double p_contagio_de_j_a_i;
+            double p_gravedad_i;
+            double p_gravedad_j;
             for (int n = 0; n < NUMERO_CLUSTERS[hilo]; n++)
             {
                 for (int i = 0; i < individuos_cluster[hilo, n].Count; i++)
@@ -3375,6 +3768,7 @@ namespace Contagio
                     indi_i = individuos_cluster[hilo, n].ElementAt(i);
                     g_indi_i = grupos_hilo[hilo].ElementAt(indi_i.grupo_ID);
                     p_contagio_de_i = g_indi_i.prob_contagio / 100.0;
+                    p_gravedad_i = g_indi_i.gravedad / 100.0;
                     if (indi_i.hospitalizado)
                     {
                         p_contagio_de_i_a_j = F_PROB_HOSPITALIZADO;
@@ -3393,6 +3787,7 @@ namespace Contagio
                         indi_j = individuos_cluster[hilo, n].ElementAt(j);
                         g_indi_j = grupos_hilo[hilo].ElementAt(indi_j.grupo_ID);
                         p_contagio_de_j = g_indi_j.prob_contagio / 100.0;
+                        p_gravedad_j = g_indi_j.gravedad / 100.0;
                         if (indi_j.hospitalizado)
                         {
                             p_contagio_de_j_a_i = F_PROB_HOSPITALIZADO;
@@ -3416,14 +3811,14 @@ namespace Contagio
 
                                 if (indi_i.estado == 0)
                                 {
-                                    sanos[hilo]--;
+                                    sanos[hilo, g_indi_i.tipo]--;
                                 }
                                 else
                                 {
-                                    desinmunizados[hilo]--;
+                                    desinmunizados[hilo, g_indi_i.tipo]--;
                                 }
                                 indi_i.estado = 1;
-                                infectados[hilo]++;
+                                infectados[hilo, g_indi_i.tipo]++;
                                 infectados_grupo[hilo, indi_i.grupo_ID]++;
 
                                 // 'i' se ha contagiado en el cluster 'n'
@@ -3436,6 +3831,14 @@ namespace Contagio
 
                                 indi_j.indi_enfermados++;
                                 contagios_clusters[hilo]++;
+
+                                // Gravedad
+
+                                if (hiloAzar[hilo].NextDouble() < p_gravedad_i)
+                                {
+                                    indi_i.grave = true;
+                                    infectados_graves[hilo, g_indi_i.tipo]++;
+                                }
                             }
                         }
                         else if (indi_i.estado == 1 && indi_i.dias_infectado >= CARENCIA_CONTAGIAR && (indi_j.estado == 0 || indi_j.estado == 3))
@@ -3449,14 +3852,14 @@ namespace Contagio
 
                                 if (indi_j.estado == 0)
                                 {
-                                    sanos[hilo]--;
+                                    sanos[hilo, g_indi_j.tipo]--;
                                 }
                                 else
                                 {
-                                    desinmunizados[hilo]--;
+                                    desinmunizados[hilo, g_indi_j.tipo]--;
                                 }
                                 indi_j.estado = 1;
-                                infectados[hilo]++;
+                                infectados[hilo, g_indi_j.tipo]++;
                                 infectados_grupo[hilo, indi_j.grupo_ID]++;
 
                                 // 'j' se ha contagiado en el cluster 'n'
@@ -3469,6 +3872,14 @@ namespace Contagio
 
                                 indi_i.indi_enfermados++;
                                 contagios_clusters[hilo]++;
+
+                                // Gravedad
+
+                                if (hiloAzar[hilo].NextDouble() < p_gravedad_j)
+                                {
+                                    indi_j.grave = true;
+                                    infectados_graves[hilo, g_indi_j.tipo]++;
+                                }
                             }
                         }
                     }
@@ -3476,34 +3887,46 @@ namespace Contagio
             }
             return 0;
         }
-        private int ContagiosAmbientales(int hilo)
+        private int ContagiosIndirectos(int hilo)
         {
             double den;
             Individuo indi;
+            Grupo g;
+            double p_gravedad;
             for (int n = 0; n < individuos[hilo].Count; n++)
             {
                 den = DensidadVecinos(n, 0);
                 if (den > DENSIDAD_VECINOS)
                 {
                     indi = individuos[hilo].ElementAt(n);
+                    g = grupos_hilo[hilo].ElementAt(indi.grupo_ID);
+                    p_gravedad = g.gravedad / 100.0;
                     if (indi.estado == 0 || indi.estado == 3)
                     {
-                        if (hiloAzar[hilo].NextDouble() < PROB_AMBIENTAL)
+                        if (hiloAzar[hilo].NextDouble() < PROB_INDIRECTA)
                         {
                             // Infectado 
 
-                            infectados_ambientales[hilo]++;
+                            infectados_indirectos[hilo, g.tipo]++;
                             if (indi.estado == 0)
                             {
-                                sanos[hilo]--;
+                                sanos[hilo, g.tipo]--;
                             }
                             else
                             {
-                                desinmunizados[hilo]--;
+                                desinmunizados[hilo, g.tipo]--;
                             }
                             indi.estado = 1;
-                            infectados[hilo]++;
+                            infectados[hilo, g.tipo]++;
                             infectados_grupo[hilo, indi.grupo_ID]++;
+
+                            // Gravedad
+
+                            if (hiloAzar[hilo].NextDouble() < p_gravedad)
+                            {
+                                indi.grave = true;
+                                infectados_graves[hilo, g.tipo]++;
+                            }
                         }
                     }
                 }
@@ -3573,6 +3996,7 @@ namespace Contagio
                 MessageBox.Show("Error al leer el fichero " + fichero + Environment.NewLine + e.Message, "Importar población", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+            int tipo;
             int grupo_id;
             double xi;
             double yi;
@@ -3584,11 +4008,29 @@ namespace Contagio
             int contagiado_en_cluster;
             int enfermo;
             int hospitalizado;
+            int grave;
             individuos[hilo] = new List<Individuo>();
             infectados_grupo = new long[NUM_HILOS, MAX_GRUPOS];
             for (int i = 0; i < MAX_GRUPOS; i++)
             {
                 infectados_grupo[hilo, i] = 0;
+            }
+            for (int j = 0; j < MAX_TIPOS; j++)
+            {
+                for (int i = 0; i < NUM_HILOS; i++)
+                {
+                    sanos[i, j] = 0;
+                    infectados[i, j] = 0;
+                    curados[i, j] = 0;
+                    desinmunizados[i, j] = 0;
+                    muertos[i, j] = 0;
+                    enfermos[i, j] = 0;
+                    hospitalizados[i, j] = 0;
+
+                    infectados_graves[i, j] = 0;
+                    curados_graves[i, j] = 0;
+                    muertos_graves[i, j] = 0;
+                }
             }
 
             // Primero los individuos
@@ -3599,46 +4041,63 @@ namespace Contagio
             {
                 s = sr.ReadLine();
                 sd = s.Split(';');
-                if (sd.Length != 12)
+                if (sd.Length != 13)
                 {
                     MessageBox.Show(string.Format("Número incorrecto de campos: {0} {1}", sd.Length, s), "Importar individuos", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     if (sr != null) sr.Close();
                     return false;
                 }
-                grupo_id = Convert.ToInt32(sd[0]);
-                xi = Convert.ToDouble(sd[2]);
-                yi = Convert.ToDouble(sd[3]);
-                estado = Convert.ToInt32(sd[4]);
-                dias_infectado = Convert.ToInt32(sd[5]);
-                dias_curado = Convert.ToInt32(sd[6]);
-                indi_enfermados = Convert.ToInt32(sd[7]);
-                cluster = Convert.ToInt32(sd[8]);
-                contagiado_en_cluster = Convert.ToInt32(sd[9]);
-                enfermo = Convert.ToInt32(sd[10]);
-                hospitalizado = Convert.ToInt32(sd[11]);
+                tipo = Convert.ToInt32(sd[0]);
+                grupo_id = Convert.ToInt32(sd[1]);
+                xi = Convert.ToDouble(sd[3]);
+                yi = Convert.ToDouble(sd[4]);
+                estado = Convert.ToInt32(sd[5]);
+                dias_infectado = Convert.ToInt32(sd[6]);
+                dias_curado = Convert.ToInt32(sd[7]);
+                indi_enfermados = Convert.ToInt32(sd[8]);
+                cluster = Convert.ToInt32(sd[9]);
+                contagiado_en_cluster = Convert.ToInt32(sd[10]);
+                enfermo = Convert.ToInt32(sd[11]);
+                hospitalizado = Convert.ToInt32(sd[12]);
+                grave = Convert.ToInt32(sd[13]);
 
-                individuos[hilo].Add(new Individuo(individuos[hilo].Count, grupo_id, sd[1], xi, yi, estado, dias_infectado, dias_curado, indi_enfermados, cluster, contagiado_en_cluster == 1 ? true : false, enfermo == 1 ? true : false, hospitalizado == 1 ? true : false));
+                individuos[hilo].Add(new Individuo(individuos[hilo].Count, tipo, grupo_id, sd[2], xi, yi, estado, dias_infectado, dias_curado, indi_enfermados, cluster, contagiado_en_cluster == 1 ? true : false, enfermo == 1 ? true : false, hospitalizado == 1 ? true : false, grave == 1 ? true : false));
                 switch (estado)
                 {
                     case 0:
-                        sanos[hilo]++;
+                        sanos[hilo, tipo]++;
                         break;
                     case 1:
-                        infectados[hilo]++;
+                        infectados[hilo, tipo]++;
                         infectados_grupo[hilo, grupo_id]++;
                         break;
                     case 2:
-                        curados[hilo]++;
+                        curados[hilo, tipo]++;
                         break;
                     case 3:
-                        desinmunizados[hilo]++;
+                        desinmunizados[hilo, tipo]++;
                         break;
                     default:
-                        muertos[hilo]++;
+                        muertos[hilo, tipo]++;
                         break;
                 }
-                if (enfermo == 1) enfermos[hilo]++;
-                if (hospitalizado == 1) hospitalizados[hilo]++;
+                if (grave == 1)
+                {
+                    switch (estado)
+                    {
+                        case 1:
+                            infectados_graves[hilo, tipo]++;
+                            break;
+                        case 2:
+                            curados_graves[hilo, tipo]++;
+                            break;
+                        case -1:
+                            muertos_graves[hilo, tipo]++;
+                            break;
+                    }
+                }
+                if (enfermo == 1) enfermos[hilo, tipo]++;
+                if (hospitalizado == 1) hospitalizados[hilo, tipo]++;
             }
 
             // Ahora los clusters
@@ -3673,10 +4132,22 @@ namespace Contagio
             else
             {
                 string sal = string.Format("Importados {0:N0} individuos", individuos[hilo].Count);
-                sal += Environment.NewLine + string.Format("Sanos      {0:N0}", sanos[hilo]);
-                sal += Environment.NewLine + string.Format("Infectados {0:N0}", infectados[hilo]);
-                sal += Environment.NewLine + string.Format("Curados    {0:N0}", curados[hilo]);
-                sal += Environment.NewLine + string.Format("Muertos    {0:N0}", muertos[hilo]);
+                long[] sumas = new long[4];
+                for (int i = 0; i < sumas.Length; i++)
+                {
+                    sumas[i] = 0;
+                }
+                for (int i = 0; i < NUM_TIPOS; i++)
+                {
+                    sumas[0] += sanos[hilo, i];
+                    sumas[1] += infectados[hilo, i];
+                    sumas[2] += curados[hilo, i];
+                    sumas[3] += muertos[hilo, i];
+                }
+                sal += Environment.NewLine + string.Format("Sanos      {0:N0}", sumas[0]);
+                sal += Environment.NewLine + string.Format("Infectados {0:N0}", sumas[1]);
+                sal += Environment.NewLine + string.Format("Curados    {0:N0}", sumas[2]);
+                sal += Environment.NewLine + string.Format("Muertos    {0:N0}", sumas[3]);
                 MessageBox.Show(sal, "Importar individuos", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (individuos[hilo].Count < MAX_INDIVIDUOS_PARA_TABLA)
                 {
@@ -3715,7 +4186,7 @@ namespace Contagio
             sw.WriteLine(string.Format("{0}", individuos[hilo].Count));
             foreach (Individuo p in individuos[hilo])
             {
-                sw.WriteLine(string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11}", p.grupo_ID, p.grupo, p.xi, p.yi, p.estado, p.dias_infectado, p.dias_curado, p.indi_enfermados, p.cluster, p.contagio_en_cluster ? 1 : 0, p.enfermo ? 1 : 0, p.hospitalizado ? 1 : 0));
+                sw.WriteLine(string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{11};{12}", p.tipo, p.grupo_ID, p.grupo, p.xi, p.yi, p.estado, p.dias_infectado, p.dias_curado, p.indi_enfermados, p.cluster, p.contagio_en_cluster ? 1 : 0, p.enfermo ? 1 : 0, p.hospitalizado ? 1 : 0, p.grave ? 1 : 0));
             }
 
             // Luego los clusters

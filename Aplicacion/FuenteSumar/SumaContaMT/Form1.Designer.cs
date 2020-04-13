@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.senda_salida = new System.Windows.Forms.Label();
             this.b_ejecuta = new System.Windows.Forms.Button();
             this.sel_salida = new System.Windows.Forms.Button();
@@ -150,9 +151,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(302, 341);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 17);
+            this.label2.Size = new System.Drawing.Size(69, 17);
             this.label2.TabIndex = 296;
-            this.label2.Text = "Num Desv";
+            this.label2.Text = "Max Desv";
             // 
             // des_maxima
             // 
@@ -160,7 +161,7 @@
             this.des_maxima.Name = "des_maxima";
             this.des_maxima.Size = new System.Drawing.Size(42, 22);
             this.des_maxima.TabIndex = 295;
-            this.des_maxima.Text = "4";
+            this.des_maxima.Text = "2";
             this.des_maxima.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // add_fuentes
@@ -204,8 +205,10 @@
             this.Controls.Add(this.b_ejecuta);
             this.Controls.Add(this.sel_salida);
             this.Controls.Add(this.sel_fuente);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Suma salidas Contagios y ContaMT";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
