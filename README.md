@@ -6,4 +6,9 @@ La carpeta Casos contiene los párametros para cada uno de los casos simulados e
 
 En la carpeta Documentos se encuentra la última versión del artículo principal sobre este proyecto.
 
-# 13 de abril: Faltan 4 días para el pico al que llegaremos con 190.000 afectados (casos) y 150.000 contagiados
+## 13 de abril: Faltan 4 días para el pico al que llegaremos con 190.000 afectados (casos) y 150.000 contagiados
+
+![Ajuste del modelo al período de restricciones](/Imagenes/abril_13.png)
+
+
+
