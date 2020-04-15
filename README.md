@@ -6,9 +6,7 @@ La carpeta Casos contiene los párametros para cada uno de los casos simulados e
 
 En la carpeta Documentos se encuentra la última versión del artículo principal sobre este proyecto.
 
-## Estoy cambiando el concepto "contagiados" por "enfermos" que es más útil. Los resultados no serán significativamente distintos, pero ya hemos llegado al pico de enfermos
-
-![Ajuste del modelo al período de restricciones](/Imagenes/abril_14.png)
+## Una vez alcanzad el pico de enfermos, estoy recalibrando el modelo con los datos disponibles para analizar con más detalle la eliminación de las restricciones
 
 
 
