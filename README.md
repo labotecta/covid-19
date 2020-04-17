@@ -6,7 +6,7 @@ La carpeta Casos contiene los párametros para cada uno de los casos simulados e
 
 En la carpeta Documentos se encuentra la última versión del artículo principal sobre este proyecto.
 
-## Una vez alcanzado el pico de enfermos, estoy recalibrando el modelo con los datos disponibles para analizar con más detalle la eliminación de las restricciones
+## 17 de abril de 2020. Doy por terminado este proyecto con la última versión del artículo en la carpeta Documentos.
 
 
 
