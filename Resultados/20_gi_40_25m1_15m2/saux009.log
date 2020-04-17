@@ -1,0 +1,276 @@
+15/04/2020 21:26:41
+
+Cambio de condiciones el día 0
+Fichero de grupos            C:\Contagio\Casos\grupos_gi.ggg
+Número de clusters           50
+Próximo cambio en            40 días
+
+                        - Edad-      %     % Factor B    Días         %      Num.Pasos      %                          %      Individuos 
+Grupo            Género Min Max   Gravedad   Contagio  Duración    Curación   Min   Max Individuos   Individuos     clusters    cluster  
+---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+nene                  0   0   4     100,00       2,00      30,00     100,00    70    90       4,00            0          4,0           40
+menor                 1   5  19     100,00       4,00      30,00     100,00    80   120      15,00            0         15,0           60
+adulto                2  20  64     100,00      30,00      30,00      98,00    80   120      62,00            0         62,0          100
+jubilado              3  65  69     100,00    4500,00      30,00      85,00    80   120       5,00            0          5,0           50
+mayor                 4  70 150     100,00    2000,00      30,00      70,00    20    30      14,00            0         14,0           40
+---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+
+Situación inicial
+
+Cluster GID Grupo                Individuos     Sanos  Infectados    Curados Desinmuniz    Muertos
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ----------
+      1   0 nene                         40         40          0          0          0          0
+      2   0 nene                         40         40          0          0          0          0
+      3   1 menor                        60         60          0          0          0          0
+      4   1 menor                        60         60          0          0          0          0
+      5   1 menor                        60         60          0          0          0          0
+      6   1 menor                        60         60          0          0          0          0
+      7   1 menor                        60         60          0          0          0          0
+      8   1 menor                        60         60          0          0          0          0
+      9   1 menor                        60         60          0          0          0          0
+     10   2 adulto                      100        100          0          0          0          0
+     11   2 adulto                      100        100          0          0          0          0
+     12   2 adulto                      100        100          0          0          0          0
+     13   2 adulto                      100        100          0          0          0          0
+     14   2 adulto                      100        100          0          0          0          0
+     15   2 adulto                      100        100          0          0          0          0
+     16   2 adulto                      100        100          0          0          0          0
+     17   2 adulto                      100        100          0          0          0          0
+     18   2 adulto                      100        100          0          0          0          0
+     19   2 adulto                      100        100          0          0          0          0
+     20   2 adulto                      100        100          0          0          0          0
+     21   2 adulto                      100        100          0          0          0          0
+     22   2 adulto                      100        100          0          0          0          0
+     23   2 adulto                      100        100          0          0          0          0
+     24   2 adulto                      100        100          0          0          0          0
+     25   2 adulto                      100        100          0          0          0          0
+     26   2 adulto                      100        100          0          0          0          0
+     27   2 adulto                      100        100          0          0          0          0
+     28   2 adulto                      100        100          0          0          0          0
+     29   2 adulto                      100        100          0          0          0          0
+     30   2 adulto                      100        100          0          0          0          0
+     31   2 adulto                      100        100          0          0          0          0
+     32   2 adulto                      100        100          0          0          0          0
+     33   2 adulto                      100        100          0          0          0          0
+     34   2 adulto                      100        100          0          0          0          0
+     35   2 adulto                      100        100          0          0          0          0
+     36   2 adulto                      100        100          0          0          0          0
+     37   2 adulto                      100        100          0          0          0          0
+     38   2 adulto                      100        100          0          0          0          0
+     39   2 adulto                      100        100          0          0          0          0
+     40   2 adulto                      100        100          0          0          0          0
+     41   3 jubilado                     50         50          0          0          0          0
+     42   3 jubilado                     50         50          0          0          0          0
+     43   4 mayor                        40         40          0          0          0          0
+     44   4 mayor                        40         40          0          0          0          0
+     45   4 mayor                        40         39          1          0          0          0
+     46   4 mayor                        40         40          0          0          0          0
+     47   4 mayor                        40         40          0          0          0          0
+     48   4 mayor                        40         40          0          0          0          0
+     49   4 mayor                        40         40          0          0          0          0
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ----------
+                                       3980       3979          1          0          0          0
+
+15/04/2020 22:17:48
+
+Cambio de condiciones el día 40
+Fichero de grupos            C:\Contagio\Casos\grupos_gi_m1.ggg
+Número de clusters           20
+Próximo cambio en            25 días
+
+                        - Edad-      %     % Factor B    Días         %      Num.Pasos      %                          %      Individuos 
+Grupo            Género Min Max   Gravedad   Contagio  Duración    Curación   Min   Max Individuos   Individuos     clusters    cluster  
+---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+nene                  0   0   4     100,00       2,00      30,00     100,00    50    70       4,00          800          4,0           40
+menor                 1   5  19     100,00       4,00      30,00     100,00    60    90      15,00        3.000         15,0           60
+adulto                2  20  64     100,00      30,00      30,00      98,00    60    90      62,00       12.400         62,0          100
+jubilado              3  65  69     100,00    4500,00      30,00      85,00    60    90       5,00        1.000          5,0           50
+mayor                 4  70 150     100,00    2000,00      30,00      70,00    15    22      14,00        2.800         14,0           40
+---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+
+                                                       -------------- Dentro y fuera ------------- -------- Dentro -----      %
+Cluster GID Grupo                Individuos      Sanos Infectados    Curados Desinmuniz    Muertos   Intentos Infectados   Aciertos
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+      1   1 menor                        60         60          0          0          0          0          0          0       0,00
+      2   1 menor                        60         59          1          0          0          0          0          0       0,00
+      3   1 menor                        60         60          0          0          0          0          0          0       0,00
+      4   2 adulto                      100         43         57          0          0          0        118          0       0,00
+      5   2 adulto                      100         63         37          0          0          0          0          0       0,00
+      6   2 adulto                      100         65         35          0          0          0          0          0       0,00
+      7   2 adulto                      100         61         39          0          0          0          0          0       0,00
+      8   2 adulto                      100          0         99          1          0          0          0          0       0,00
+      9   2 adulto                      100         78         22          0          0          0          0          0       0,00
+     10   2 adulto                      100         12         88          0          0          0       7755         56       0,72
+     11   2 adulto                      100         51         49          0          0          0       3862         34       0,88
+     12   2 adulto                      100          0         99          1          0          0       5037         32       0,64
+     13   2 adulto                      100         87         13          0          0          0       4218         36       0,85
+     14   2 adulto                      100          0         98          2          0          0      11880         95       0,80
+     15   2 adulto                      100          0        100          0          0          0       1615         17       1,05
+     16   3 jubilado                     50          0         48          2          0          0      12269         85       0,69
+     17   4 mayor                        40          0         32          6          0          2       4219         44       1,04
+     18   4 mayor                        40          0         38          1          0          1      11992         96       0,80
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+                                       1510        639        855         13          0          3      62965        495       0,79
+
+15/04/2020 22:39:38
+
+Cambio de condiciones el día 65
+Fichero de grupos            C:\Contagio\Casos\grupos_gi_m2.ggg
+Número de clusters           10
+No hay próximos cambios
+
+                        - Edad-      %     % Factor B    Días         %      Num.Pasos      %                          %      Individuos 
+Grupo            Género Min Max   Gravedad   Contagio  Duración    Curación   Min   Max Individuos   Individuos     clusters    cluster  
+---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+nene                  0   0   4     100,00       2,00      30,00     100,00    70    90       4,00          800          4,0           40
+menor                 1   5  19     100,00       4,00      30,00     100,00    80   120      15,00        3.000         15,0           60
+adulto                2  20  64     100,00      30,00      30,00      98,00    80   120      62,00       12.400         62,0          100
+jubilado              3  65  69     100,00    4500,00      30,00      85,00    80   120       5,00        1.000          5,0           50
+mayor                 4  70 150     100,00    2000,00      30,00      70,00    20    30      14,00        2.800         14,0           40
+---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+
+                                                       -------------- Dentro y fuera ------------- -------- Dentro -----      %
+Cluster GID Grupo                Individuos      Sanos Infectados    Curados Desinmuniz    Muertos   Intentos Infectados   Aciertos
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+      1   1 menor                        60         55          5          0          0          0       3869          3       0,08
+      2   2 adulto                      100          0         55         45          0          0       8346          3       0,04
+      3   2 adulto                      100          0         65         32          0          3       1770          0       0,00
+      4   2 adulto                      100          0         65         35          0          0       5389         41       0,76
+      5   2 adulto                      100          0         64         36          0          0       6115         62       1,01
+      6   2 adulto                      100          0          4         96          0          0       7249         65       0,90
+      7   2 adulto                      100          0         61         38          0          1       9425         61       0,65
+      8   4 mayor                        40          0          0         27          0         13          0          0       0,00
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+                                        700         55        319        309          0         17      42163        235       0,56
+
+Situación final
+
+                                                       -------------- Dentro y fuera ------------- -------- Dentro -----      %
+Cluster GID Grupo                Individuos      Sanos Infectados    Curados Desinmuniz    Muertos   Intentos Infectados   Aciertos
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+      1   1 menor                        60         44          0         16          0          0      41130         14       0,03
+      2   2 adulto                      100          0          0        100          0          0       8346          3       0,04
+      3   2 adulto                      100          0          0         95          0          5       1770          0       0,00
+      4   2 adulto                      100          0          0        100          0          0       5389         41       0,76
+      5   2 adulto                      100          0          0         97          0          3       6115         62       1,01
+      6   2 adulto                      100          0          0         99          0          1       7249         65       0,90
+      7   2 adulto                      100          0          0         99          0          1       9425         61       0,65
+      8   4 mayor                        40          0          0         27          0         13          0          0       0,00
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+                                        700         44          0        633          0         23      79424        246       0,31
+
+Grupo   0 nene
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                                  6
+Número intentos fin infección                    167
+Número finales de infección                        6       3,59
+Número finales curacion                            6     100,00
+Número finales muerte                              0       0,00
+Total infecciones                                  2
+Total infecciones por curados                      2
+Total infecciones por muertos                      0
+Total infectadores curados                         6
+Total infectadores muertos                         0
+Total pasos                               10.935.446
+Total recorridos                             142.593
+Total distancia recorrida                  6.698.276
+Contactos de riesgo                           14.351
+Máximo de contagios por 1 individuo                1
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,3333
+Falso (R0) muertos                            0,0000
+
+Grupo   1 menor
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                                 67
+Número intentos fin infección                  1.854
+Número finales de infección                       67       3,61
+Número finales curacion                           67     100,00
+Número finales muerte                              0       0,00
+Total infecciones                                 47
+Total infecciones por curados                     47
+Total infecciones por muertos                      0
+Total infectadores curados                        67
+Total infectadores muertos                         0
+Total pasos                               50.925.039
+Total recorridos                             530.691
+Total distancia recorrida                 31.156.841
+Contactos de riesgo                           58.101
+Máximo de contagios por 1 individuo                5
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,7015
+Falso (R0) muertos                            0,0000
+
+Grupo   2 adulto
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                              3.736
+Número intentos fin infección                 99.853
+Número finales de infección                    3.736       3,74
+Número finales curacion                        3.660      97,97
+Número finales muerte                             76       2,03
+Total infecciones                              5.030
+Total infecciones por curados                  4.956
+Total infecciones por muertos                     74
+Total infectadores curados                     3.660
+Total infectadores muertos                        76
+Total pasos                              170.973.224
+Total recorridos                           1.790.831
+Total distancia recorrida                104.691.099
+Contactos de riesgo                          155.058
+Máximo de contagios por 1 individuo               17
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            1,3541
+Falso (R0) muertos                            0,9737
+
+Grupo   3 jubilado
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                                880
+Número intentos fin infección                 23.369
+Número finales de infección                      880       3,77
+Número finales curacion                          755      85,80
+Número finales muerte                            125      14,20
+Total infecciones                                645
+Total infecciones por curados                    573
+Total infecciones por muertos                     72
+Total infectadores curados                       755
+Total infectadores muertos                       125
+Total pasos                                7.517.991
+Total recorridos                              80.760
+Total distancia recorrida                  4.608.922
+Contactos de riesgo                            1.278
+Máximo de contagios por 1 individuo               51
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,7589
+Falso (R0) muertos                            0,5760
+
+Grupo   4 mayor
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                              1.901
+Número intentos fin infección                 50.932
+Número finales de infección                    1.901       3,73
+Número finales curacion                        1.327      69,81
+Número finales muerte                            574      30,19
+Total infecciones                                856
+Total infecciones por curados                    628
+Total infecciones por muertos                    228
+Total infectadores curados                     1.327
+Total infectadores muertos                       574
+Total pasos                                6.794.869
+Total recorridos                             293.887
+Total distancia recorrida                  4.161.770
+Contactos de riesgo                            4.810
+Máximo de contagios por 1 individuo               40
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,4732
+Falso (R0) muertos                            0,3972
+

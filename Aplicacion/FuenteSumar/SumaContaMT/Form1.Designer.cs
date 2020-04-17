@@ -43,6 +43,8 @@
             this.des_maxima = new System.Windows.Forms.TextBox();
             this.add_fuentes = new System.Windows.Forms.Button();
             this.borra_fuentes = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.hasta = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // senda_salida
@@ -53,12 +55,12 @@
             this.senda_salida.Location = new System.Drawing.Point(12, 296);
             this.senda_salida.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.senda_salida.Name = "senda_salida";
-            this.senda_salida.Size = new System.Drawing.Size(478, 24);
+            this.senda_salida.Size = new System.Drawing.Size(581, 24);
             this.senda_salida.TabIndex = 196;
             // 
             // b_ejecuta
             // 
-            this.b_ejecuta.Location = new System.Drawing.Point(437, 335);
+            this.b_ejecuta.Location = new System.Drawing.Point(542, 335);
             this.b_ejecuta.Margin = new System.Windows.Forms.Padding(2);
             this.b_ejecuta.Name = "b_ejecuta";
             this.b_ejecuta.Size = new System.Drawing.Size(92, 28);
@@ -69,7 +71,7 @@
             // 
             // sel_salida
             // 
-            this.sel_salida.Location = new System.Drawing.Point(495, 294);
+            this.sel_salida.Location = new System.Drawing.Point(600, 294);
             this.sel_salida.Margin = new System.Windows.Forms.Padding(2);
             this.sel_salida.Name = "sel_salida";
             this.sel_salida.Size = new System.Drawing.Size(34, 28);
@@ -80,7 +82,7 @@
             // 
             // sel_fuente
             // 
-            this.sel_fuente.Location = new System.Drawing.Point(495, 63);
+            this.sel_fuente.Location = new System.Drawing.Point(600, 63);
             this.sel_fuente.Margin = new System.Windows.Forms.Padding(2);
             this.sel_fuente.Name = "sel_fuente";
             this.sel_fuente.Size = new System.Drawing.Size(34, 28);
@@ -95,7 +97,7 @@
             this.lista.ItemHeight = 16;
             this.lista.Location = new System.Drawing.Point(12, 17);
             this.lista.Name = "lista";
-            this.lista.Size = new System.Drawing.Size(478, 276);
+            this.lista.Size = new System.Drawing.Size(580, 276);
             this.lista.TabIndex = 197;
             // 
             // cuenta
@@ -103,7 +105,7 @@
             this.cuenta.BackColor = System.Drawing.Color.White;
             this.cuenta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cuenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cuenta.Location = new System.Drawing.Point(495, 136);
+            this.cuenta.Location = new System.Drawing.Point(600, 136);
             this.cuenta.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.cuenta.Name = "cuenta";
             this.cuenta.Size = new System.Drawing.Size(34, 24);
@@ -157,7 +159,7 @@
             // 
             // des_maxima
             // 
-            this.des_maxima.Location = new System.Drawing.Point(382, 338);
+            this.des_maxima.Location = new System.Drawing.Point(380, 338);
             this.des_maxima.Name = "des_maxima";
             this.des_maxima.Size = new System.Drawing.Size(42, 22);
             this.des_maxima.TabIndex = 295;
@@ -166,7 +168,7 @@
             // 
             // add_fuentes
             // 
-            this.add_fuentes.Location = new System.Drawing.Point(495, 95);
+            this.add_fuentes.Location = new System.Drawing.Point(600, 95);
             this.add_fuentes.Margin = new System.Windows.Forms.Padding(2);
             this.add_fuentes.Name = "add_fuentes";
             this.add_fuentes.Size = new System.Drawing.Size(34, 28);
@@ -177,7 +179,7 @@
             // 
             // borra_fuentes
             // 
-            this.borra_fuentes.Location = new System.Drawing.Point(495, 17);
+            this.borra_fuentes.Location = new System.Drawing.Point(600, 17);
             this.borra_fuentes.Margin = new System.Windows.Forms.Padding(2);
             this.borra_fuentes.Name = "borra_fuentes";
             this.borra_fuentes.Size = new System.Drawing.Size(34, 28);
@@ -186,11 +188,31 @@
             this.borra_fuentes.UseVisualStyleBackColor = true;
             this.borra_fuentes.Click += new System.EventHandler(this.Borra_fuentes_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(434, 341);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 17);
+            this.label3.TabIndex = 300;
+            this.label3.Text = "Hasta";
+            // 
+            // hasta
+            // 
+            this.hasta.Location = new System.Drawing.Point(492, 338);
+            this.hasta.Name = "hasta";
+            this.hasta.Size = new System.Drawing.Size(42, 22);
+            this.hasta.TabIndex = 299;
+            this.hasta.Text = "9999";
+            this.hasta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(537, 369);
+            this.ClientSize = new System.Drawing.Size(644, 369);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.hasta);
             this.Controls.Add(this.borra_fuentes);
             this.Controls.Add(this.add_fuentes);
             this.Controls.Add(this.label2);
@@ -230,6 +252,8 @@
         private System.Windows.Forms.TextBox des_maxima;
         private System.Windows.Forms.Button add_fuentes;
         private System.Windows.Forms.Button borra_fuentes;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox hasta;
     }
 }
 

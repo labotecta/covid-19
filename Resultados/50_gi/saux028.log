@@ -1,0 +1,151 @@
+15/04/2020 10:28:55
+
+Cambio de condiciones el día 0
+Fichero de grupos            C:\Contagio\Casos\grupos_gi.ggg
+Número de clusters           125
+Próximo cambio en            30 días
+
+                        - Edad-      %     % Factor B    Días         %      Num.Pasos      %                          %      Individuos 
+Grupo            Género Min Max   Gravedad   Contagio  Duración    Curación   Min   Max Individuos   Individuos     clusters    cluster  
+---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+nene                  0   0   4     100,00       2,00      30,00     100,00    70    90       4,00            0          4,0           40
+menor                 1   5  19     100,00       4,00      30,00     100,00    80   120      15,00            0         15,0           60
+adulto                2  20  64     100,00      30,00      30,00      98,00    80   120      62,00            0         62,0          100
+jubilado              3  65  69     100,00    4500,00      30,00      85,00    80   120       5,00            0          5,0           50
+mayor                 4  70 150     100,00    2000,00      30,00      70,00    20    30      14,00            0         14,0           40
+---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+
+Situación inicial
+
+Cluster GID Grupo                Individuos     Sanos  Infectados    Curados Desinmuniz    Muertos
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ----------
+      1   0 nene                         40         40          0          0          0          0
+      2   0 nene                         40         40          0          0          0          0
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ----------
+                                         80         80          0          0          0          0
+
+Situación final
+
+                                                       -------------- Dentro y fuera ------------- -------- Dentro -----      %
+Cluster GID Grupo                Individuos      Sanos Infectados    Curados Desinmuniz    Muertos   Intentos Infectados   Aciertos
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+      1   0 nene                         40         40          0          0          0          0          0          0       0,00
+      2   0 nene                         40         40          0          0          0          0          0          0       0,00
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+                                         80         80          0          0          0          0          0          0       0,00
+
+Grupo   0 nene
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                                  0
+Número intentos fin infección                      0
+Número finales de infección                        0        NaN
+Número finales curacion                            0       0,00
+Número finales muerte                              0       0,00
+Total infecciones                                  0
+Total infecciones por curados                      0
+Total infecciones por muertos                      0
+Total infectadores curados                         0
+Total infectadores muertos                         0
+Total pasos                               20.672.717
+Total recorridos                             260.000
+Total distancia recorrida                 12.659.072
+Contactos de riesgo                              134
+Máximo de contagios por 1 individuo                -
+Mínimo de contagios por 1 individuo                -
+Falso (R0) curados                                 -
+Falso (R0) muertos                                 -
+
+Grupo   1 menor
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                                  5
+Número intentos fin infección                    125
+Número finales de infección                        4       3,20
+Número finales curacion                            4     100,00
+Número finales muerte                              0       0,00
+Total infecciones                                  3
+Total infecciones por curados                      3
+Total infecciones por muertos                      0
+Total infectadores curados                         4
+Total infectadores muertos                         0
+Total pasos                               96.998.628
+Total recorridos                             974.615
+Total distancia recorrida                 59.383.977
+Contactos de riesgo                              940
+Máximo de contagios por 1 individuo                2
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,7500
+Falso (R0) muertos                            0,0000
+
+Grupo   2 adulto
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                                 46
+Número intentos fin infección                  1.225
+Número finales de infección                       45       3,67
+Número finales curacion                           44      97,78
+Número finales muerte                              1       2,22
+Total infecciones                                 55
+Total infecciones por curados                     52
+Total infecciones por muertos                      2
+Total infectadores curados                        44
+Total infectadores muertos                         1
+Total pasos                              400.720.277
+Total recorridos                           4.026.973
+Total distancia recorrida                245.297.115
+Contactos de riesgo                            4.302
+Máximo de contagios por 1 individuo                4
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            1,1818
+Falso (R0) muertos                            2,0000
+
+Grupo   3 jubilado
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                                 28
+Número intentos fin infección                    791
+Número finales de infección                       28       3,54
+Número finales curacion                           28     100,00
+Número finales muerte                              0       0,00
+Total infecciones                                 28
+Total infecciones por curados                     28
+Total infecciones por muertos                      0
+Total infectadores curados                        28
+Total infectadores muertos                         0
+Total pasos                               32.175.157
+Total recorridos                             323.325
+Total distancia recorrida                 19.691.962
+Contactos de riesgo                               42
+Máximo de contagios por 1 individuo                4
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            1,0000
+Falso (R0) muertos                            0,0000
+
+Grupo   4 mayor
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                                 43
+Número intentos fin infección                  1.179
+Número finales de infección                       42       3,56
+Número finales curacion                           29      69,05
+Número finales muerte                             13      30,95
+Total infecciones                                 26
+Total infecciones por curados                     20
+Total infecciones por muertos                      6
+Total infectadores curados                        29
+Total infectadores muertos                        13
+Total pasos                               22.241.130
+Total recorridos                             907.426
+Total distancia recorrida                 13.606.661
+Contactos de riesgo                              106
+Máximo de contagios por 1 individuo                2
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,6897
+Falso (R0) muertos                            0,4615
+

@@ -222,6 +222,7 @@ namespace SumaContaMT
                 return;
             }
             veces = Convert.ToDouble(des_maxima.Text);
+            int hasta_dia = Convert.ToInt32(hasta.Text);
             cancelar = false;
             string fichero;
             List<Resultado>[] resultados = new List<Resultado>[fuentes];
@@ -230,8 +231,8 @@ namespace SumaContaMT
             for (int hilo = 0; hilo < fuentes; hilo++)
             {
                 fichero = lista.Items[hilo].ToString();
-                resultados[n] = ImportaResultado(fichero);
-                restipos[n] = ImportaResTipo(fichero);
+                resultados[n] = ImportaResultado(fichero, hasta_dia);
+                restipos[n] = ImportaResTipo(fichero, hasta_dia);
                 if (cancelar) break;
                 if (resultados[n] != null && resultados[n].Count >= minimo && resultados[n].Count <= maximo)
                 {
@@ -350,7 +351,7 @@ namespace SumaContaMT
             }
             return nuevos;
         }
-        private List<Resultado> ImportaResultado(string fichero)
+        private List<Resultado> ImportaResultado(string fichero, int hasta)
         {
             string s;
             string[] sd;
@@ -480,10 +481,11 @@ namespace SumaContaMT
                 muertos_graves = Convert.ToInt64(sd[21]);
                 R0_graves = Convert.ToDouble(sd[22]);
                 resultado.Add(new Resultado(dia, sanos, infectados, importados, curados, desinmunizados, muertos, recorrido_individuo_activo, contactos_de_riesgo, media_dias_infectado, R0, contagios_cercania, contagios_clusters, infectados_total_clusters, curados_total_clusters, muertos_total_clusters, infectados_ambientales, enfermos, hospitalizados, infectados_graves, curados_graves, muertos_graves, R0_graves, series));
+                if (resultado.Count == hasta) break;
             }
             return resultado;
         }
-        private List<ResTipo>[] ImportaResTipo(string fichero)
+        private List<ResTipo>[] ImportaResTipo(string fichero, int hasta)
         {
             suma_tipos = true;
             string senda = Path.GetDirectoryName(fichero);
@@ -601,6 +603,7 @@ namespace SumaContaMT
                 enfermos = Convert.ToInt64(sd[8]);
                 hospitalizados = Convert.ToInt64(sd[9]);
                 resultado[tipo].Add(new ResTipo(dia, sanos, infectados, importados, curados, desinmunizados, muertos, infectados_indirectos, enfermos, hospitalizados, tipos));
+                if (resultado[tipo].Count == hasta) break;
             }
             return resultado;
         }
@@ -839,7 +842,7 @@ namespace SumaContaMT
         private void SalidaValoresMedios(string fichero, List<Resultado>[] resultados, List<Resultado> media, List<ResTipo>[] mediatipos)
         {
             int res = resultados.Length;
-            FileStream fw = new FileStream(fichero, FileMode.Append, FileAccess.Write, FileShare.Read);
+            FileStream fw = new FileStream(fichero, FileMode.Create, FileAccess.Write, FileShare.Read);
             StreamWriter sw = new StreamWriter(fw);
             sw.WriteLine("Fichero                                                      Desv.Media Ser");
             sw.WriteLine("------------------------------------------------------------ ---------- --- --");
