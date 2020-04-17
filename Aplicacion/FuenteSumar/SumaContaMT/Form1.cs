@@ -228,11 +228,15 @@ namespace SumaContaMT
             List<Resultado>[] resultados = new List<Resultado>[fuentes];
             List<ResTipo>[][] restipos = new List<ResTipo>[fuentes][];
             int n = 0;
+            suma_tipos = true;
             for (int hilo = 0; hilo < fuentes; hilo++)
             {
                 fichero = lista.Items[hilo].ToString();
                 resultados[n] = ImportaResultado(fichero, hasta_dia);
-                restipos[n] = ImportaResTipo(fichero, hasta_dia);
+                if (suma_tipos)
+                {
+                    restipos[n] = ImportaResTipo(fichero, hasta_dia);
+                }
                 if (cancelar) break;
                 if (resultados[n] != null && resultados[n].Count >= minimo && resultados[n].Count <= maximo)
                 {
@@ -487,7 +491,6 @@ namespace SumaContaMT
         }
         private List<ResTipo>[] ImportaResTipo(string fichero, int hasta)
         {
-            suma_tipos = true;
             string senda = Path.GetDirectoryName(fichero);
             string fi = "st" + Path.GetFileName(fichero).Substring(1);
             fichero = Path.Combine(senda, fi);
