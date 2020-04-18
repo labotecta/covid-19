@@ -1,35 +1,35 @@
 Fichero                                                      Desv.Media Ser
 ------------------------------------------------------------ ---------- --- --
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s001.log                    80,86   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s002.log                    28,57   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s003.log                    45,61   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s004.log                    84,15   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s005.log                   233,20   1 
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s006.log                    71,13   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s007.log                    93,23   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s008.log                    29,93   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s009.log                    35,14   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s010.log                   137,46   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s011.log                   116,24   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s012.log                    57,93   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s013.log                    26,23   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s014.log                    47,65   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s015.log                    34,24   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s016.log                    27,29   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s017.log                   149,00   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s018.log                    38,41   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s019.log                    52,17   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s020.log                   126,51   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s021.log                    57,75   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s022.log                    14,50   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s023.log                   175,82   1 
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s024.log                    33,25   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s025.log                   149,66   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s026.log                   107,59   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s027.log                    56,82   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s028.log                    84,14   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s029.log                    22,76   1 ok
-C:\Contagio\50_gi_30_25m1_15m2_15m1_0\s030.log                    28,96   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s001.log                    80,86   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s002.log                    28,57   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s003.log                    45,61   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s004.log                    84,15   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s005.log                   233,20   1 
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s006.log                    71,13   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s007.log                    93,23   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s008.log                    29,93   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s009.log                    35,14   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s010.log                   137,46   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s011.log                   116,24   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s012.log                    57,93   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s013.log                    26,23   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s014.log                    47,65   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s015.log                    34,24   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s016.log                    27,29   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s017.log                   149,00   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s018.log                    38,41   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s019.log                    52,17   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s020.log                   126,51   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s021.log                    57,75   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s022.log                    14,50   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s023.log                   175,82   1 
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s024.log                    33,25   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s025.log                   149,66   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s026.log                   107,59   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s027.log                    56,82   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s028.log                    84,14   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s029.log                    22,76   1 ok
+F:\Contagio\50_gi_30_25m1_15m2_15m1_0\s030.log                    28,96   1 ok
 ------------------------------------------------------------ ---------- --- --
                                            2 x      74,87  =     149,75
 ------------------------------------------------------------ ---------- --- --

@@ -150,6 +150,7 @@ namespace SumaContaMT
         {
             lista.Items.Clear();
             cuenta.Text = lista.Items.Count.ToString();
+            senda_salida.Text = string.Empty;
         }
         private void Sel_fuente_Click(object sender, EventArgs e)
         {
@@ -167,6 +168,7 @@ namespace SumaContaMT
                     lista.Items.Add(fichero);
                 }
                 cuenta.Text = lista.Items.Count.ToString();
+                senda_salida.Text = string.Empty;
             }
         }
         private void Add_fuentes_Click(object sender, EventArgs e)
@@ -570,6 +572,17 @@ namespace SumaContaMT
             while (true && !sr.EndOfStream)
             {
                 s = sr.ReadLine().Trim();
+                if (resultado[tipo].Count == hasta)
+                {
+                    while (true && !sr.EndOfStream)
+                    {
+                        if (s.StartsWith("--- ---------- "))
+                        {
+                            break;
+                        }
+                        s = sr.ReadLine().Trim();
+                    }
+                }
                 if (s.Length == 0) break;
                 if (s.StartsWith("--- ---------- "))
                 {
@@ -606,7 +619,6 @@ namespace SumaContaMT
                 enfermos = Convert.ToInt64(sd[8]);
                 hospitalizados = Convert.ToInt64(sd[9]);
                 resultado[tipo].Add(new ResTipo(dia, sanos, infectados, importados, curados, desinmunizados, muertos, infectados_indirectos, enfermos, hospitalizados, tipos));
-                if (resultado[tipo].Count == hasta) break;
             }
             return resultado;
         }

@@ -1,15 +1,15 @@
 Fichero                                                      Desv.Media Ser
 ------------------------------------------------------------ ---------- --- --
-\\PABLO\Contagio\20_gi_40_25m1_15m2_15_m1_0\s001.log              31,83   1 ok
-\\PABLO\Contagio\20_gi_40_25m1_15m2_15_m1_0\s002.log              10,29   1 ok
-\\PABLO\Contagio\20_gi_40_25m1_15m2_15_m1_0\s003.log              10,88   1 ok
-\\PABLO\Contagio\20_gi_40_25m1_15m2_15_m1_0\s004.log              29,46   1 ok
-\\PABLO\Contagio\20_gi_40_25m1_15m2_15_m1_0\s005.log              32,33   1 ok
-\\PABLO\Contagio\20_gi_40_25m1_15m2_15_m1_0\s006.log              34,04   1 ok
-\\PABLO\Contagio\20_gi_40_25m1_15m2_15_m1_0\s007.log              22,07   1 ok
-\\PABLO\Contagio\20_gi_40_25m1_15m2_15_m1_0\s008.log              10,03   1 ok
-\\PABLO\Contagio\20_gi_40_25m1_15m2_15_m1_0\s009.log              13,15   1 ok
-\\PABLO\Contagio\20_gi_40_25m1_15m2_15_m1_0\s010.log              48,27   1 ok
+F:\Contagio\20_gi_40_25m1_15m2_15_m1_0\s001.log                   31,83   1 ok
+F:\Contagio\20_gi_40_25m1_15m2_15_m1_0\s002.log                   10,29   1 ok
+F:\Contagio\20_gi_40_25m1_15m2_15_m1_0\s003.log                   10,88   1 ok
+F:\Contagio\20_gi_40_25m1_15m2_15_m1_0\s004.log                   29,46   1 ok
+F:\Contagio\20_gi_40_25m1_15m2_15_m1_0\s005.log                   32,33   1 ok
+F:\Contagio\20_gi_40_25m1_15m2_15_m1_0\s006.log                   34,04   1 ok
+F:\Contagio\20_gi_40_25m1_15m2_15_m1_0\s007.log                   22,07   1 ok
+F:\Contagio\20_gi_40_25m1_15m2_15_m1_0\s008.log                   10,03   1 ok
+F:\Contagio\20_gi_40_25m1_15m2_15_m1_0\s009.log                   13,15   1 ok
+F:\Contagio\20_gi_40_25m1_15m2_15_m1_0\s010.log                   48,27   1 ok
 ------------------------------------------------------------ ---------- --- --
                                            2 x      24,24  =      48,47
 ------------------------------------------------------------ ---------- --- --

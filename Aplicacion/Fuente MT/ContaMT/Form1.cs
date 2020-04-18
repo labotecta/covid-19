@@ -841,6 +841,18 @@ namespace Contagio
                 {
                     U_SALIDAS = "C";
                 }
+                else
+                {
+                    try
+                    {
+                        string s = string.Format(@"{0}:\{1}", U_SALIDAS, CARPETA_SALIDAS);
+                        if (!Directory.Exists(s)) Directory.CreateDirectory(s);
+                    }
+                    catch
+                    {
+                        U_SALIDAS = "C";
+                    }
+                }
                 selunidad.SelectedItem = U_SALIDAS;
                 CARPETA = prefijo.Text;
                 NUM_HILOS = Convert.ToInt32(d_hilos.Text);
@@ -881,8 +893,6 @@ namespace Contagio
 
                 PROB_CONTAGIO_Cd2 = PROB_CONTAGIO_C / 2.0;
                 FACTOR_INDIVIDUOS_CLUSTER = Convert.ToDouble(d_individuos_c.Text.Replace('.', ','));
-                string s = string.Format(@"{0}:\{1}", U_SALIDAS, CARPETA_SALIDAS);
-                if (!Directory.Exists(s)) Directory.CreateDirectory(s);
             }
             catch (Exception e)
             {
@@ -2609,7 +2619,7 @@ namespace Contagio
 
                         indi.pasos_dados = 0;
                     }
-                    resultado_dia = ContagiosDiaVecinos(hilo);
+                    resultado_dia = ContagiosVecinos(hilo);
                     if (NUMERO_CLUSTERS[hilo] > 0) ContagiosCluster(hilo);
                     if (PROB_INDIRECTA > 0 && DENSIDAD_VECINOS < 1) ContagiosIndirectos(hilo);
                 }
@@ -2886,7 +2896,6 @@ namespace Contagio
                     catch { }
                     return -1;
                 }
-
                 if (suma[1] == 0 && (N_FOCOS_IMPORTADOS == 0 || (N_FOCOS_IMPORTADOS > 0 && suma[0] == 0)))
                 {
                     break;
@@ -3469,7 +3478,7 @@ namespace Contagio
             sw_t.Close();
             MessageBox.Show(tiempo, CARPETA, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        private int ContagiosDiaVecinos(int hilo)
+        private int ContagiosVecinos(int hilo)
         {
             /*
              * Devuelve:
@@ -3669,7 +3678,6 @@ namespace Contagio
 
                                 total_contactos_de_riesgo[hilo]++;
                                 total_contactos_de_riesgo_g[hilo, indi_i.grupo_ID]++;
-                                double pp = p_contagio_de_j_a_i * p_contagio_de_i * PROB_CONTAGIO;
                                 if (hiloAzar[hilo].NextDouble() < p_contagio_de_j_a_i * p_contagio_de_i * PROB_CONTAGIO)
                                 {
                                     // 'indi_i' infectado 
@@ -3752,10 +3760,10 @@ namespace Contagio
         }
         private int ContagiosCluster(int hilo)
         {
-            Individuo indi_i;
-            Individuo indi_j;
             Grupo g_indi_i;
             Grupo g_indi_j;
+            Individuo indi_i;
+            Individuo indi_j;
             double p_contagio_de_i;
             double p_contagio_de_j;
             double p_contagio_de_i_a_j;

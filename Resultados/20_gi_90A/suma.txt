@@ -1,15 +1,15 @@
 Fichero                                                      Desv.Media Ser
 ------------------------------------------------------------ ---------- --- --
-\\PABLO\Contagio\20_gi_90A\s001.log                               29,13   1 ok
-\\PABLO\Contagio\20_gi_90A\s002.log                                9,27   1 ok
-\\PABLO\Contagio\20_gi_90A\s003.log                               14,06   1 ok
-\\PABLO\Contagio\20_gi_90A\s004.log                               42,35   1 ok
-\\PABLO\Contagio\20_gi_90A\s005.log                               12,51   1 ok
-\\PABLO\Contagio\20_gi_90A\s006.log                               50,86   1 ok
-\\PABLO\Contagio\20_gi_90A\s007.log                               49,51   1 ok
-\\PABLO\Contagio\20_gi_90A\s008.log                                9,55   1 ok
-\\PABLO\Contagio\20_gi_90A\s009.log                                8,92   1 ok
-\\PABLO\Contagio\20_gi_90A\s010.log                               74,21   1 
+F:\Contagio\20_gi_90A\s001.log                                    29,13   1 ok
+F:\Contagio\20_gi_90A\s002.log                                     9,27   1 ok
+F:\Contagio\20_gi_90A\s003.log                                    14,06   1 ok
+F:\Contagio\20_gi_90A\s004.log                                    42,35   1 ok
+F:\Contagio\20_gi_90A\s005.log                                    12,51   1 ok
+F:\Contagio\20_gi_90A\s006.log                                    50,86   1 ok
+F:\Contagio\20_gi_90A\s007.log                                    49,51   1 ok
+F:\Contagio\20_gi_90A\s008.log                                     9,55   1 ok
+F:\Contagio\20_gi_90A\s009.log                                     8,92   1 ok
+F:\Contagio\20_gi_90A\s010.log                                    74,21   1 
 ------------------------------------------------------------ ---------- --- --
                                            2 x      30,04  =      60,07
 ------------------------------------------------------------ ---------- --- --
