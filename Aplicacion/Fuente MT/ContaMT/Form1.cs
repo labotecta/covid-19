@@ -67,7 +67,6 @@ namespace Contagio
 
         private const int MAX_INDIVIDUOS_CLUSTER = 1000;
         private double FACTOR_INDIVIDUOS_CLUSTER;
-        private int[] clusters_grupo;
         private List<Individuo>[,] individuos_cluster;
         private long[,] intentos_cluster;
         private long[,] infectados_cluster;
@@ -1496,6 +1495,8 @@ namespace Contagio
         #region Poblacion
         private bool IndividuosBase()
         {
+            // Con la tabla de grupos de la primera entrada en 'condiciones'
+
             Condicion c = condiciones.ElementAt(0);
             grupos = LeeGrupos(c.f_grupos);
             double[] fraccion_antes = new double[grupos.Count];
@@ -1558,6 +1559,8 @@ namespace Contagio
         }
         private bool CreaIndividuos(int hilo)
         {
+            // Copiar la población base
+
             individuos[hilo] = new List<Individuo>();
             foreach (Individuo individuo in individuos_base)
             {
@@ -1645,17 +1648,13 @@ namespace Contagio
         }
         private bool CreaClusters(int hilo)
         {
-            double[] fraccion_antes = new double[grupos.Count];
-            double[] fraccion_ahora = new double[grupos.Count];
-            clusters_grupo = new int[grupos.Count];
+            int[] clusters_grupo = new int[grupos_hilo[hilo].Count];
 
             // Normalizar porcentajes ('fraccion_clusters'))
 
-            int n = 0;
             double suma = 0.0;
-            foreach (Grupo g in grupos)
+            foreach (Grupo g in grupos_hilo[hilo])
             {
-                fraccion_antes[n++] = g.fraccion_clusters;
                 suma += g.fraccion_clusters;
             }
             suma = Math.Round(suma, 4);
@@ -1663,11 +1662,10 @@ namespace Contagio
             // Cluster por grupo
 
             int suma_c = 0;
-            n = 0;
-            foreach (Grupo g in grupos)
+            int n = 0;
+            foreach (Grupo g in grupos_hilo[hilo])
             {
                 if (suma != 1.0000) g.fraccion_clusters = Math.Round(g.fraccion_clusters / suma, 3);
-                fraccion_ahora[n] = g.fraccion_clusters;
                 clusters_grupo[n] = (int)(NUMERO_CLUSTERS_DATO[hilo] * g.fraccion_clusters);
                 suma_c += clusters_grupo[n];
                 n++;
@@ -1691,7 +1689,7 @@ namespace Contagio
             int k = -1;
             total_individuos_clusters[hilo] = 0;
             infectados_iniciales_clusters[hilo] = 0;
-            foreach (Grupo g in grupos)
+            foreach (Grupo g in grupos_hilo[hilo])
             {
                 k++;
                 if (clusters_grupo[k] == 0) continue;
