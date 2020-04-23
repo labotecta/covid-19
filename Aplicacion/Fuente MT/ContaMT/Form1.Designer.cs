@@ -1129,6 +1129,7 @@
             this.tablaCondiciones.RowTemplate.Height = 24;
             this.tablaCondiciones.Size = new System.Drawing.Size(617, 161);
             this.tablaCondiciones.TabIndex = 293;
+            this.tablaCondiciones.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TablaCondiciones_CellDoubleClick);
             this.tablaCondiciones.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.TablaCondiciones_CellEndEdit);
             this.tablaCondiciones.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.TablaCondiciones_RowEnter);
             // 

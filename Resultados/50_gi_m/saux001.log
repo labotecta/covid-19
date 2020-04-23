@@ -1,0 +1,393 @@
+20/04/2020 11:07:24
+
+Cambio de condiciones el día 0
+Fichero de grupos            C:\Contagio\Casos\grupos_gi_m.ggg
+Número de clusters           125
+Próximo cambio en            30 días
+
+                        - Edad-      %     % Factor B    Días         %      Num.Pasos      %                          %      Individuos 
+Grupo            Género Min Max   Gravedad   Contagio  Duración    Curación   Min   Max Individuos   Individuos     clusters    cluster  
+---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+nene                  0   0   4     100,00       3,00      30,00     100,00    70    90       4,00            0          4,0           40
+menor                 1   5  19     100,00       1,00      30,00     100,00    80   120      15,00            0         15,0           60
+adulto                2  20  64     100,00      25,00      30,00      99,00    80   120      62,00            0         62,0          100
+jubilado              3  65  69     100,00    5800,00      30,00      96,00    80   120       5,00            0          5,0           50
+mayor                 4  70 150     100,00    2500,00      30,00      81,00    20    30      14,00            0         14,0           40
+---------------- ------ --- --- ---------- ---------- ---------- ---------- ----- ----- ---------- ------------ ------------ ------------
+
+Situación inicial
+
+Cluster GID Grupo                Individuos     Sanos  Infectados    Curados Desinmuniz    Muertos
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ----------
+      1   0 nene                         40         40          0          0          0          0
+      2   0 nene                         40         40          0          0          0          0
+      3   0 nene                         40         40          0          0          0          0
+      4   0 nene                         40         40          0          0          0          0
+      5   0 nene                         40         40          0          0          0          0
+      6   1 menor                        60         60          0          0          0          0
+      7   1 menor                        60         60          0          0          0          0
+      8   1 menor                        60         60          0          0          0          0
+      9   1 menor                        60         60          0          0          0          0
+     10   1 menor                        60         60          0          0          0          0
+     11   1 menor                        60         60          0          0          0          0
+     12   1 menor                        60         60          0          0          0          0
+     13   1 menor                        60         60          0          0          0          0
+     14   1 menor                        60         60          0          0          0          0
+     15   1 menor                        60         60          0          0          0          0
+     16   1 menor                        60         60          0          0          0          0
+     17   1 menor                        60         60          0          0          0          0
+     18   1 menor                        60         60          0          0          0          0
+     19   1 menor                        60         60          0          0          0          0
+     20   1 menor                        60         60          0          0          0          0
+     21   1 menor                        60         60          0          0          0          0
+     22   1 menor                        60         60          0          0          0          0
+     23   1 menor                        60         60          0          0          0          0
+     24   2 adulto                      100        100          0          0          0          0
+     25   2 adulto                      100        100          0          0          0          0
+     26   2 adulto                      100        100          0          0          0          0
+     27   2 adulto                      100        100          0          0          0          0
+     28   2 adulto                      100        100          0          0          0          0
+     29   2 adulto                      100        100          0          0          0          0
+     30   2 adulto                      100        100          0          0          0          0
+     31   2 adulto                      100        100          0          0          0          0
+     32   2 adulto                      100        100          0          0          0          0
+     33   2 adulto                      100        100          0          0          0          0
+     34   2 adulto                      100        100          0          0          0          0
+     35   2 adulto                      100        100          0          0          0          0
+     36   2 adulto                      100        100          0          0          0          0
+     37   2 adulto                      100        100          0          0          0          0
+     38   2 adulto                      100        100          0          0          0          0
+     39   2 adulto                      100        100          0          0          0          0
+     40   2 adulto                      100        100          0          0          0          0
+     41   2 adulto                      100        100          0          0          0          0
+     42   2 adulto                      100        100          0          0          0          0
+     43   2 adulto                      100         99          1          0          0          0
+     44   2 adulto                      100        100          0          0          0          0
+     45   2 adulto                      100        100          0          0          0          0
+     46   2 adulto                      100        100          0          0          0          0
+     47   2 adulto                      100        100          0          0          0          0
+     48   2 adulto                      100        100          0          0          0          0
+     49   2 adulto                      100        100          0          0          0          0
+     50   2 adulto                      100        100          0          0          0          0
+     51   2 adulto                      100        100          0          0          0          0
+     52   2 adulto                      100        100          0          0          0          0
+     53   2 adulto                      100        100          0          0          0          0
+     54   2 adulto                      100        100          0          0          0          0
+     55   2 adulto                      100        100          0          0          0          0
+     56   2 adulto                      100        100          0          0          0          0
+     57   2 adulto                      100        100          0          0          0          0
+     58   2 adulto                      100        100          0          0          0          0
+     59   2 adulto                      100        100          0          0          0          0
+     60   2 adulto                      100        100          0          0          0          0
+     61   2 adulto                      100        100          0          0          0          0
+     62   2 adulto                      100        100          0          0          0          0
+     63   2 adulto                      100        100          0          0          0          0
+     64   2 adulto                      100        100          0          0          0          0
+     65   2 adulto                      100        100          0          0          0          0
+     66   2 adulto                      100        100          0          0          0          0
+     67   2 adulto                      100        100          0          0          0          0
+     68   2 adulto                      100        100          0          0          0          0
+     69   2 adulto                      100        100          0          0          0          0
+     70   2 adulto                      100        100          0          0          0          0
+     71   2 adulto                      100        100          0          0          0          0
+     72   2 adulto                      100        100          0          0          0          0
+     73   2 adulto                      100        100          0          0          0          0
+     74   2 adulto                      100        100          0          0          0          0
+     75   2 adulto                      100        100          0          0          0          0
+     76   2 adulto                      100        100          0          0          0          0
+     77   2 adulto                      100        100          0          0          0          0
+     78   2 adulto                      100        100          0          0          0          0
+     79   2 adulto                      100        100          0          0          0          0
+     80   2 adulto                      100         99          1          0          0          0
+     81   2 adulto                      100        100          0          0          0          0
+     82   2 adulto                      100        100          0          0          0          0
+     83   2 adulto                      100        100          0          0          0          0
+     84   2 adulto                      100        100          0          0          0          0
+     85   2 adulto                      100        100          0          0          0          0
+     86   2 adulto                      100        100          0          0          0          0
+     87   2 adulto                      100        100          0          0          0          0
+     88   2 adulto                      100        100          0          0          0          0
+     89   2 adulto                      100        100          0          0          0          0
+     90   2 adulto                      100        100          0          0          0          0
+     91   2 adulto                      100        100          0          0          0          0
+     92   2 adulto                      100        100          0          0          0          0
+     93   2 adulto                      100        100          0          0          0          0
+     94   2 adulto                      100        100          0          0          0          0
+     95   2 adulto                      100        100          0          0          0          0
+     96   2 adulto                      100        100          0          0          0          0
+     97   2 adulto                      100        100          0          0          0          0
+     98   2 adulto                      100        100          0          0          0          0
+     99   2 adulto                      100        100          0          0          0          0
+    100   2 adulto                      100        100          0          0          0          0
+    101   3 jubilado                     50         50          0          0          0          0
+    102   3 jubilado                     50         50          0          0          0          0
+    103   3 jubilado                     50         50          0          0          0          0
+    104   3 jubilado                     50         50          0          0          0          0
+    105   3 jubilado                     50         50          0          0          0          0
+    106   3 jubilado                     50         50          0          0          0          0
+    107   4 mayor                        40         40          0          0          0          0
+    108   4 mayor                        40         40          0          0          0          0
+    109   4 mayor                        40         40          0          0          0          0
+    110   4 mayor                        40         40          0          0          0          0
+    111   4 mayor                        40         40          0          0          0          0
+    112   4 mayor                        40         40          0          0          0          0
+    113   4 mayor                        40         40          0          0          0          0
+    114   4 mayor                        40         40          0          0          0          0
+    115   4 mayor                        40         40          0          0          0          0
+    116   4 mayor                        40         40          0          0          0          0
+    117   4 mayor                        40         40          0          0          0          0
+    118   4 mayor                        40         40          0          0          0          0
+    119   4 mayor                        40         40          0          0          0          0
+    120   4 mayor                        40         40          0          0          0          0
+    121   4 mayor                        40         40          0          0          0          0
+    122   4 mayor                        40         40          0          0          0          0
+    123   4 mayor                        40         40          0          0          0          0
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ----------
+                                       9960       9958          2          0          0          0
+
+Situación final
+
+                                                       -------------- Dentro y fuera ------------- -------- Dentro -----      %
+Cluster GID Grupo                Individuos      Sanos Infectados    Curados Desinmuniz    Muertos   Intentos Infectados   Aciertos
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+      1   0 nene                         40         39          0          1          0          0       1638          0       0,00
+      2   0 nene                         40         40          0          0          0          0          0          0       0,00
+      3   0 nene                         40         40          0          0          0          0          0          0       0,00
+      4   0 nene                         40         40          0          0          0          0          0          0       0,00
+      5   0 nene                         40         33          0          7          0          0      12137          5       0,04
+      6   1 menor                        60         60          0          0          0          0          0          0       0,00
+      7   1 menor                        60         60          0          0          0          0          0          0       0,00
+      8   1 menor                        60         59          0          1          0          0       3422          0       0,00
+      9   1 menor                        60         60          0          0          0          0          0          0       0,00
+     10   1 menor                        60         60          0          0          0          0          0          0       0,00
+     11   1 menor                        60         60          0          0          0          0          0          0       0,00
+     12   1 menor                        60         60          0          0          0          0          0          0       0,00
+     13   1 menor                        60         60          0          0          0          0          0          0       0,00
+     14   1 menor                        60         56          0          4          0          0      11816          3       0,03
+     15   1 menor                        60         60          0          0          0          0          0          0       0,00
+     16   1 menor                        60         60          0          0          0          0          0          0       0,00
+     17   1 menor                        60         60          0          0          0          0          0          0       0,00
+     18   1 menor                        60         60          0          0          0          0          0          0       0,00
+     19   1 menor                        60         60          0          0          0          0          0          0       0,00
+     20   1 menor                        60         60          0          0          0          0          0          0       0,00
+     21   1 menor                        60         60          0          0          0          0          0          0       0,00
+     22   1 menor                        60         60          0          0          0          0          0          0       0,00
+     23   1 menor                        60         60          0          0          0          0          0          0       0,00
+     24   2 adulto                      100          0          0         97          0          3      12483         98       0,79
+     25   2 adulto                      100          0          0        100          0          0      13596         98       0,72
+     26   2 adulto                      100          0          0         99          0          1      11821         99       0,84
+     27   2 adulto                      100          0          0         99          0          1      13489         98       0,73
+     28   2 adulto                      100          0          0         98          0          2      15631         97       0,62
+     29   2 adulto                      100          0          0         99          0          1      14299         95       0,66
+     30   2 adulto                      100          0          0         99          0          1      13857         99       0,71
+     31   2 adulto                      100          0          0         98          0          2      16130         96       0,60
+     32   2 adulto                      100          0          0         99          0          1      17372         98       0,56
+     33   2 adulto                      100          0          0         98          0          2      11497         98       0,85
+     34   2 adulto                      100          0          0        100          0          0      13009         99       0,76
+     35   2 adulto                      100          0          0        100          0          0      16646         99       0,59
+     36   2 adulto                      100          0          0        100          0          0      13647         98       0,72
+     37   2 adulto                      100          0          0         96          0          4      14317         95       0,66
+     38   2 adulto                      100          0          0         97          0          3      14496         98       0,68
+     39   2 adulto                      100          0          0         99          0          1      11269         97       0,86
+     40   2 adulto                      100          0          0         99          0          1      14078         99       0,70
+     41   2 adulto                      100          0          0        100          0          0      11955         97       0,81
+     42   2 adulto                      100          0          0        100          0          0      14706         97       0,66
+     43   2 adulto                      100          0          0        100          0          0      10872         99       0,91
+     44   2 adulto                      100          0          0        100          0          0      16324         98       0,60
+     45   2 adulto                      100          0          0         99          0          1      13652         94       0,69
+     46   2 adulto                      100          0          0         99          0          1      15769         97       0,62
+     47   2 adulto                      100          0          0         98          0          2      15685         94       0,60
+     48   2 adulto                      100          0          0         99          0          1      15095         99       0,66
+     49   2 adulto                      100          0          0        100          0          0      11649         97       0,83
+     50   2 adulto                      100          0          0         99          0          1      12064         98       0,81
+     51   2 adulto                      100          0          0         99          0          1      14765         99       0,67
+     52   2 adulto                      100          0          0        100          0          0      11090         96       0,87
+     53   2 adulto                      100          0          0         99          0          1      15029         97       0,65
+     54   2 adulto                      100          0          0        100          0          0      14775         97       0,66
+     55   2 adulto                      100          0          0         98          0          2      11953         99       0,83
+     56   2 adulto                      100          0          0         99          0          1      14486         95       0,66
+     57   2 adulto                      100          0          0         99          0          1      18376         97       0,53
+     58   2 adulto                      100          0          0         99          0          1      16740         98       0,59
+     59   2 adulto                      100          0          0         99          0          1      13425         99       0,74
+     60   2 adulto                      100          0          0         96          0          4      15379         99       0,64
+     61   2 adulto                      100          0          0         99          0          1      13190         95       0,72
+     62   2 adulto                      100          0          0        100          0          0      13153         98       0,75
+     63   2 adulto                      100          0          0         98          0          2      13493         98       0,73
+     64   2 adulto                      100          0          0         99          0          1      13761         99       0,72
+     65   2 adulto                      100          0          0        100          0          0      13058         97       0,74
+     66   2 adulto                      100          0          0         97          0          3      18323         95       0,52
+     67   2 adulto                      100          0          0         98          0          2      16852         99       0,59
+     68   2 adulto                      100          0          0         99          0          1      12123         97       0,80
+     69   2 adulto                      100          0          0         98          0          2      14316         99       0,69
+     70   2 adulto                      100          0          0        100          0          0      18396         96       0,52
+     71   2 adulto                      100          0          0         98          0          2      14669         98       0,67
+     72   2 adulto                      100          0          0         99          0          1      17984         98       0,54
+     73   2 adulto                      100          0          0        100          0          0      13134         95       0,72
+     74   2 adulto                      100          0          0        100          0          0      11120         97       0,87
+     75   2 adulto                      100          0          0         99          0          1      15678         98       0,63
+     76   2 adulto                      100          0          0         99          0          1      12308         98       0,80
+     77   2 adulto                      100          0          0         97          0          3      10085         95       0,94
+     78   2 adulto                      100          0          0        100          0          0      15185         98       0,65
+     79   2 adulto                      100          0          0         99          0          1      14115         99       0,70
+     80   2 adulto                      100          0          0         98          0          2      15905         99       0,62
+     81   2 adulto                      100          0          0         99          0          1      10733         94       0,88
+     82   2 adulto                      100          0          0        100          0          0      11928         96       0,80
+     83   2 adulto                      100          0          0        100          0          0      14748         99       0,67
+     84   2 adulto                      100          0          0        100          0          0      14816         98       0,66
+     85   2 adulto                      100          0          0        100          0          0      16115         99       0,61
+     86   2 adulto                      100          0          0         98          0          2      10777         98       0,91
+     87   2 adulto                      100          0          0        100          0          0      13041         99       0,76
+     88   2 adulto                      100          0          0         99          0          1      14898         97       0,65
+     89   2 adulto                      100          0          0         98          0          2      14909         98       0,66
+     90   2 adulto                      100          0          0        100          0          0      13741         98       0,71
+     91   2 adulto                      100          0          0         98          0          2      14637         98       0,67
+     92   2 adulto                      100          0          0        100          0          0      13590         99       0,73
+     93   2 adulto                      100          0          0         99          0          1      12467         98       0,79
+     94   2 adulto                      100          0          0        100          0          0      14898         95       0,64
+     95   2 adulto                      100          0          0        100          0          0      13847         97       0,70
+     96   2 adulto                      100          0          0        100          0          0      15453         99       0,64
+     97   2 adulto                      100          0          0         99          0          1      12944         95       0,73
+     98   2 adulto                      100          0          0         99          0          1      13638         97       0,71
+     99   2 adulto                      100          0          0         98          0          2      18716         98       0,52
+    100   2 adulto                      100          0          0         98          0          2      14399         99       0,69
+    101   3 jubilado                     50          0          0         48          0          2         49         49     100,00
+    102   3 jubilado                     50          0          0         46          0          4         48         48     100,00
+    103   3 jubilado                     50          0          0         50          0          0         49         49     100,00
+    104   3 jubilado                     50          0          0         49          0          1         48         48     100,00
+    105   3 jubilado                     50          0          0         49          0          1         48         48     100,00
+    106   3 jubilado                     50          0          0         48          0          2         48         48     100,00
+    107   4 mayor                        40          0          0         29          0         11         53         37      69,81
+    108   4 mayor                        40          0          0         37          0          3         50         39      78,00
+    109   4 mayor                        40          0          0         35          0          5         51         39      76,47
+    110   4 mayor                        40          0          0         31          0          9         52         37      71,15
+    111   4 mayor                        40          0          0         35          0          5         48         38      79,17
+    112   4 mayor                        40          0          0         33          0          7         50         39      78,00
+    113   4 mayor                        40          0          0         34          0          6         50         38      76,00
+    114   4 mayor                        40          0          0         34          0          6         53         39      73,58
+    115   4 mayor                        40          0          0         29          0         11         53         39      73,58
+    116   4 mayor                        40          0          0         34          0          6         47         38      80,85
+    117   4 mayor                        40          0          0         25          0         15         52         37      71,15
+    118   4 mayor                        40          0          0         33          0          7         46         38      82,61
+    119   4 mayor                        40          0          0         36          0          4         57         39      68,42
+    120   4 mayor                        40          0          0         32          0          8         49         38      77,55
+    121   4 mayor                        40          0          0         34          0          6         50         39      78,00
+    122   4 mayor                        40          0          0         31          0          9         51         39      76,47
+    123   4 mayor                        40          0          0         34          0          6         44         38      86,36
+------- --- -------------------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------
+                                       9960       1267          0       8480          0        213    1118728       8455       0,76
+
+Grupo   0 nene
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                                 31
+Número intentos fin infección                    859
+Número finales de infección                       31       3,61
+Número finales curacion                           31     100,00
+Número finales muerte                              0       0,00
+Total infecciones                                 19
+Total infecciones por curados                     19
+Total infecciones por muertos                      0
+Total infectadores curados                        31
+Total infectadores muertos                         0
+Total pasos                               23.718.596
+Total recorridos                             298.297
+Total distancia recorrida                 14.522.963
+Contactos de riesgo                           44.157
+Máximo de contagios por 1 individuo                3
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,6129
+Falso (R0) muertos                            0,0000
+
+Grupo   1 menor
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                                 48
+Número intentos fin infección                  1.371
+Número finales de infección                       48       3,50
+Número finales curacion                           48     100,00
+Número finales muerte                              0       0,00
+Total infecciones                                 28
+Total infecciones por curados                     28
+Total infecciones por muertos                      0
+Total infectadores curados                        48
+Total infectadores muertos                         0
+Total pasos                              111.642.855
+Total recorridos                           1.121.856
+Total distancia recorrida                 68.350.802
+Contactos de riesgo                          190.201
+Máximo de contagios por 1 individuo                2
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,5833
+Falso (R0) muertos                            0,0000
+
+Grupo   2 adulto
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                             10.430
+Número intentos fin infección                280.447
+Número finales de infección                   10.424       3,72
+Número finales curacion                       10.312      98,93
+Número finales muerte                            112       1,07
+Total infecciones                             14.161
+Total infecciones por curados                 14.017
+Total infecciones por muertos                    143
+Total infectadores curados                    10.312
+Total infectadores muertos                       112
+Total pasos                              380.066.475
+Total recorridos                           3.819.519
+Total distancia recorrida                232.580.212
+Contactos de riesgo                          486.004
+Máximo de contagios por 1 individuo               18
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            1,3593
+Falso (R0) muertos                            1,2768
+
+Grupo   3 jubilado
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                              2.354
+Número intentos fin infección                 63.311
+Número finales de infección                    2.352       3,71
+Número finales curacion                        2.259      96,05
+Número finales muerte                             93       3,95
+Total infecciones                              1.831
+Total infecciones por curados                  1.729
+Total infecciones por muertos                    102
+Total infectadores curados                     2.259
+Total infectadores muertos                        93
+Total pasos                               18.558.186
+Total recorridos                             186.476
+Total distancia recorrida                 11.353.110
+Contactos de riesgo                            2.940
+Máximo de contagios por 1 individuo               51
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,7654
+Falso (R0) muertos                            1,0968
+
+Grupo   4 mayor
+      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15     16     17     18     19     20     21     22     23     24     25     26     27     28     29
+ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+ 0,0000 0,0000 0,0000 0,0001 0,0003 0,0006 0,0010 0,0016 0,0024 0,0034 0,0046 0,0062 0,0080 0,0102 0,0127 0,0156 0,0189 0,0227 0,0270 0,0317 0,0370 0,0428 0,0492 0,0563 0,0639 0,0723 0,0813 0,0910 0,1015 0,1128
+Número infectados                              5.312
+Número intentos fin infección                141.481
+Número finales de infección                    5.305       3,75
+Número finales curacion                        4.339      81,79
+Número finales muerte                            966      18,21
+Total infecciones                              2.126
+Total infecciones por curados                  1.743
+Total infecciones por muertos                    383
+Total infectadores curados                     4.339
+Total infectadores muertos                       966
+Total pasos                               15.863.397
+Total recorridos                             647.444
+Total distancia recorrida                  9.717.925
+Contactos de riesgo                           12.127
+Máximo de contagios por 1 individuo               40
+Mínimo de contagios por 1 individuo                0
+Falso (R0) curados                            0,4017
+Falso (R0) muertos                            0,3965
+
