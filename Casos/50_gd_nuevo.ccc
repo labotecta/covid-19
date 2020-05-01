@@ -1,9 +1,9 @@
-C
-50_gi_m_40_25m1_15m2
+F
+50_gd_nuevo
 30
 1324
 642
-50_con_restricciones_gi_m_40_25m1_15m2.rrr
+50_sin_restricciones_gd.rrr
 
 
 50000
@@ -28,5 +28,5 @@ adulto
 1
 4
 150
-6
+0,4
 25
