@@ -1,0 +1,13 @@
+C:\Contagio\SimulaTest\SimulaTest\bin\Debug\SimulaTest.exe.manifest
+C:\Contagio\SimulaTest\SimulaTest\bin\Debug\SimulaTest.application
+C:\Contagio\SimulaTest\SimulaTest\bin\Debug\SimulaTest.exe
+C:\Contagio\SimulaTest\SimulaTest\bin\Debug\SimulaTest.pdb
+C:\Contagio\SimulaTest\SimulaTest\obj\Debug\SimulaTest.csprojAssemblyReference.cache
+C:\Contagio\SimulaTest\SimulaTest\obj\Debug\SimulaTest.Form1.resources
+C:\Contagio\SimulaTest\SimulaTest\obj\Debug\SimulaTest.Properties.Resources.resources
+C:\Contagio\SimulaTest\SimulaTest\obj\Debug\SimulaTest.csproj.GenerateResource.cache
+C:\Contagio\SimulaTest\SimulaTest\obj\Debug\SimulaTest.csproj.CoreCompileInputs.cache
+C:\Contagio\SimulaTest\SimulaTest\obj\Debug\SimulaTest.exe.manifest
+C:\Contagio\SimulaTest\SimulaTest\obj\Debug\SimulaTest.application
+C:\Contagio\SimulaTest\SimulaTest\obj\Debug\SimulaTest.exe
+C:\Contagio\SimulaTest\SimulaTest\obj\Debug\SimulaTest.pdb
