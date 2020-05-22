@@ -54,6 +54,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.muestra = new System.Windows.Forms.TextBox();
             this.grafico = new System.Windows.Forms.PictureBox();
+            this.b_cancela = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grafico)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,7 +62,7 @@
             // 
             this.label51.AutoSize = true;
             this.label51.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label51.Location = new System.Drawing.Point(24, 23);
+            this.label51.Location = new System.Drawing.Point(24, 14);
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(82, 17);
             this.label51.TabIndex = 292;
@@ -70,7 +71,7 @@
             // prevalencia
             // 
             this.prevalencia.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.prevalencia.Location = new System.Drawing.Point(172, 23);
+            this.prevalencia.Location = new System.Drawing.Point(172, 14);
             this.prevalencia.Name = "prevalencia";
             this.prevalencia.Size = new System.Drawing.Size(56, 22);
             this.prevalencia.TabIndex = 291;
@@ -81,7 +82,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(24, 49);
+            this.label1.Location = new System.Drawing.Point(24, 40);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(84, 17);
             this.label1.TabIndex = 294;
@@ -90,7 +91,7 @@
             // sensibilidad
             // 
             this.sensibilidad.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.sensibilidad.Location = new System.Drawing.Point(172, 49);
+            this.sensibilidad.Location = new System.Drawing.Point(172, 40);
             this.sensibilidad.Name = "sensibilidad";
             this.sensibilidad.Size = new System.Drawing.Size(56, 22);
             this.sensibilidad.TabIndex = 293;
@@ -101,7 +102,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label2.Location = new System.Drawing.Point(24, 76);
+            this.label2.Location = new System.Drawing.Point(24, 67);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(81, 17);
             this.label2.TabIndex = 296;
@@ -110,7 +111,7 @@
             // especificidad
             // 
             this.especificidad.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.especificidad.Location = new System.Drawing.Point(172, 76);
+            this.especificidad.Location = new System.Drawing.Point(172, 67);
             this.especificidad.Name = "especificidad";
             this.especificidad.Size = new System.Drawing.Size(56, 22);
             this.especificidad.TabIndex = 295;
@@ -121,7 +122,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label3.Location = new System.Drawing.Point(253, 23);
+            this.label3.Location = new System.Drawing.Point(253, 14);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(91, 17);
             this.label3.TabIndex = 298;
@@ -130,7 +131,7 @@
             // simulaciones
             // 
             this.simulaciones.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.simulaciones.Location = new System.Drawing.Point(401, 23);
+            this.simulaciones.Location = new System.Drawing.Point(401, 14);
             this.simulaciones.Name = "simulaciones";
             this.simulaciones.Size = new System.Drawing.Size(56, 22);
             this.simulaciones.TabIndex = 297;
@@ -141,7 +142,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(253, 49);
+            this.label4.Location = new System.Drawing.Point(253, 40);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 17);
             this.label4.TabIndex = 300;
@@ -150,7 +151,7 @@
             // ancho
             // 
             this.ancho.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ancho.Location = new System.Drawing.Point(401, 76);
+            this.ancho.Location = new System.Drawing.Point(401, 67);
             this.ancho.Name = "ancho";
             this.ancho.Size = new System.Drawing.Size(56, 22);
             this.ancho.TabIndex = 299;
@@ -159,7 +160,7 @@
             // 
             // b_calcula
             // 
-            this.b_calcula.Location = new System.Drawing.Point(289, 108);
+            this.b_calcula.Location = new System.Drawing.Point(289, 98);
             this.b_calcula.Margin = new System.Windows.Forms.Padding(2);
             this.b_calcula.Name = "b_calcula";
             this.b_calcula.Size = new System.Drawing.Size(168, 29);
@@ -171,7 +172,7 @@
             // pv
             // 
             this.pv.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pv.Location = new System.Drawing.Point(200, 190);
+            this.pv.Location = new System.Drawing.Point(200, 197);
             this.pv.Name = "pv";
             this.pv.Size = new System.Drawing.Size(42, 22);
             this.pv.TabIndex = 330;
@@ -182,7 +183,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(102, 190);
+            this.label5.Location = new System.Drawing.Point(102, 197);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(56, 17);
             this.label5.TabIndex = 331;
@@ -191,27 +192,27 @@
             // label6
             // 
             this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label6.Location = new System.Drawing.Point(200, 162);
+            this.label6.Location = new System.Drawing.Point(200, 169);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(45, 17);
             this.label6.TabIndex = 332;
-            this.label6.Text = "SI";
+            this.label6.Text = "% SI";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label7
             // 
             this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label7.Location = new System.Drawing.Point(283, 162);
+            this.label7.Location = new System.Drawing.Point(283, 169);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(45, 17);
             this.label7.TabIndex = 333;
-            this.label7.Text = "NO";
+            this.label7.Text = "% NO";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pf
             // 
             this.pf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pf.Location = new System.Drawing.Point(283, 190);
+            this.pf.Location = new System.Drawing.Point(283, 197);
             this.pf.Name = "pf";
             this.pf.Size = new System.Drawing.Size(42, 22);
             this.pf.TabIndex = 334;
@@ -221,7 +222,7 @@
             // nv
             // 
             this.nv.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.nv.Location = new System.Drawing.Point(283, 216);
+            this.nv.Location = new System.Drawing.Point(283, 223);
             this.nv.Name = "nv";
             this.nv.Size = new System.Drawing.Size(42, 22);
             this.nv.TabIndex = 337;
@@ -232,7 +233,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label9.Location = new System.Drawing.Point(102, 216);
+            this.label9.Location = new System.Drawing.Point(102, 223);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(53, 17);
             this.label9.TabIndex = 336;
@@ -241,7 +242,7 @@
             // nf
             // 
             this.nf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.nf.Location = new System.Drawing.Point(200, 216);
+            this.nf.Location = new System.Drawing.Point(200, 223);
             this.nf.Name = "nf";
             this.nf.Size = new System.Drawing.Size(42, 22);
             this.nf.TabIndex = 335;
@@ -251,7 +252,7 @@
             // positivos
             // 
             this.positivos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.positivos.Location = new System.Drawing.Point(377, 190);
+            this.positivos.Location = new System.Drawing.Point(415, 197);
             this.positivos.Name = "positivos";
             this.positivos.Size = new System.Drawing.Size(42, 22);
             this.positivos.TabIndex = 338;
@@ -261,18 +262,18 @@
             // label10
             // 
             this.label10.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label10.Location = new System.Drawing.Point(345, 162);
+            this.label10.Location = new System.Drawing.Point(345, 169);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(74, 17);
+            this.label10.Size = new System.Drawing.Size(112, 17);
             this.label10.TabIndex = 339;
-            this.label10.Text = "Positivos";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label10.Text = "% Positivos";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // contador
             // 
             this.contador.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.contador.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.contador.Location = new System.Drawing.Point(51, 162);
+            this.contador.Location = new System.Drawing.Point(51, 169);
             this.contador.Name = "contador";
             this.contador.Size = new System.Drawing.Size(125, 22);
             this.contador.TabIndex = 340;
@@ -283,7 +284,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label8.Location = new System.Drawing.Point(253, 76);
+            this.label8.Location = new System.Drawing.Point(253, 67);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(122, 17);
             this.label8.TabIndex = 342;
@@ -292,7 +293,7 @@
             // muestra
             // 
             this.muestra.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.muestra.Location = new System.Drawing.Point(401, 49);
+            this.muestra.Location = new System.Drawing.Point(401, 40);
             this.muestra.Name = "muestra";
             this.muestra.Size = new System.Drawing.Size(56, 22);
             this.muestra.TabIndex = 341;
@@ -302,17 +303,31 @@
             // grafico
             // 
             this.grafico.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.grafico.Location = new System.Drawing.Point(18, 253);
+            this.grafico.Location = new System.Drawing.Point(18, 260);
             this.grafico.Name = "grafico";
             this.grafico.Size = new System.Drawing.Size(447, 349);
             this.grafico.TabIndex = 343;
             this.grafico.TabStop = false;
             // 
+            // b_cancela
+            // 
+            this.b_cancela.Enabled = false;
+            this.b_cancela.ForeColor = System.Drawing.Color.Red;
+            this.b_cancela.Location = new System.Drawing.Point(289, 131);
+            this.b_cancela.Margin = new System.Windows.Forms.Padding(2);
+            this.b_cancela.Name = "b_cancela";
+            this.b_cancela.Size = new System.Drawing.Size(168, 29);
+            this.b_cancela.TabIndex = 344;
+            this.b_cancela.Text = "Cancela";
+            this.b_cancela.UseVisualStyleBackColor = true;
+            this.b_cancela.Click += new System.EventHandler(this.B_cancela_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(486, 617);
+            this.ClientSize = new System.Drawing.Size(482, 617);
+            this.Controls.Add(this.b_cancela);
             this.Controls.Add(this.grafico);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.muestra);
@@ -375,6 +390,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox muestra;
         private System.Windows.Forms.PictureBox grafico;
+        private System.Windows.Forms.Button b_cancela;
     }
 }
 

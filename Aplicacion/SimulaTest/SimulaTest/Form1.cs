@@ -52,6 +52,9 @@ namespace SimulaTest
             azar = new Random(12345);
             bool pre_real;
             double pm;
+            cancelar = false;
+            b_cancela.Enabled = true;
+            b_calcula.Enabled = prevalencia.Enabled = sensibilidad.Enabled = especificidad.Enabled = simulaciones.Enabled = muestra.Enabled = ancho.Enabled = false;
             for (long i = 0; i < num_simulaciones; i++)
             {
                 pv_cm = 0;
@@ -115,6 +118,7 @@ namespace SimulaTest
                     Application.DoEvents();
                 }
                 tt += num_muestra;
+                if (cancelar) break;
             }
             contador.Text = string.Format("{0:N0}", num_simulaciones);
             pv.Text = string.Format("{0:f2}", 100.0 * pv_c / tt);
@@ -142,10 +146,11 @@ namespace SimulaTest
                 x += ancho_his;
             }
             sw.Close();
-            MessageBox.Show("Simulación terminada");
             Console.Beep();
+            b_cancela.Enabled = false;
+            b_calcula.Enabled = prevalencia.Enabled = sensibilidad.Enabled = especificidad.Enabled = simulaciones.Enabled = muestra.Enabled = ancho.Enabled = true;
+            MessageBox.Show("Simulación terminada");
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             grafico.Image = null;
@@ -212,6 +217,13 @@ namespace SimulaTest
             s = string.Format("{0:f2}", ymax);
             g.DrawString(s, fuente, Brushes.Black, 0, 0);
             grafico.Image = img_grafico;
+            Application.DoEvents();
+        }
+        bool cancelar;
+        private void B_cancela_Click(object sender, EventArgs e)
+        {
+            cancelar = true;
+            b_cancela.Enabled = false;
             Application.DoEvents();
         }
     }
