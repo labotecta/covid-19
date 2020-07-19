@@ -8,7 +8,7 @@ En la carpeta Documentos se encuentra la última versión del artículo principa
 
 17 de abril de 2020. Doy por terminado este proyecto con la última versión del artículo en la carpeta Documentos.
 
-## Contacto: alberto@ajedrezdirecto.com
+## Contacto: alberto@interajedrez.com
 
 
 
